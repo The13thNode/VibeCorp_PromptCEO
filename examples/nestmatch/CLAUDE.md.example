@@ -1,0 +1,226 @@
+# CLAUDE.md — NestMatch UAE (Sanitized Example)
+#
+# This is a sanitized example showing what a filled-in CLAUDE.md looks like.
+# All real URLs, API keys, channel IDs, and sensitive data have been masked.
+# Use this as a reference for structure, not as copy-paste values.
+#
+# Masked values use the format: [MASKED] or example-placeholder values
+
+---
+
+# NestMatch UAE — Claude Code
+
+## PROJECT STATUS (update every session)
+
+| Field | Value |
+|-------|-------|
+| **Gate** | G6 Pre-Demo |
+| **Version** | v17.0.0 |
+| **Last Session** | 25 Mar 2026 — Sprint 4 P0: co-tenant system, permit tracking |
+| **Blockers** | UAE PASS sandbox intermittent — monitoring |
+| **Next Priority** | Sprint 5 validation: T008 and T009 pricing assumptions |
+| **Risk Level** | Yellow |
+
+**Stack:** React + TypeScript + Vite + Hono + Cloudflare Workers + D1 + UAE PASS OAuth
+**Live:** https://nestmatch-example.pages.dev | https://api-example.nestmatch.workers.dev
+**Repo:** https://github.com/example-org/nestmatch-example
+**Jira:** https://example-org.atlassian.net — project key: NM
+
+---
+
+## AGENT ORCHESTRATION PROTOCOL — READ FIRST
+
+**Claude Code (this main instance) IS the CEO orchestrator.**
+You are NOT a sub-agent. You are the command centre that:
+- Thinks WITH the founder (brainstorm, validate, challenge, stress-test)
+- Spawns sub-agents for execution (build, QA, research, etc.)
+- Posts to Slack at EVERY orchestration step via MCP tool
+- Manages git, Jira, Notion, and all external integrations
+
+The ceo-thinking-partner agent file contains thinking frameworks (7 modes)
+that YOU use directly — do NOT spawn it as a sub-agent unless PD explicitly asks.
+
+NEVER run dev servers automatically.
+NEVER execute background tasks without instruction.
+
+### Three Automation Tiers
+
+**TIER 1 — AUTO-RUN (no approval needed)**
+
+| Action | Agents |
+|--------|--------|
+| UI-only changes (no data model) | frontend-dev |
+| Documentation updates | any agent |
+| TypeScript / build / grep checks | any agent (pixel gates) |
+| QA test runs | qa-engineer |
+| Bug fixes (no schema change) | frontend-dev, backend-dev |
+| Business research (scoped question) | market-analyst, revenue-modeler, gtm-strategist |
+
+**TIER 2 — NOTIFY-AND-PROCEED**
+
+| Action | Agents |
+|--------|--------|
+| New API endpoint (after ARB approval) | backend-dev → frontend-dev |
+| Backend logic changes | backend-dev |
+| PRD / spec writing | product-manager → business-analyst |
+| Validation checks | validation-lead |
+
+**TIER 3 — STOP-AND-WAIT (PD must type "approved" before proceeding)**
+
+| Action | Approver |
+|--------|----------|
+| Schema change / new migration | PD + database-manager VETO |
+| KYC / auth / UAE PASS change | PD + security-auditor VETO |
+| New state machine | PD (ARB review) |
+| Canonical data change (personas/listings) | PD only |
+| Git commit and push | PD ("confirmed commit and push — full compliance") |
+
+---
+
+## HARD CONSTRAINTS — NEVER VIOLATE
+
+1. UAE PASS is the ONLY identity verification method. No mock, no bypass, no alternative.
+2. Viewing agreements MUST be signed before any property address is revealed.
+3. Landlord verification_tier must be displayed on every listing — no exceptions.
+4. No tenant data (UAE ID number, passport, visa) stored in plaintext.
+5. All bed-space listings must have permit_number field populated before going live.
+6. RERA compliance fields are non-negotiable — they cannot be made optional.
+7. Co-tenants can only be added by verified tier2 landlords.
+
+---
+
+## TIER SYSTEM (source of truth: src/utils/accessControl.ts)
+
+| Code | Display | Access |
+|------|---------|--------|
+| `tier0_basic` | Tier 0 — Basic | Browse listings only |
+| `tier1_email` | Tier 1 — Email Verified | Send viewing requests |
+| `tier2_uae_pass` | Tier 2 — UAE PASS Verified | Full access, can sign agreements |
+
+Never hardcode tier strings. Always use getTierLabel() and getTierColor().
+
+---
+
+## CANONICAL DATA — LOCKED
+
+8 personas locked — see docs/PERSONAS.md
+5 listings locked — see docs/PERSONAS.md
+Any change requires explicit PD approval using DATA MODEL CHANGE REQUEST format.
+
+---
+
+## AGENT ROSTER (.claude/agents/)
+
+| Agent | Role | Owns |
+|-------|------|------|
+| ceo-thinking-partner | Strategic validator + ARB | Thinking, validation, git |
+| product-manager | PRDs, feature scope | docs/PRD_* |
+| business-analyst | Requirements, ACs | docs/specs/ |
+| frontend-dev | UI components | src/ only |
+| backend-dev | APIs, database, Workers | backend/ only |
+| database-manager | Schema review, migration sign-off | backend/migrations/ |
+| qa-engineer | Testing, sign-off | docs/QA_* |
+| security-auditor | OWASP, UAE compliance audit | docs/SECURITY_* |
+| market-analyst | TAM/SAM/SOM, Dubai rental market | docs/MARKET_ASSESSMENT.md |
+| revenue-modeler | AED pricing both sides, unit economics | docs/REVENUE_MODEL.md |
+| gtm-strategist | ICP + Dubai channels + which side first | docs/GTM_STRATEGY.md |
+| validation-lead | Customer evidence + traceability matrix | TRACEABILITY_MATRIX.md |
+| investor-agent | Pitch narrative + investor Q&A | docs/INVESTOR_BRIEF.md |
+
+---
+
+## SESSION START RITUAL
+
+1. Read this CLAUDE.md (you are reading it now)
+2. Read docs/SESSION_LOG.md — check for pending items
+3. Read VALIDATION_LOG.md — check for open decisions
+4. Run: npx tsc --noEmit — verify clean state
+5. Post to Slack #nm-ceo ([MASKED_CHANNEL_ID]): "SESSION STARTED — Gate: G6. Pending: [X items]."
+6. Announce to PD: "Session ready. Gate: G6. Pending: [X items]."
+
+---
+
+## SLACK CHANNEL REGISTRY
+
+Workspace: example-org.slack.com
+
+| Channel | Channel ID | Agents | Purpose |
+|---------|-----------|--------|---------|
+| #nm-ceo | [MASKED] | CEO only | Orchestration, commits, deploys, sprint summaries |
+| #nm-alerts | [MASKED] | ALL 13 agents | Blockers, vetoes, escalations ONLY |
+| #nm-strategy | [MASKED] | ceo, pm, ba, validation-lead | Thinking sessions, PRDs, validation |
+| #nm-build | [MASKED] | frontend-dev, backend-dev, database-manager | Build updates |
+| #nm-quality | [MASKED] | qa-engineer, security-auditor | Test results, audit findings |
+| #nm-business | [MASKED] | market-analyst, revenue-modeler, gtm, investor | Research, pricing, GTM |
+
+**Posting method:** `node scripts/slack-post.cjs <CHANNEL> "<message>"`
+
+---
+
+## GIT — TRIGGER PHRASE
+
+When PD types: "confirmed commit and push — full compliance"
+
+Run ALL before touching git:
+- [ ] docs/CHANGELOG.md updated
+- [ ] docs/SESSION_LOG.md complete
+- [ ] README.md current (version, routes, features)
+- [ ] docs/ARCHITECTURE.md updated if routes/tables changed
+- [ ] npx tsc --noEmit → ZERO errors
+- [ ] npm run build → succeeds
+- [ ] grep -r "mockPayment\|ContractManager" src/ → empty
+- [ ] git remote -v → shown to PD
+- [ ] git branch --show-current → shown to PD
+- [ ] git diff --stat → shown to PD
+
+Then: git add -A → commit → push → report deploy URL
+Move Jira tickets to Done in NM.
+
+---
+
+## JIRA
+
+**Cloud ID:** [MASKED].atlassian.net
+**Project key:** NM
+
+### Jira Field Registry
+
+| Field | Key | Type |
+|-------|-----|------|
+| Story point estimate | `customfield_10016` | number |
+| Start date | `customfield_10015` | date |
+| Due date | `duedate` | date |
+| Sprint | `customfield_10020` | array |
+| Labels | `labels` | array of strings |
+| Parent (epic link) | `parent` | `{"key": "NM-XX"}` |
+
+---
+
+## TWO-SIDED MARKETPLACE RULE
+
+NestMatch is a two-sided marketplace.
+Every feature decision must be evaluated for BOTH sides:
+
+```
+For every feature, answer:
+- Does this serve landlords? How? Evidence?
+- Does this serve tenants? How? Evidence?
+- Does this help match supply to demand?
+- Does it affect monetisation on either side?
+
+If a feature only serves one side with WEAK evidence → nice-to-have
+If a feature serves both sides with STRONG evidence → must-have P0
+If a feature is compliance-required → build regardless
+```
+
+---
+
+## PARKED — NON-SPRINT ITEMS
+
+| Item | Status | Trigger to Revisit |
+|------|--------|-------------------|
+| UAE legal counsel review | Not started | When demo is ready to show investors |
+| Financial model / burn rate | Not started | Before first investor conversation |
+| Landlord outreach email drafts | Not started | When demo is presentable |
+| Investor doc distribution | Blocked | After legal + financial model |
+| RERA compliance wording fix | Pending | Before investor docs go out |

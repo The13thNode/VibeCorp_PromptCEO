@@ -1,0 +1,251 @@
+# CLAUDE.md — [PROJECT_NAME] (Blank SaaS Example)
+#
+# This is a minimal CLAUDE.md for a generic SaaS product.
+# Pre-filled with realistic values for a React + Node.js + PostgreSQL + Stripe stack.
+# Replace every [PLACEHOLDER] with your actual project values.
+#
+# For a more complete example, see examples/nestmatch/CLAUDE.md.example
+
+---
+
+# [PROJECT_NAME] — Claude Code
+
+## PROJECT STATUS (update every session)
+
+| Field | Value |
+|-------|-------|
+| **Gate** | G1 Discovery |
+| **Version** | v0.1.0 |
+| **Last Session** | [Date] — [What was done] |
+| **Blockers** | None |
+| **Next Priority** | [First P0 item — e.g., user auth, core CRUD, Stripe integration] |
+| **Risk Level** | Green |
+
+**Stack:** React + TypeScript + Vite | Node.js + Express + TypeScript | PostgreSQL + Prisma | Auth0 | Stripe
+**Live:** https://[your-app].vercel.app | https://api.[your-app].railway.app
+**Repo:** https://github.com/[your-org]/[your-repo]
+**Jira:** https://[your-org].atlassian.net — project key: [APP]
+
+---
+
+## AGENT ORCHESTRATION PROTOCOL — READ FIRST
+
+**Claude Code (this main instance) IS the CEO orchestrator.**
+You are NOT a sub-agent. You are the command centre that:
+- Thinks WITH the founder (brainstorm, validate, challenge, stress-test)
+- Spawns sub-agents for execution (build, QA, research, etc.)
+- Posts to Slack at EVERY orchestration step via MCP tool
+- Manages git, Jira, Notion, and all external integrations
+
+NEVER run dev servers automatically.
+NEVER execute background tasks without instruction.
+
+### Three Automation Tiers
+
+**TIER 1 — AUTO-RUN (no approval needed)**
+
+| Action | Agents |
+|--------|--------|
+| UI-only changes (no data model) | frontend-dev |
+| Documentation updates | any agent |
+| TypeScript / build checks | any agent |
+| QA test runs | qa-engineer |
+| Bug fixes (no schema change) | frontend-dev, backend-dev |
+| Business research | market-analyst, revenue-modeler |
+
+**TIER 2 — NOTIFY-AND-PROCEED**
+
+| Action | Agents |
+|--------|--------|
+| New API endpoint | backend-dev → frontend-dev |
+| Backend logic changes | backend-dev |
+| PRD / spec writing | product-manager → business-analyst |
+
+**TIER 3 — STOP-AND-WAIT (PD must approve before proceeding)**
+
+| Action | Approver |
+|--------|----------|
+| Database schema change / migration | PD + database-manager VETO |
+| Auth / session / token changes | PD + security-auditor VETO |
+| Stripe webhook or billing changes | PD only |
+| Git commit and push | PD ("confirmed commit and push — full compliance") |
+| Spending money / new API keys | PD only |
+
+---
+
+## HARD CONSTRAINTS — NEVER VIOLATE
+
+1. Never store raw Stripe payment details — use Stripe's tokenization only.
+2. Never log auth tokens, session cookies, or passwords — even in dev.
+3. User data (email, billing info) must never appear in client-side logs.
+4. Prisma migrations must be reviewed by database-manager before running.
+5. Never expose internal error messages or stack traces to the frontend.
+6. [ADD YOUR OWN COMPLIANCE OR DOMAIN CONSTRAINTS HERE]
+
+---
+
+## ROLE/PERMISSION SYSTEM (source of truth: src/lib/permissions.ts)
+
+| Role | Display | Access |
+|------|---------|--------|
+| `free` | Free Plan | [N] seats, core features only |
+| `pro` | Pro Plan | Unlimited seats, all features |
+| `admin` | Admin | Full access + billing management |
+
+Never hardcode role strings inline. Always use the permissions helper.
+
+---
+
+## AGENT ROSTER (.claude/agents/)
+
+| Agent | Role | Owns |
+|-------|------|------|
+| ceo-thinking-partner | Strategic validator + ARB | Thinking, validation, git |
+| product-manager | PRDs, feature scope | docs/PRD_* |
+| business-analyst | Requirements, ACs | docs/specs/ |
+| frontend-dev | React components | src/ only |
+| backend-dev | Express APIs, Prisma | backend/ only |
+| database-manager | Schema review, migration sign-off | prisma/migrations/ |
+| qa-engineer | Testing, sign-off | docs/QA_* |
+| security-auditor | OWASP, auth audit | docs/SECURITY_* |
+| market-analyst | TAM/SAM/SOM, competitor research | docs/MARKET_ASSESSMENT.md |
+| revenue-modeler | Pricing tiers, unit economics | docs/REVENUE_MODEL.md |
+| gtm-strategist | ICP, acquisition channels | docs/GTM_STRATEGY.md |
+
+---
+
+## SESSION START RITUAL
+
+1. Read this CLAUDE.md (you are reading it now)
+2. Read docs/SESSION_LOG.md — check for pending items
+3. Run: npx tsc --noEmit — verify clean state
+4. Run: npx prisma validate — verify schema is valid
+5. Post to Slack #[app]-ceo: "SESSION STARTED — Gate: [G]. Pending: [X items]."
+6. Announce to PD: "Session ready. Gate: [G]. Pending: [X items]."
+
+---
+
+## SESSION END RITUAL
+
+Before closing any session:
+1. Update PROJECT STATUS table at top of this file
+2. Append to docs/SESSION_LOG.md
+3. Update Notion with session activity row
+4. Create Jira tickets for any new work discovered
+5. Post to Slack #[app]-ceo: "SESSION ENDING — [summary]"
+
+---
+
+## SLACK CHANNEL REGISTRY
+
+Workspace: [your-org].slack.com
+
+**Posting method:** `node scripts/slack-post.cjs <CHANNEL> "<message>"`
+
+| Channel | Purpose |
+|---------|---------|
+| #[app]-ceo | Orchestration, commits, deploys, session open/close |
+| #[app]-alerts | Blockers, vetoes, escalations ONLY |
+| #[app]-build | Frontend/backend agent actions |
+| #[app]-quality | QA and security findings |
+| #[app]-business | Research, pricing, GTM |
+
+---
+
+## GIT — TRIGGER PHRASE
+
+When PD types: "confirmed commit and push — full compliance"
+
+Run ALL before touching git:
+- [ ] docs/CHANGELOG.md updated
+- [ ] docs/SESSION_LOG.md complete
+- [ ] README.md current (version, routes, features)
+- [ ] npx tsc --noEmit → ZERO errors
+- [ ] npm run build → succeeds
+- [ ] npx prisma validate → valid
+- [ ] git remote -v → shown to PD
+- [ ] git branch --show-current → shown to PD
+- [ ] git diff --stat → shown to PD
+
+Then: git add [specific files] → commit → push → report deploy URL
+
+---
+
+## JIRA (project: [APP])
+
+**Cloud ID:** [your-org].atlassian.net
+
+### Standard Ticket Sections
+
+Every ticket description must include:
+```
+## What this is
+[One sentence — what the ticket delivers]
+
+## Why it matters
+[Business justification]
+
+## Acceptance criteria
+- [ ] [Testable criterion 1]
+- [ ] [Testable criterion 2]
+
+## Agent responsible
+[agent-name] — [specific task]
+
+## Definition of Done
+- [ ] TypeScript: CLEAN
+- [ ] QA sign-off
+- [ ] Notion row updated
+- [ ] Slack posted
+```
+
+---
+
+## STRIPE INTEGRATION NOTES
+
+**Products:** [List your Stripe product IDs once created, e.g., prod_xxxxxxxx]
+**Prices:** [List your Stripe price IDs, e.g., price_xxxxxxxx for monthly, price_xxxxxxxx for annual]
+**Webhook endpoint:** https://api.[your-app].railway.app/webhooks/stripe
+**Events handled:** customer.subscription.created, customer.subscription.updated, customer.subscription.deleted, invoice.payment_succeeded, invoice.payment_failed
+
+Stripe agent rule: Never modify webhook handling without security-auditor review.
+
+---
+
+## DATABASE NOTES
+
+**ORM:** Prisma
+**Database:** PostgreSQL (Railway)
+**Migration command:** npx prisma migrate deploy
+**Schema file:** prisma/schema.prisma
+
+Core tables:
+- `users` — Auth0 user ID, email, role, stripe_customer_id
+- `subscriptions` — user_id, stripe_subscription_id, status, plan, current_period_end
+- `[YOUR_CORE_ENTITY]` — [description of your main business object]
+
+Database agent rule: database-manager must review all schema changes before migration runs.
+
+---
+
+## DOCS THAT MUST ALWAYS STAY CURRENT
+
+| File | Update when |
+|------|------------|
+| docs/CHANGELOG.md | Every commit |
+| docs/SESSION_LOG.md | Every agent completion |
+| README.md | Version, routes, or features change |
+| docs/ARCHITECTURE.md | New routes or tables |
+| docs/API_ROUTES.md | New endpoint added |
+
+---
+
+## PARKED — NON-SPRINT ITEMS
+
+| Item | Status | Trigger to Revisit |
+|------|--------|-------------------|
+| Annual pricing page | Not started | After monthly plan validated |
+| Team/org accounts | Not started | When first 10 paying users onboarded |
+| API rate limiting | Not started | Before public launch |
+| SOC 2 prep | Not started | When enterprise customers request it |
+| [Your own parked items] | Not started | [Your trigger] |

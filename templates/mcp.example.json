@@ -1,0 +1,67 @@
+{
+  "_comment": "Copy this file to .mcp.json in your project root. Fill in all YOUR_xxx_HERE values before use.",
+  "_docs": "MCP (Model Context Protocol) server config. Each key is a named server. Claude Code loads these at startup.",
+
+  "mcpServers": {
+
+    "slack": {
+      "_comment": "Slack MCP — enables Claude Code to post messages and read channels via your Slack workspace",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "YOUR_SLACK_BOT_TOKEN_HERE",
+        "SLACK_WEBHOOK_URL": "YOUR_SLACK_INCOMING_WEBHOOK_URL_HERE",
+        "_hint_bot_token": "xoxb-... — get from api.slack.com > Your Apps > OAuth & Permissions",
+        "_hint_webhook": "https://hooks.slack.com/services/... — get from api.slack.com > Incoming Webhooks"
+      }
+    },
+
+    "jira": {
+      "_comment": "Jira MCP — enables Claude Code to create, read, and update Jira tickets",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-jira"],
+      "env": {
+        "JIRA_CLOUD_ID": "YOUR_JIRA_CLOUD_ID_HERE",
+        "JIRA_API_TOKEN": "YOUR_JIRA_API_TOKEN_HERE",
+        "JIRA_EMAIL": "YOUR_ATLASSIAN_ACCOUNT_EMAIL_HERE",
+        "_hint_cloud_id": "Found in your Atlassian URL: https://YOUR_CLOUD_ID.atlassian.net",
+        "_hint_api_token": "Generate at: id.atlassian.com/manage-profile/security/api-tokens",
+        "_hint_email": "The email address you use to log in to Atlassian"
+      }
+    },
+
+    "notion": {
+      "_comment": "Notion MCP — enables Claude Code to read and write Notion databases and pages",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-notion"],
+      "env": {
+        "NOTION_API_KEY": "YOUR_NOTION_INTEGRATION_API_KEY_HERE",
+        "_hint_api_key": "Create an integration at notion.so/my-integrations. Share your workspace pages with the integration.",
+        "_hint_format": "secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    },
+
+    "telegram": {
+      "_comment": "Telegram MCP — enables Claude Code to send notifications to a Telegram chat or group",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-telegram"],
+      "env": {
+        "TELEGRAM_BOT_TOKEN": "YOUR_TELEGRAM_BOT_TOKEN_HERE",
+        "TELEGRAM_CHAT_ID": "YOUR_TELEGRAM_CHAT_ID_HERE",
+        "_hint_bot_token": "Create a bot at t.me/BotFather. The token format is 123456789:ABCdef...",
+        "_hint_chat_id": "Your personal chat ID or group chat ID. Use @userinfobot to find your user ID.",
+        "_hint_chat_id_group": "For group chats, add the bot to the group. Chat ID will be a negative number, e.g. -1001234567890"
+      }
+    }
+
+  },
+
+  "_setup_steps": [
+    "1. Copy this file to .mcp.json in your project root",
+    "2. Remove all keys starting with underscore (_comment, _hint, etc.) — they are documentation only",
+    "3. Replace every YOUR_xxx_HERE value with your real credentials",
+    "4. Add .mcp.json to .gitignore — it contains secrets",
+    "5. Run: claude mcp list — to verify servers are loaded",
+    "6. Restart Claude Code — MCP servers load at startup"
+  ]
+}
