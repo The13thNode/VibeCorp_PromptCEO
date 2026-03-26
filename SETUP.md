@@ -8,6 +8,7 @@ This guide walks you through setting up PromptCEO from scratch. It assumes you a
 
 ## Table of Contents
 
+0. [Choose Your Tools](#0-choose-your-tools)
 1. [Prerequisites](#1-prerequisites)
 2. [Clone the Repository](#2-clone-the-repository)
 3. [Fill In CLAUDE.md Placeholders](#3-fill-in-claudemd-placeholders)
@@ -21,6 +22,16 @@ This guide walks you through setting up PromptCEO from scratch. It assumes you a
 7. [Test Your First Agent](#7-test-your-first-agent)
 8. [Session Workflow](#8-session-workflow)
 9. [Troubleshooting](#9-troubleshooting)
+
+---
+
+## 0. Choose Your Tools
+
+Before deploying, decide which tools you want to use for notifications, knowledge management, and task tracking. PromptCEO works with many tools — all integrations are optional.
+
+See **[Choose Your Stack](docs/TOOL_COMPARISON.md)** for a full comparison of free and paid options with recommended stacks.
+
+Short version: start with Discord + Obsidian + GitHub Issues (all free). Upgrade later if needed.
 
 ---
 

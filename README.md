@@ -228,6 +228,7 @@ VibeCorp_PromptCEO/
 | [Model Policy](docs/MODEL_POLICY.md) | Everyone | When to use which Claude model |
 | [Agent Teams](docs/AGENT_TEAMS.md) | Advanced | Experimental parallel agents |
 | [Security](SECURITY.md) | Everyone | Data boundaries and guardrails |
+| [Choose Your Stack](docs/TOOL_COMPARISON.md) | Everyone | Pick your tools (free and paid options) |
 | [FAQ](docs/FAQ.md) | Everyone | Common questions answered |
 
 ---
