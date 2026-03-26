@@ -10,8 +10,8 @@ Attribution, acknowledgements, and a clear statement of what this project is and
 
 It is not affiliated with, endorsed by, sponsored by, or in any way connected to Anthropic PBC. The name "Claude" and associated trademarks belong to Anthropic. This framework builds on Anthropic's public APIs and tools, but Anthropic has no involvement in this project.
 
-For official Claude Code documentation: https://docs.anthropic.com/claude-code
-For official Anthropic products: https://anthropic.com
+For official Claude Code documentation: [Claude Code Documentation](https://docs.anthropic.com/claude-code)
+For official Anthropic products: [anthropic.com](https://anthropic.com)
 
 ---
 
@@ -26,8 +26,8 @@ The foundation everything here is built on.
 - **Agent Teams** — the experimental multi-agent parallelism feature documented in `docs/AGENT_TEAMS.md`
 - **Model Context Protocol (MCP)** — the open standard that allows agents to connect to external tools
 
-Website: https://anthropic.com
-Claude Code docs: https://docs.anthropic.com/claude-code
+Website: [anthropic.com](https://anthropic.com)
+Claude Code docs: [Claude Code Documentation](https://docs.anthropic.com/claude-code)
 
 ---
 
@@ -37,7 +37,7 @@ Claude Code docs: https://docs.anthropic.com/claude-code
 
 The Jira integration in this framework uses the MCP server built by SpillwaveSolutions. Their work makes the Jira integration seamless and maintainable.
 
-Repository: https://github.com/SpillwaveSolutions/jira
+Repository: [SpillwaveSolutions/jira](https://github.com/SpillwaveSolutions/jira)
 
 ---
 
@@ -45,7 +45,7 @@ Repository: https://github.com/SpillwaveSolutions/jira
 
 The Telegram remote access integration is based on the open-source bot built by RichardAtCT. This is the cleanest implementation of Telegram-based Claude Code remote control available.
 
-Repository: https://github.com/RichardAtCT/claude-code-telegram
+Repository: [RichardAtCT/claude-code-telegram](https://github.com/RichardAtCT/claude-code-telegram)
 
 ---
 
@@ -53,7 +53,7 @@ Repository: https://github.com/RichardAtCT/claude-code-telegram
 
 The skills architecture in this framework draws inspiration from the patterns documented in the VoltAgent awesome-agent-skills collection. Their curation of reusable skill patterns shaped how the `skills/` directory is structured.
 
-Repository: https://github.com/VoltAgent/awesome-agent-skills
+Repository: [VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills)
 
 ---
 
@@ -61,7 +61,7 @@ Repository: https://github.com/VoltAgent/awesome-agent-skills
 
 The TowardsAI team published an early and thorough guide to Claude Code skills that informed the framework's approach to skill modularity and agent composition.
 
-Reference: https://towardsai.net (Claude Code skills coverage)
+Reference: [TowardsAI](https://towardsai.net) (Claude Code skills coverage)
 
 ---
 
@@ -82,6 +82,17 @@ NestMatch UAE is the proof that a solo founder with this system can operate at t
 ## Community and Ecosystem
 
 This framework exists within a larger ecosystem of builders experimenting with AI-augmented development. Thanks to everyone publishing their experiments, failures, and discoveries publicly — the open-source ethos that makes this kind of rapid iteration possible.
+
+---
+
+## References & Further Reading
+
+- [Claude Code Documentation](https://code.claude.com/docs) — official docs
+- [Using Skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude) — Anthropic support
+- [Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) — Anthropic PDF
+- [Claude Guides: Code, Cowork, Skills](https://karozieminski.substack.com/p/claude-guides-code-cowork-skills-workflows) — Karo Zieminski
+- [Awesome Claude Skills](https://github.com/ComposioHQ/awesome-claude-skills) — ComposioHQ
+- [VibeCorp CoworkSkills](https://github.com/The13thNode/VibeCorp_CoworkSkills) — sister project
 
 ---
 

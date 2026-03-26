@@ -2,6 +2,10 @@
 
 > DISCLAIMER: This document is a framework for self-managed AI orchestration projects. It is NOT legal advice and should NOT be treated as such. Every team is responsible for verifying compliance with the laws and regulations applicable to their jurisdiction and industry. This project is NOT affiliated with Anthropic.
 
+> **Personal use only.** This framework is provided as-is for personal and educational use. There is no warranty, no support guarantee, and no liability. You are responsible for reviewing all agent output before using it in any context.
+
+> **Not affiliated with Anthropic.** VibeCorp PromptCEO is a community project. It is not created, endorsed, sponsored, or supported by Anthropic PBC. For official Claude products: [anthropic.com](https://anthropic.com). For official Claude Code docs: [code.claude.com/docs](https://code.claude.com/docs).
+
 ---
 
 ## Table of Contents
@@ -348,6 +352,31 @@ If operating in the UAE:
 4. Define and document data retention periods
 5. Have a breach response plan ready
 6. Review the terms of service of every API you connect to (Slack, Atlassian, Notion, Anthropic, etc.) for their data handling commitments
+
+---
+
+## 10. Personal Use & Liability
+
+This is an open-source framework distributed under the MIT license. It is provided **as-is** with no warranty of any kind.
+
+**What this means:**
+- You may use, modify, and distribute this framework freely
+- There is no guaranteed support, SLA, or maintenance commitment
+- The authors and contributors are not liable for any damages arising from use
+- You are solely responsible for evaluating and verifying all agent output
+- This framework does not constitute legal, financial, security, or compliance advice
+
+**What data goes where — honest summary:**
+
+| Data | Where it goes | Your control |
+|------|--------------|-------------|
+| Your code and project files | Stays on your machine (unless you push to GitHub) | Full control |
+| CLAUDE.md and session prompts | Sent to Anthropic's API | Governed by Anthropic's privacy policy |
+| .env and .mcp.json secrets | Stays on your machine | Full control (never commit these) |
+| Slack/Jira/Notion updates | Sent to those services via MCP | Only if you configure MCP integrations |
+| Agent memory and handoffs | Local files in your project | Full control |
+
+**Bottom line:** Your code stays local. Your conversations go through Anthropic. Your integrations go where you point them. Nothing happens without your configuration.
 
 ---
 

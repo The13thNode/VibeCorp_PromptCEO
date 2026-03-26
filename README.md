@@ -6,6 +6,8 @@ PromptCEO is a free, open-source framework that gives you a complete AI-powered 
 
 This isn't theory. Every pattern in this framework was battle-tested across 50+ sessions, 17 versions, and 100+ commits on a real product ([NestMatch UAE](examples/nestmatch/README.md) — a compliance-first rental marketplace for Dubai).
 
+> **Complete beginner?** Never used a terminal or GitHub before? Start with the [Step-by-Step Guide](docs/STEP_BY_STEP_GUIDE.md). Have questions? Read the [FAQ](docs/FAQ.md).
+
 ---
 
 ## What You'll Get
@@ -234,6 +236,24 @@ VibeCorp_PromptCEO/
 
 - **[NestMatch UAE](examples/nestmatch/)** — Real-world example. A compliance-first rental marketplace for Dubai, built entirely with this framework.
 - **[Blank SaaS](examples/blank-saas/)** — Starting template for a SaaS product with common defaults pre-filled.
+
+---
+
+## PromptCEO vs CoworkSkills
+
+VibeCorp maintains two complementary frameworks:
+
+| | PromptCEO | CoworkSkills |
+|---|---|---|
+| **What it is** | Agent framework for Claude Code | Chat skills for Claude.ai / Cowork |
+| **How it works** | Agents read/write files, run commands, build software | Copy a skill into a Claude Project, chat with it |
+| **Requires** | Terminal, Claude Code CLI | Browser only — no terminal needed |
+| **Best for** | Building products, writing code, managing sprints | Strategy, planning, analysis, business thinking |
+| **Agents** | 13 specialized agents with governance | No agents — skill-guided conversations |
+
+**Use CoworkSkills for thinking. Use PromptCEO for building.**
+
+Sister repo: [VibeCorp CoworkSkills](https://github.com/The13thNode/VibeCorp_CoworkSkills)
 
 ---
 
