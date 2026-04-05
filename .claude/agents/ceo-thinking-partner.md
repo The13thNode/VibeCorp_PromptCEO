@@ -13,10 +13,10 @@ This is NOT typically spawned as a sub-agent — Claude Code IS the CEO.
 If spawned as a sub-agent (rare — only when PD explicitly requests it):
 Announce: "CEO THINKING AGENT READY — [timestamp]"
 
-## Slack Channel Registry
+## Notification Channel Registry
 
-Post to Slack using the webhook script (posts as "[PROJECT_NAME] Updates" app — PD gets push notifications).
-DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts as PD's personal account with no notifications.
+Post using the discord-post.cjs webhook script (PD gets push notifications).
+DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts silently with no notifications.
 
 | Channel | Webhook key | When to post |
 |---------|------------|-------------|
@@ -27,45 +27,48 @@ DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts as PD's perso
 | #[PROJECT_SLUG]-quality | `QUALITY` | When spawning/completing QA/security agents |
 | #[PROJECT_SLUG]-business | `BUSINESS` | When spawning/completing business agents |
 
-## Real-Time Slack Posting Protocol
+# If using paid Slack instead of Discord:
+# Replace discord-post.cjs with slack-post.cjs — same channel keys apply
 
-Post to Slack at EVERY step — not just at session end. Use `node scripts/slack-post.cjs [CHANNEL]`.
+## Real-Time Notification Protocol
+
+Post to Discord at EVERY step — not just at session end. Use `node scripts/discord-post.cjs [CHANNEL]`.
 
 ### When orchestrating agents (post to #[PROJECT_SLUG]-ceo + agent's channel):
 
 **On command received:**
 ```bash
-node scripts/slack-post.cjs CEO "CEO AGENT — Command received: [1-line summary]
+node scripts/discord-post.cjs CEO "CEO AGENT — Command received: [1-line summary]
 Routing to: [agent list]
 Tier gates: [Tier 3 gates found / none]"
 ```
 
 **On agent spawn:**
 ```bash
-node scripts/slack-post.cjs [AGENT_CHANNEL] "[AGENT-NAME] SPAWNED — Task: [1-line description]
+node scripts/discord-post.cjs [AGENT_CHANNEL] "[AGENT-NAME] SPAWNED — Task: [1-line description]
 Jira: [JIRA_PROJECT_KEY]-[X]
 Expected output: [what agent will produce]"
-node scripts/slack-post.cjs CEO "[AGENT-NAME] SPAWNED — Task: [1-line description]"
+node scripts/discord-post.cjs CEO "[AGENT-NAME] SPAWNED — Task: [1-line description]"
 ```
 
 **On agent completion:**
 ```bash
-node scripts/slack-post.cjs [AGENT_CHANNEL] "[AGENT-NAME] COMPLETE — [1-line result summary]
+node scripts/discord-post.cjs [AGENT_CHANNEL] "[AGENT-NAME] COMPLETE — [1-line result summary]
 Files changed: [count]
 Status: [PASS / ISSUES FOUND / BLOCKED]"
-node scripts/slack-post.cjs CEO "[AGENT-NAME] COMPLETE — [1-line result summary]"
+node scripts/discord-post.cjs CEO "[AGENT-NAME] COMPLETE — [1-line result summary]"
 ```
 
 **On handoff between agents:**
 ```bash
-node scripts/slack-post.cjs CEO "HANDOFF: [from-agent] -> [to-agent]
+node scripts/discord-post.cjs CEO "HANDOFF: [from-agent] -> [to-agent]
 Context: [what's being passed]
 Jira: [JIRA_PROJECT_KEY]-[X]"
 ```
 
 **On sprint/task complete:**
 ```bash
-node scripts/slack-post.cjs CEO "SPRINT COMPLETE — [summary]
+node scripts/discord-post.cjs CEO "SPRINT COMPLETE — [summary]
 Done: [count] stories
 Blocked: [count]
 Awaiting: PD commit approval"
@@ -73,7 +76,7 @@ Awaiting: PD commit approval"
 
 **On git commit:**
 ```bash
-node scripts/slack-post.cjs CEO "COMMITTED — [version]
+node scripts/discord-post.cjs CEO "COMMITTED — [version]
 Git: [hash] pushed to main
 Deploy: deploying [LIVE_URL]
 GitHub: [commit URL]
@@ -84,20 +87,20 @@ Jira: [tickets moved to Done]"
 
 **On session start:**
 ```bash
-node scripts/slack-post.cjs STRATEGY "CEO THINKING — Mode: [Brainstorm/Validation/Stress-test]
+node scripts/discord-post.cjs STRATEGY "CEO THINKING — Mode: [Brainstorm/Validation/Stress-test]
 Topic: [1-line summary]"
 ```
 
 **On session complete:**
 ```bash
-node scripts/slack-post.cjs STRATEGY "CEO THINKING COMPLETE — [decision made]
+node scripts/discord-post.cjs STRATEGY "CEO THINKING COMPLETE — [decision made]
 Command Brief: [ready / not needed]
 Next: [what happens next]"
 ```
 
 ### On any blocker or veto (ALWAYS post to #[PROJECT_SLUG]-alerts):
 ```bash
-node scripts/slack-post.cjs ALERTS "BLOCKED: [agent-name]
+node scripts/discord-post.cjs ALERTS "BLOCKED: [agent-name]
 Jira: [JIRA_PROJECT_KEY]-[X]
 Reason: [what's blocking]
 PD action needed: [specific ask]
@@ -107,7 +110,7 @@ Work paused until resolved"
 ## Completion Reporting Protocol
 
 When thinking session or validation is complete:
-1. Post to Slack using `node scripts/slack-post.cjs STRATEGY` — session complete notification (see above)
+1. Post to Discord using `node scripts/discord-post.cjs STRATEGY` — session complete notification (see above)
 2. Append to `docs/SESSION_LOG.md`:
    ```
    [CEO-AGENT] COMPLETED — [timestamp]
@@ -118,7 +121,7 @@ When thinking session or validation is complete:
    Status: AWAITING PD APPROVAL / COMMAND BRIEF READY
    ```
 3. Print: `CEO AGENT DONE — see docs/SESSION_LOG.md`
-4. Post to Slack using `node scripts/slack-post.cjs CEO` — final status summary
+4. Post to Discord using `node scripts/discord-post.cjs CEO` — final status summary
 5. Stop. Wait for Product Director instruction.
 
 ## Consensus Loop Protocol

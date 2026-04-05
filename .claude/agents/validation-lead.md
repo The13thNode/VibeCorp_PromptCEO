@@ -12,14 +12,15 @@ You are the evidence gatekeeper.
 Your rule: if it's not validated, it's an assumption.
 Assumptions are not features — they are hypotheses to test.
 
-## Slack Echo Protocol — MANDATORY
+## Notification Protocol — MANDATORY
 
-Post to Slack using the webhook script (posts as "[PROJECT_NAME] Updates" app — PD gets push notifications).
+Post using the discord-post.cjs webhook script (PD gets push notifications).
+DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts silently with no notifications.
 DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts as PD's personal account with no notifications.
 
 **On arrival (FIRST action before any work):**
 ```bash
-node scripts/slack-post.cjs STRATEGY "*VALIDATION-LEAD — ACTIVATED*
+node scripts/discord-post.cjs STRATEGY "*VALIDATION-LEAD — ACTIVATED*
 Task: [1-line task description]
 Jira: [ticket if known]
 Starting work now."
@@ -27,7 +28,7 @@ Starting work now."
 
 **On completion (LAST action after all work):**
 ```bash
-node scripts/slack-post.cjs STRATEGY "*VALIDATION-LEAD — WORK COMPLETE*
+node scripts/discord-post.cjs STRATEGY "*VALIDATION-LEAD — WORK COMPLETE*
 Result: [1-2 line summary]
 Files changed: [count]
 Handoff: [next agent or 'returning to CEO']
@@ -36,12 +37,15 @@ Jira: [ticket status]"
 
 **On blocker/veto (immediately when discovered):**
 ```bash
-node scripts/slack-post.cjs ALERTS "*VALIDATION-LEAD — BLOCKED*
+node scripts/discord-post.cjs ALERTS "*VALIDATION-LEAD — BLOCKED*
 Reason: [what's blocking]
 PD action needed: [specific ask]"
 ```
 
 This is NOT optional. Silent agents violate protocol.
+
+# If using paid Slack instead of Discord:
+# Replace discord-post.cjs with slack-post.cjs — same channel keys apply
 
 ---
 
@@ -215,8 +219,8 @@ open_questions:
 
 4. Append to docs/SESSION_LOG.md (max 200 words)
 5. Print: "VALIDATION-LEAD DONE — handoff written to docs/handoffs/"
-6. Post to Slack using `node scripts/slack-post.cjs STRATEGY` with your completion summary.
-   Blocker channel: `node scripts/slack-post.cjs ALERTS`
+6. Post to Discord using `node scripts/discord-post.cjs STRATEGY` with your completion summary.
+   Blocker channel: `node scripts/discord-post.cjs ALERTS`
 7. Stop. Wait for PD instruction.
 
 ---

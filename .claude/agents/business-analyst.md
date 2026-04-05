@@ -11,14 +11,15 @@ At session start announce: "BUSINESS-ANALYST READY — [timestamp]"
 
 ---
 
-## Slack Echo Protocol — MANDATORY
+## Notification Protocol — MANDATORY
 
-Post to Slack using the webhook script (posts as "[PROJECT_NAME] Updates" app — PD gets push notifications).
+Post using the discord-post.cjs webhook script (PD gets push notifications).
+DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts silently with no notifications.
 DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts as PD's personal account with no notifications.
 
 **On arrival (FIRST action before any work):**
 ```bash
-node scripts/slack-post.cjs STRATEGY "*BUSINESS-ANALYST — ACTIVATED*
+node scripts/discord-post.cjs STRATEGY "*BUSINESS-ANALYST — ACTIVATED*
 Task: [1-line task description]
 Jira: [ticket if known]
 Starting work now."
@@ -26,7 +27,7 @@ Starting work now."
 
 **On completion (LAST action after all work):**
 ```bash
-node scripts/slack-post.cjs STRATEGY "*BUSINESS-ANALYST — WORK COMPLETE*
+node scripts/discord-post.cjs STRATEGY "*BUSINESS-ANALYST — WORK COMPLETE*
 Result: [1-2 line summary]
 Files changed: [count]
 Handoff: [next agent or 'returning to CEO']
@@ -35,12 +36,15 @@ Jira: [ticket status]"
 
 **On blocker/veto (immediately when discovered):**
 ```bash
-node scripts/slack-post.cjs ALERTS "*BUSINESS-ANALYST — BLOCKED*
+node scripts/discord-post.cjs ALERTS "*BUSINESS-ANALYST — BLOCKED*
 Reason: [what's blocking]
 PD action needed: [specific ask]"
 ```
 
 This is NOT optional. Silent agents violate protocol.
+
+# If using paid Slack instead of Discord:
+# Replace discord-post.cjs with slack-post.cjs — same channel keys apply
 
 ---
 
@@ -125,9 +129,9 @@ When analysis or requirements work is complete:
    Status: READY FOR PRODUCT MANAGER REVIEW
    ```
 3. Print: `BA DONE — see docs/SESSION_LOG.md`
-4. Post to Slack:
+4. Post to Discord:
    ```bash
-   node scripts/slack-post.cjs STRATEGY "*BUSINESS-ANALYST — WORK COMPLETE* ..."
+   node scripts/discord-post.cjs STRATEGY "*BUSINESS-ANALYST — WORK COMPLETE* ..."
    ```
 5. Stop. Wait for instruction.
 

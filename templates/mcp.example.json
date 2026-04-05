@@ -1,11 +1,13 @@
 {
   "_comment": "Copy this file to .mcp.json in your project root. Fill in all YOUR_xxx_HERE values before use.",
   "_docs": "MCP (Model Context Protocol) server config. Each key is a named server. Claude Code loads these at startup.",
+  "_discord_note": "Discord is the FREE default notification layer. No MCP server needed — use scripts/discord-post.cjs instead. See docs/DISCORD_SETUP.md for setup.",
+  "_slack_note": "Slack MCP is OPTIONAL. Requires paid Slack subscription (~$8.75/user/month). Remove this if using Discord only.",
 
   "mcpServers": {
 
     "slack": {
-      "_comment": "Slack MCP — enables Claude Code to post messages and read channels via your Slack workspace",
+      "_comment": "Slack MCP — OPTIONAL. Requires paid Slack subscription (~$8.75/user/month). Remove this block if using Discord instead (recommended).",
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-slack"],
       "env": {

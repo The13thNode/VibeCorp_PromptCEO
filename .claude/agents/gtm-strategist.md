@@ -13,14 +13,15 @@ The chicken-and-egg problem is your primary challenge to solve.
 
 ---
 
-## Slack Echo Protocol — MANDATORY
+## Notification Protocol — MANDATORY
 
-Post to Slack using the webhook script (posts as "[PROJECT_NAME] Updates" app — PD gets push notifications).
+Post using the discord-post.cjs webhook script (PD gets push notifications).
+DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts silently with no notifications.
 DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts as PD's personal account with no notifications.
 
 **On arrival (FIRST action before any work):**
 ```bash
-node scripts/slack-post.cjs BUSINESS "*GTM-STRATEGIST — ACTIVATED*
+node scripts/discord-post.cjs BUSINESS "*GTM-STRATEGIST — ACTIVATED*
 Task: [1-line task description]
 Jira: [ticket if known]
 Starting work now."
@@ -28,7 +29,7 @@ Starting work now."
 
 **On completion (LAST action after all work):**
 ```bash
-node scripts/slack-post.cjs BUSINESS "*GTM-STRATEGIST — WORK COMPLETE*
+node scripts/discord-post.cjs BUSINESS "*GTM-STRATEGIST — WORK COMPLETE*
 Result: [1-2 line summary]
 Files changed: [count]
 Handoff: [next agent or 'returning to CEO']
@@ -37,12 +38,15 @@ Jira: [ticket status]"
 
 **On blocker/veto (immediately when discovered):**
 ```bash
-node scripts/slack-post.cjs ALERTS "*GTM-STRATEGIST — BLOCKED*
+node scripts/discord-post.cjs ALERTS "*GTM-STRATEGIST — BLOCKED*
 Reason: [what's blocking]
 PD action needed: [specific ask]"
 ```
 
 This is NOT optional. Silent agents violate protocol.
+
+# If using paid Slack instead of Discord:
+# Replace discord-post.cjs with slack-post.cjs — same channel keys apply
 
 ---
 
@@ -226,9 +230,9 @@ open_questions:
 
 3. Append to docs/SESSION_LOG.md (max 200 words, plain English)
 4. Print: "GTM-STRATEGIST DONE — handoff written to docs/handoffs/"
-5. Post to Slack:
+5. Post to Discord:
    ```bash
-   node scripts/slack-post.cjs BUSINESS "*GTM-STRATEGIST — WORK COMPLETE* ..."
+   node scripts/discord-post.cjs BUSINESS "*GTM-STRATEGIST — WORK COMPLETE* ..."
    ```
 6. Stop. Wait for PD instruction.
 

@@ -125,6 +125,7 @@ asks PD for explicit written approval before continuing.
 | Public-facing content | PD only |
 | Git commit and push | PD ("confirmed commit and push — full compliance") |
 | Spending money / external API keys | PD only |
+| Safety-guard override | PD ("override — proceed with [command]") |
 
 ### Orchestration Rules
 
@@ -140,11 +141,11 @@ asks PD for explicit written approval before continuing.
 ### Visibility Guarantee
 
 The founder sees everything through existing infrastructure:
-- **[SLACK_BUILD_CHANNEL]** — every frontend/backend agent action
-- **[SLACK_QUALITY_CHANNEL]** — every QA/security action
-- **[SLACK_STRATEGY_CHANNEL]** — every thinking/validation action
-- **[SLACK_ALERTS_CHANNEL]** — every blocker/veto
-- **[SLACK_CEO_CHANNEL]** — every commit/deploy
+- **Discord #[project]-build** — every frontend/backend agent action
+- **Discord #[project]-quality** — every QA/security action
+- **Discord #[project]-strategy** — every thinking/validation action
+- **Discord #[project]-alerts** — every blocker/veto
+- **Discord #[project]-ceo** — every commit/deploy
 - **Jira [JIRA_PROJECT_KEY]** — every ticket created/transitioned
 - **Notion** — every activity log row
 - **docs/execution-log/** — append-only audit trail
@@ -218,16 +219,47 @@ Any change requires explicit PD approval using DATA MODEL CHANGE REQUEST format.
 | gtm-strategist | ICP + channels + which side first | docs/GTM_STRATEGY.md |
 | validation-lead | Customer evidence + traceability matrix | TRACEABILITY_MATRIX.md |
 | investor-agent | Pitch narrative + investor Q&A | docs/INVESTOR_BRIEF.md |
+| code-reviewer | Code review gatekeeper (after build, before QA) | docs/handoffs/ |
+| release-engineer | Release pipeline executor (Tier 3 trigger only) | git, deploy |
+| safety-guard | Destructive command guard + scope freeze | docs/agent-notes/safety-guard-notes.md |
+| ui-designer | Design system, 3-option proposals, component review | design-system/MASTER.md |
+| workflow-architect | State machines, flow design, pre-engineering review | docs/STATE_MACHINES.md |
+| build-quality-auditor | Post-sprint code audit, SEV-1–5 findings | docs/agent-notes/build-quality-auditor-notes.md |
+| demo-tester | Investor demo readiness, DEMO-BLOCKER findings | docs/agent-notes/demo-tester-notes.md |
+| ux-researcher | User journey testing, Journey Test Records | docs/agent-notes/ux-researcher-notes.md |
+| developer-provocateur | In-sprint READ-ONLY code challenges (no VETO) | docs/agent-notes/developer-provocateur-notes.md |
+| developer-advocate | First-time user DX audit, GOOD/NEEDS WORK/BROKEN | docs/agent-notes/developer-advocate-notes.md |
+| visual-storyteller | Demo narration, investor narrative, pitch content | docs/agent-notes/visual-storyteller-notes.md |
+| social-host | Optional social sessions (PD approval required) | docs/agent-notes/social-host-notes.md |
+| provocateur | Post-sprint external audit, rotating lens | docs/agent-notes/provocateur-notes.md |
 
 Load agent skills just-in-time from skills/ directory.
 Do NOT read skills/ upfront — load only when task requires it.
+
+### AGENT TEAMS
+
+| Team | Lead | Members | Discord Channel |
+|------|------|---------|----------------|
+| **Alpha — Product Build** | frontend-dev | frontend-dev, backend-dev, database-manager, ui-designer | BUILD (#[project]-build) |
+| **Bravo — Quality Gate** | qa-engineer | qa-engineer, demo-tester, ux-researcher, developer-advocate, release-engineer | QUALITY (#[project]-quality) |
+| **Charlie — Strategy** | product-manager | product-manager, business-analyst, validation-lead, workflow-architect | STRATEGY (#[project]-strategy) |
+| **Delta — Business** | market-analyst | market-analyst, revenue-modeler, gtm-strategist, investor-agent, visual-storyteller | BUSINESS (#[project]-business) |
+
+**Floating (not in a team — attach as needed):**
+- `security-auditor` — VETO holder, attaches to any team
+- `build-quality-auditor` — VETO holder, post-sprint audit only
+- `developer-provocateur` — READ-ONLY code challenger, no VETO
+- `code-reviewer` — always sequential, after Alpha build, before QA
+- `safety-guard` — VETO holder, activated by PD only
+- `social-host` — optional, PD approval required
+- `provocateur` — post-sprint only, never during active sprint
 
 ### MODEL POLICY — Token Conservation
 
 | Model | Who uses it | When |
 |-------|------------|------|
 | **Opus 4.6** | CEO (main instance) only | PD interaction, orchestration, strategic thinking |
-| **Sonnet 4.6** | All 12 sub-agents (default) | Builds, specs, QA, research, analysis |
+| **Sonnet 4.6** | All 25 sub-agents (default) | Builds, specs, QA, research, analysis |
 | **Haiku 4.5** | Ad-hoc, CEO decides per task | Simple reads, summaries, formatting, status checks |
 
 Rules:
@@ -262,17 +294,18 @@ If a feature is compliance-required → build regardless
 
 1. Read this CLAUDE.md (you are reading it now)
 2. Read docs/SESSION_LOG.md — check for pending items
-3. Read VALIDATION_LOG.md — check for open decisions
-4. Run: [BUILD_CHECK_COMMAND] — verify clean state
-5. Post to Slack [SLACK_CEO_CHANNEL] ([SLACK_CEO_ID]): "SESSION STARTED — Gate: [G]. Pending: [X items]."
-6. Announce to PD: "Session ready. Gate: [G]. Pending: [X items]."
+3. Read docs/memory-summaries/learnings.md — accumulated learnings
+4. Read VALIDATION_LOG.md — check for open decisions
+5. Run: [BUILD_CHECK_COMMAND] — verify clean state
+6. Post to Discord CEO channel: `node scripts/discord-post.cjs CEO "SESSION STARTED — Gate: [G]. Pending: [X items]."`
+7. Announce to PD: "Session ready. Gate: [G]. Pending: [X items]."
 
 ---
 
 ## SESSION END RITUAL
 
 Before closing any session, Claude Code (main instance) posts to
-Slack [SLACK_CEO_CHANNEL] ([SLACK_CEO_ID]): "SESSION ENDING — [summary of work done]"
+Discord CEO channel: `node scripts/discord-post.cjs CEO "SESSION ENDING — [summary of work done]"`
 
 Then answers these questions and updates Notion with the following fields populated:
 
@@ -300,6 +333,8 @@ Then answers these questions and updates Notion with the following fields popula
    → Status, Files changed, Jira link, Git commit link
    → Date Created=today, Priority of work completed
 
+7. Append new learnings to docs/memory-summaries/learnings.md (use skills/public/learn/SKILL.md format)
+
 NOTION FIELD STANDARDS — always populate these on every row:
   Date Created: date the work started or idea was raised
   Release Date: date it shipped or is planned to ship
@@ -307,80 +342,98 @@ NOTION FIELD STANDARDS — always populate these on every row:
   Description: one clear sentence of what this is and why it matters
   Priority: P0 Critical / P1 High / P2 Medium / P3 Low / Icebox
 
-7. Post session close to Slack [SLACK_CEO_CHANNEL] ([SLACK_CEO_ID]):
-   "SESSION CLOSED — [work summary]. Notion/Jira updated. Next: [pending items]."
+7. Post session close to Discord CEO channel:
+   `node scripts/discord-post.cjs CEO "SESSION CLOSED — [work summary]. Notion/Jira updated. Next: [pending items]."`
 
 ---
 
-## SLACK CHANNEL REGISTRY
+## NOTIFICATION CHANNEL REGISTRY
 
-**Two posting methods — use the RIGHT one:**
+**Notification layer — choose one (Discord recommended):**
 
-| Method | Identity | PD gets notified? | When to use |
-|--------|----------|-------------------|-------------|
-| `node scripts/slack-post.cjs` | "[PROJECT_NAME] Updates" (app) | **YES** — push notification | ALL agent notifications |
-| `mcp__claude_ai_Slack__slack_send_message` | "[your name]" (user) | **NO** — silent | Reading channels, searching, replying to threads |
+| Method | Cost | Identity | Push notifications | When to use |
+|--------|------|----------|--------------------|-------------|
+| `node scripts/discord-post.cjs` | **FREE** | "[PROJECT_NAME] Bot" (webhook) | YES — Discord mobile app | **DEFAULT** — all agent notifications |
+| `node scripts/slack-post.cjs` | Paid (Slack Pro ~$8.75/user/mo) | "[PROJECT_NAME] Updates" (app) | YES — Slack mobile app | Optional — only if your org has paid Slack |
+| `mcp__claude_ai_Slack__slack_send_message` | Paid | "[your name]" (user) | NO — silent | Reading channels, searching, replying to threads only |
 
-**DEFAULT: Always use `node scripts/slack-post.cjs` for posting.**
-Syntax: `node scripts/slack-post.cjs <CHANNEL> "<message>"`
-Channels: CEO, STRATEGY, BUILD, QUALITY, BUSINESS, ALERTS
+**DEFAULT: `node scripts/discord-post.cjs` — free, no subscription required.**
+See `docs/DISCORD_SETUP.md` to set up your Discord server and webhooks.
+See `docs/SLACK_SETUP.md` if using paid Slack instead.
 
-Only use the MCP tool when you need to: read channel history, search messages, reply to a thread, or send a draft.
-
-Workspace: [SLACK_WORKSPACE]
-
-| Channel | Channel ID | Agents | Purpose |
-|---------|-----------|--------|---------|
-| [SLACK_CEO_CHANNEL] | `[SLACK_CEO_ID]` | CEO only | Orchestration play-by-play, commits, deploys, sprint summaries |
-| [SLACK_ALERTS_CHANNEL] | `[SLACK_ALERTS_ID]` | ALL 13 agents | Blockers, vetoes, escalations ONLY |
-| [SLACK_STRATEGY_CHANNEL] | `[SLACK_STRATEGY_ID]` | ceo, pm, ba, validation-lead | Thinking sessions, PRDs, validation |
-| [SLACK_BUILD_CHANNEL] | `[SLACK_BUILD_ID]` | frontend-dev, backend-dev, database-manager | Build updates, file changes, API work |
-| [SLACK_QUALITY_CHANNEL] | `[SLACK_QUALITY_ID]` | qa-engineer, security-auditor | Test results, audit findings |
-| [SLACK_BUSINESS_CHANNEL] | `[SLACK_BUSINESS_ID]` | market-analyst, revenue-modeler, gtm, investor | Research, pricing, GTM |
-
-Also connected (native Slack apps — no webhook needed):
-#[project]-github → GitHub app (git pushes, deploys)
-#[project]-jira   → Jira app (ticket updates, sprint changes)
+| Channel Key | Discord Channel | Agents | Purpose |
+|-------------|----------------|--------|---------|
+| CEO | #[project]-ceo | CEO only | Orchestration play-by-play, commits, deploys, sprint summaries |
+| ALERTS | #[project]-alerts | ALL agents | Blockers, vetoes, escalations ONLY |
+| BUILD | #[project]-build | frontend-dev, backend-dev, database-manager, ui-designer | Build updates, file changes, API work |
+| QUALITY | #[project]-quality | qa-engineer, demo-tester, security-auditor, release-engineer | Test results, audit findings, demo readiness |
+| STRATEGY | #[project]-strategy | product-manager, business-analyst, validation-lead, workflow-architect | Thinking sessions, PRDs, validation |
+| BUSINESS | #[project]-business | market-analyst, revenue-modeler, gtm-strategist, investor-agent, visual-storyteller | Research, pricing, GTM |
+| CROSSTEAM | #[project]-crossteam | All agents | Cross-team handoffs and coordination |
+| DEMOLOG | #[project]-demolog | demo-tester | Demo test results and investor readiness evidence |
+| SOCIAL | #[project]-social | social-host | Optional team social activity |
+| PROVOCATEUR | #[project]-provocateur | provocateur, developer-provocateur | Post-sprint and in-sprint challenge findings |
+| PULSE | #[project]-pulse | CEO | Health checks, daily heartbeat, status |
+| DESIGN | #[project]-design | ui-designer | Design reviews, visual decisions, mockups |
 
 ### Agent → Channel mapping (quick lookup)
 
 ```
-ceo-thinking-partner → [SLACK_CEO_ID] + [SLACK_STRATEGY_ID]
-product-manager      → [SLACK_STRATEGY_ID]
-business-analyst     → [SLACK_STRATEGY_ID]
-validation-lead      → [SLACK_STRATEGY_ID]
-frontend-dev         → [SLACK_BUILD_ID]
-backend-dev          → [SLACK_BUILD_ID]
-database-manager     → [SLACK_BUILD_ID]
-qa-engineer          → [SLACK_QUALITY_ID]
-security-auditor     → [SLACK_QUALITY_ID]
-market-analyst       → [SLACK_BUSINESS_ID]
-revenue-modeler      → [SLACK_BUSINESS_ID]
-gtm-strategist       → [SLACK_BUSINESS_ID]
-investor-agent       → [SLACK_BUSINESS_ID]
-ALL agents (blocks)  → [SLACK_ALERTS_ID]
+ceo-thinking-partner    → CEO + STRATEGY
+product-manager         → STRATEGY
+business-analyst        → STRATEGY
+validation-lead         → STRATEGY
+workflow-architect      → STRATEGY
+frontend-dev            → BUILD
+backend-dev             → BUILD
+database-manager        → BUILD
+ui-designer             → DESIGN + BUILD
+qa-engineer             → QUALITY
+security-auditor        → QUALITY
+demo-tester             → DEMOLOG + QUALITY
+ux-researcher           → QUALITY
+developer-advocate      → QUALITY
+release-engineer        → QUALITY
+market-analyst          → BUSINESS
+revenue-modeler         → BUSINESS
+gtm-strategist          → BUSINESS
+investor-agent          → BUSINESS
+visual-storyteller      → BUSINESS
+build-quality-auditor   → QUALITY + ALERTS (VETO)
+code-reviewer           → BUILD
+safety-guard            → ALERTS (VETO when active)
+provocateur             → PROVOCATEUR
+developer-provocateur   → PROVOCATEUR
+social-host             → SOCIAL
+ALL agents (blocks)     → ALERTS
 ```
+
+### Slack alternative (if using paid Slack instead)
+
+If your team uses paid Slack, replace all `discord-post.cjs` calls with `slack-post.cjs`.
+See `docs/SLACK_SETUP.md` for channel IDs and setup.
+The channel KEY names (CEO, BUILD, QUALITY, etc.) are the same for both Discord and Slack.
 
 ### POSTING RULE — Real-Time, Every Step
 
-Agents post to Slack at EVERY step — NOT just at session end.
-Use `node scripts/slack-post.cjs` — this posts as "[PROJECT_NAME] Updates" app and triggers push notifications on PD's phone.
+Agents post at EVERY step — NOT just at session end.
+Use `node scripts/discord-post.cjs` — this posts as "[PROJECT_NAME] Bot" via Discord webhook and triggers push notifications on PD's phone.
 
 **How to post:**
 ```bash
-node scripts/slack-post.cjs CEO "CEO AGENT — Command received: [summary]"
-node scripts/slack-post.cjs BUILD "FRONTEND-DEV — SPAWNED — Task: [description]"
-node scripts/slack-post.cjs QUALITY "QA-ENGINEER — COMPLETE — [result summary]"
-node scripts/slack-post.cjs ALERTS "BLOCKED: [agent] — [reason]"
+node scripts/discord-post.cjs CEO "CEO AGENT — Command received: [summary]"
+node scripts/discord-post.cjs BUILD "FRONTEND-DEV — SPAWNED — Task: [description]"
+node scripts/discord-post.cjs QUALITY "QA-ENGINEER — COMPLETE — [result summary]"
+node scripts/discord-post.cjs ALERTS "BLOCKED: [agent] — [reason]"
 ```
 
 **When to post (minimum required):**
-1. COMMAND RECEIVED → `node scripts/slack-post.cjs CEO "..."`
-2. AGENT SPAWNED → `node scripts/slack-post.cjs [CHANNEL] "..."` + CEO
+1. COMMAND RECEIVED → `node scripts/discord-post.cjs CEO "..."`
+2. AGENT SPAWNED → `node scripts/discord-post.cjs [CHANNEL] "..."` + CEO
 3. AGENT WORKING → post key milestones
 4. AGENT COMPLETE → agent's channel + CEO
 5. HANDOFF → CEO
-6. BLOCKER/VETO → `node scripts/slack-post.cjs ALERTS "..."`
+6. BLOCKER/VETO → `node scripts/discord-post.cjs ALERTS "..."`
 7. SPRINT COMPLETE → CEO
 8. GIT COMMIT → CEO
 9. SESSION START → CEO
@@ -393,8 +446,8 @@ node scripts/slack-post.cjs ALERTS "BLOCKED: [agent] — [reason]"
 Jira: [JIRA_PROJECT_KEY]-[X] | Files: [count] | Status: [state]
 ```
 
-Slack posting is NOT optional. If an agent runs and Slack is silent, the protocol was violated.
-PD must receive push notifications — always use the webhook script, not MCP tool.
+Notification posting is NOT optional. If an agent runs and Discord is silent, the protocol was violated.
+PD must receive push notifications — always use `node scripts/discord-post.cjs`, not the MCP Slack tool.
 
 ---
 
@@ -419,15 +472,17 @@ After a Command Brief is approved, route using this table:
 
 | If Command Brief contains | Route to (in order) |
 |--------------------------|-------------------|
-| New table or schema change | ARB → database-manager → backend-dev → frontend-dev → qa-engineer |
-| New API endpoint only | ARB → backend-dev → frontend-dev → qa-engineer |
-| UI-only change (no data change) | frontend-dev → qa-engineer |
-| New state machine | ARB → database-manager → backend-dev → qa-engineer → security-auditor |
-| KYC / auth / verification change | ARB → security-auditor → backend-dev → frontend-dev → qa-engineer |
+| New table or schema change | ARB → database-manager → backend-dev → frontend-dev → code-reviewer → qa-engineer → release-engineer |
+| New API endpoint only | ARB → backend-dev → frontend-dev → code-reviewer → qa-engineer → release-engineer |
+| UI-only change (no data change) | frontend-dev → code-reviewer → qa-engineer → release-engineer |
+| New state machine | ARB → database-manager → backend-dev → qa-engineer → security-auditor → code-reviewer → release-engineer |
+| KYC / auth / verification change | ARB → security-auditor → backend-dev → frontend-dev → code-reviewer → qa-engineer → release-engineer |
 | PRD update or spec work | product-manager → business-analyst → CEO review |
 | Compliance audit | security-auditor → CEO review |
 | Market research | market-analyst subagent (general-purpose) |
 | Investor prep | finance-modeler + investor-agent subagents |
+| Full feature (office hours start) | office-hours → plan-ceo-review → plan-eng-review → Alpha build → code-reviewer → qa-engineer → release-engineer |
+| Design exploration | design-consultation → design-shotgun → PD picks → design-html → frontend-dev → code-reviewer → qa-engineer |
 
 ### Parallel vs sequential decision
 
@@ -569,14 +624,14 @@ Covered work:
 Rule: Claude Code starts, runs, collects handoffs, posts to Slack, reports to PD.
 PD does not need to paste any prompts between agents.
 
-**Slack posting (mandatory at every step):**
-Use `mcp__claude_ai_Slack__slack_send_message` — see SLACK CHANNEL REGISTRY for IDs.
+**Notification posting (mandatory at every step):**
+Use `node scripts/discord-post.cjs` — see NOTIFICATION CHANNEL REGISTRY for channel keys.
 Post BEFORE spawning agent + AFTER agent returns. Never silent.
 
 ---
 
 ### TIER 2 — NOTIFY-AND-PROCEED
-Claude Code posts to [SLACK_CEO_CHANNEL] ([SLACK_CEO_ID]) BEFORE starting, then runs.
+Claude Code posts to Discord CEO channel BEFORE starting, then runs.
 PD can type "stop" or "hold" at any point to pause the chain.
 If no response, Claude Code proceeds automatically.
 
@@ -587,7 +642,7 @@ Covered work:
   - PRD writing and technical spec generation
   - Any task estimated to take more than 30 minutes
 
-Notification format to [SLACK_CEO_CHANNEL]:
+Notification format to Discord CEO channel:
   STARTING: [sprint or task name]
   Agents involved: [list]
   Estimated duration: [time]
@@ -599,7 +654,7 @@ Notification format to [SLACK_CEO_CHANNEL]:
 ### TIER 3 — STOP-AND-WAIT (Visual Gate)
 Claude Code STOPS immediately and waits for explicit PD approval.
 Work does not proceed until PD types the approval phrase.
-Claude Code posts to [SLACK_ALERTS_CHANNEL] ([SLACK_ALERTS_ID]) when a gate is hit.
+Claude Code posts to Discord ALERTS channel when a gate is hit: `node scripts/discord-post.cjs ALERTS "GATE HIT: [reason]"`
 
 Always required for:
   - Any schema change or migration
@@ -619,29 +674,29 @@ Commit trigger: "confirmed commit and push — full compliance"
 ### ORCHESTRATION FLOW
 When PD gives a command, Claude Code (main instance):
 
-1. Post to Slack [SLACK_CEO_CHANNEL]: "Command received: [summary]"
+1. Post to Discord CEO channel: `node scripts/discord-post.cjs CEO "Command received: [summary]"`
 2. Read routing table and identify agents needed
 3. Check each task for Visual gates (Tier 3 indicators)
 4. If Tier 3 detected:
-   a. Post to Slack [SLACK_ALERTS_CHANNEL]: "GATE HIT: [what needs approval]"
+   a. Post to Discord ALERTS: `node scripts/discord-post.cjs ALERTS "GATE HIT: [what needs approval]"`
    b. STOP → tell PD what approval is needed
    c. Wait for approval phrase
 5. If PD approves → continue from that step
 6. If all Tier 1/2 → proceed automatically:
-   a. Post Tier 2 notification to [SLACK_CEO_CHANNEL] (if Tier 2)
+   a. Post Tier 2 notification to CEO channel (if Tier 2)
    b. For each agent spawn:
-      - Post to Slack [agent's channel]: "[AGENT] SPAWNED — [task]"
-      - Post to Slack [SLACK_CEO_CHANNEL]: "Dispatched [agent] to [channel]"
+      - Post to Discord [agent's channel]: `node scripts/discord-post.cjs [CHANNEL] "[AGENT] SPAWNED — [task]"`
+      - Post to Discord CEO: `node scripts/discord-post.cjs CEO "Dispatched [agent] to [channel]"`
       - Spawn agent with task prompt
       - Agent does the work and returns result
-      - Post to Slack [agent's channel]: "[AGENT] COMPLETE — [summary]"
-      - Post to Slack [SLACK_CEO_CHANNEL]: "[AGENT] done — [1-line result]"
+      - Post to Discord [agent's channel]: `node scripts/discord-post.cjs [CHANNEL] "[AGENT] COMPLETE — [summary]"`
+      - Post to Discord CEO: `node scripts/discord-post.cjs CEO "[AGENT] done — [1-line result]"`
       - Write handoff envelope to docs/handoffs/
    c. On handoff between agents:
-      - Post to Slack [SLACK_CEO_CHANNEL]: "HANDOFF: [from] → [to]"
+      - Post to Discord CEO: `node scripts/discord-post.cjs CEO "HANDOFF: [from] → [to]"`
    d. Claude Code collects all handoff envelopes
    e. Claude Code updates Sprint Narratives in Notion
-   f. Post to Slack [SLACK_CEO_CHANNEL]: sprint summary
+   f. Post to Discord CEO: sprint summary
    g. Present unified status to PD in terminal
    h. WAIT for commit trigger before pushing
 
@@ -691,8 +746,11 @@ Run SEQUENTIALLY (one must finish before next starts):
   - backend-dev THEN frontend-dev (API contract before UI wiring)
   - product-manager THEN business-analyst (PRD before spec)
   - business-analyst THEN all build agents (spec before build)
-  - all build agents THEN qa-engineer (build before test)
+  - all build agents THEN code-reviewer (build before review)
+  - code-reviewer THEN qa-engineer (review before test)
   - qa-engineer THEN Claude Code commit (test before push)
+
+Note: code-reviewer is ALWAYS sequential — never parallel with build or QA agents.
 
 ---
 
@@ -701,6 +759,7 @@ These agents can stop any work regardless of tier:
   database-manager  → VETO on any schema change
   security-auditor  → VETO on any auth/KYC/PII change
   validation-lead   → VETO on any ASSUMPTION-strength feature
+  safety-guard      → VETO on any destructive commands + out-of-scope edits (when active)
 
 A VETO immediately:
   1. Posts BLOCKED comment to Jira ticket
@@ -737,27 +796,46 @@ PD types in Claude Code:
   "Run Sprint 1 P0 — execute [JIRA_PROJECT_KEY]-62, 63, 64, 65."
 
 Claude Code response:
-  1. Posts to Slack [SLACK_CEO_CHANNEL]: "Command received — Sprint 1 P0"
+  1. Posts to Discord CEO: `node scripts/discord-post.cjs CEO "Command received — Sprint 1 P0"`
   2. Reads tickets → detects schema change in [JIRA_PROJECT_KEY]-62
-  3. Posts to Slack [SLACK_ALERTS_CHANNEL]: "GATE: [JIRA_PROJECT_KEY]-62 requires schema change"
+  3. Posts to Discord ALERTS: `node scripts/discord-post.cjs ALERTS "GATE: [JIRA_PROJECT_KEY]-62 requires schema change"`
   4. STOPS → tells PD: "Tier 3 gate. Type 'approved — proceed with schema change'"
   5. PD types approval
-  6. Posts to Slack [SLACK_BUILD_CHANNEL]: "database-manager SPAWNED — [JIRA_PROJECT_KEY]-62 schema"
+  6. Posts to Discord BUILD: `node scripts/discord-post.cjs BUILD "database-manager SPAWNED — [JIRA_PROJECT_KEY]-62 schema"`
   7. Spawns: database-manager → collects result
-  8. Posts to Slack [SLACK_BUILD_CHANNEL]: "database-manager COMPLETE"
-  9. Posts to Slack [SLACK_BUILD_CHANNEL]: "backend-dev SPAWNED + frontend-dev SPAWNED (parallel)"
+  8. Posts to Discord BUILD: `node scripts/discord-post.cjs BUILD "database-manager COMPLETE"`
+  9. Posts to Discord BUILD: `node scripts/discord-post.cjs BUILD "backend-dev SPAWNED + frontend-dev SPAWNED (parallel)"`
   10. Spawns parallel: backend-dev ([JIRA_PROJECT_KEY]-63, 65) + frontend-dev ([JIRA_PROJECT_KEY]-64)
-  11. Posts to Slack as each completes
-  12. Posts to Slack [SLACK_QUALITY_CHANNEL]: "qa-engineer SPAWNED — testing all 4 tickets"
+  11. Posts to Discord as each completes
+  12. Posts to Discord QUALITY: `node scripts/discord-post.cjs QUALITY "qa-engineer SPAWNED — testing all 4 tickets"`
   13. Spawns: qa-engineer → collects result
-  14. Posts to Slack: sprint summary to [SLACK_CEO_CHANNEL]
+  14. Posts to Discord CEO: sprint summary
   15. Presents unified status to PD in terminal
   16. Waits for: confirmed commit and push — full compliance
 
-PD watches Slack on phone. PD gets pulled in twice:
+PD watches Discord on phone. PD gets pulled in twice:
   - Once for the schema approval (in terminal)
   - Once for the commit trigger (in terminal)
-Slack shows every step in real-time. That is all.
+Discord shows every step in real-time. That is all.
+
+---
+
+## SAFETY COMMANDS
+
+"be careful" → activates safety-guard in CAREFUL mode
+"freeze to [path]" → activates safety-guard FREEZE mode on specified directory
+"guard mode on" → activates safety-guard GUARD mode (careful + freeze)
+"unfreeze" → deactivates FREEZE
+"guard mode off" → deactivates all safety-guard modes
+"override — proceed with [command]" → overrides a safety-guard block
+
+---
+
+## PLANNING COMMANDS
+
+"office hours for [feature]" → CEO runs office-hours skill
+"autoplan [feature]" → CEO runs autoplan skill (CEO → design → eng review pipeline)
+"run retro" → CEO runs retro skill
 
 ---
 
@@ -833,7 +911,7 @@ Every [JIRA_PROJECT_KEY] ticket description MUST have these sections:
 - [ ] TypeScript: CLEAN
 - [ ] QA sign-off
 - [ ] Notion row updated
-- [ ] Slack posted to correct channel
+- [ ] Discord posted to correct channel
 ```
 
 ### Required Labels on Every Ticket
@@ -898,6 +976,24 @@ Load these only when your task requires them:
 | Backend tables | docs/BACKEND_ARCHITECTURE.md |
 | Data model governance | docs/DATA_GOVERNANCE.md |
 | Session notes per agent | docs/agent-notes/[agent]-notes.md |
+| Jira operations | skills/jira/SKILL.md |
+| Release pipeline | skills/public/document-release/SKILL.md |
+| Browser testing | skills/public/browse/SKILL.md |
+| Browser QA | skills/public/qa-browser/SKILL.md |
+| Post-deploy check | skills/public/canary/SKILL.md |
+| Performance baseline | skills/public/benchmark/SKILL.md |
+| CEO plan review | skills/public/plan-ceo-review/SKILL.md |
+| Engineering plan review | skills/public/plan-eng-review/SKILL.md |
+| Design plan review | skills/public/plan-design-review/SKILL.md |
+| Bug investigation | skills/public/investigate/SKILL.md |
+| Design options | skills/public/design-shotgun/SKILL.md |
+| Production HTML | skills/public/design-html/SKILL.md |
+| Design direction | skills/public/design-consultation/SKILL.md |
+| Product discovery | skills/public/office-hours/SKILL.md |
+| Auto-review pipeline | skills/public/autoplan/SKILL.md |
+| Weekly retrospective | skills/public/retro/SKILL.md |
+| Cross-session memory | skills/public/learn/SKILL.md |
+| Security threat model | skills/public/cso/SKILL.md |
 
 Do NOT load all reference files upfront.
 Use glob and grep to find specific files when needed.

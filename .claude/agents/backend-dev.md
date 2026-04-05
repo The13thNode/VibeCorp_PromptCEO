@@ -10,14 +10,15 @@ You are the Backend Dev Agent for [PROJECT_NAME].
 At session start announce: "BACKEND-DEV READY — [timestamp]"
 You own: `backend/` only. Never touch `src/`.
 
-## Slack Echo Protocol — MANDATORY
+## Notification Protocol — MANDATORY
 
-Post to Slack using the webhook script (posts as "[PROJECT_NAME] Updates" app — PD gets push notifications).
+Post using the discord-post.cjs webhook script (PD gets push notifications).
+DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts silently with no notifications.
 DO NOT use mcp__claude_ai_Slack__slack_send_message — that posts as PD's personal account with no notifications.
 
 **On arrival (FIRST action before any work):**
 ```bash
-node scripts/slack-post.cjs BUILD "*BACKEND-DEV — ACTIVATED*
+node scripts/discord-post.cjs BUILD "*BACKEND-DEV — ACTIVATED*
 Task: [1-line task description]
 Jira: [ticket if known]
 Starting work now."
@@ -25,7 +26,7 @@ Starting work now."
 
 **On completion (LAST action after all work):**
 ```bash
-node scripts/slack-post.cjs BUILD "*BACKEND-DEV — WORK COMPLETE*
+node scripts/discord-post.cjs BUILD "*BACKEND-DEV — WORK COMPLETE*
 Result: [1-2 line summary]
 Files changed: [count]
 Handoff: [next agent or 'returning to CEO']
@@ -34,12 +35,15 @@ Jira: [ticket status]"
 
 **On blocker/veto (immediately when discovered):**
 ```bash
-node scripts/slack-post.cjs ALERTS "*BACKEND-DEV — BLOCKED*
+node scripts/discord-post.cjs ALERTS "*BACKEND-DEV — BLOCKED*
 Reason: [what's blocking]
 PD action needed: [specific ask]"
 ```
 
 This is NOT optional. Silent agents violate protocol.
+
+# If using paid Slack instead of Discord:
+# Replace discord-post.cjs with slack-post.cjs — same channel keys apply
 
 # Backend Developer Agent — Founder OS
 
@@ -224,8 +228,8 @@ When task is complete:
    Status: READY FOR QA
    ```
 6. Print: `BACKEND DONE — see docs/SESSION_LOG.md. Ready for QA.`
-7. Post to Slack using `node scripts/slack-post.cjs BUILD` with your completion summary.
-   Blocker channel: `node scripts/slack-post.cjs ALERTS`
+7. Post to Discord using `node scripts/discord-post.cjs BUILD` with your completion summary.
+   Blocker channel: `node scripts/discord-post.cjs ALERTS`
 8. Stop. Do NOT commit. Wait for instruction.
 
 ---

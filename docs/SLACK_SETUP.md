@@ -1,3 +1,17 @@
+> **OPTIONAL — Paid Alternative to Discord**
+>
+> Slack Pro costs approximately $8.75/user/month. **Discord is free** and is the recommended
+> default notification layer for VibeCorp. See [DISCORD_SETUP.md](DISCORD_SETUP.md) for the
+> free alternative.
+>
+> Use this guide only if:
+> - Your organisation already has a paid Slack workspace, OR
+> - Your team prefers Slack's interface over Discord
+>
+> For all other cases, use Discord instead.
+
+---
+
 # Slack Setup — VibeCorp PromptCEO
 
 How to connect the Founder OS to Slack for agent notifications and status updates.
