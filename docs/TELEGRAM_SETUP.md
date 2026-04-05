@@ -1,20 +1,46 @@
-# Telegram Setup — VibeCorp PromptCEO
+# Telegram Setup — PromptCEO v2.0
 
 How to set up the Telegram bot for remote access to Claude Code from your phone.
 
 Reference implementation: https://github.com/RichardAtCT/claude-code-telegram
 
+> **v2.0 — 26 agents, 58 skills, 7 protocols**
+> Telegram is the **remote control** layer. It lets you send commands to your agents from anywhere. It is NOT the notification layer — that is Discord.
+
 ---
 
-## What This Gives You
+## Discord vs Telegram — When to Use What
+
+This is the most common question when setting up v2.0. Both tools involve your phone. They do completely different things.
+
+| | Discord | Telegram |
+|---|---------|---------|
+| **What it is** | Notification layer | Remote control layer |
+| **Direction** | Agents → You (they push updates to you) | You → Agents (you send commands to them) |
+| **Cost** | Free | Free |
+| **Setup** | Webhook in your project | Bot running on your machine |
+| **Use when** | You want to watch what your agents are doing | You want to trigger agent work while away from your desk |
+| **Example** | "Frontend agent completed — 3 files changed" | "Run the market research sprint" |
+
+**The short version:**
+- Discord tells you what is happening.
+- Telegram lets you make things happen.
+
+Both are optional. Most founders start with Discord (notifications) and add Telegram when they want to kick off work from their phone.
+
+---
+
+## What Telegram Gives You
 
 Once configured, you can:
 - Send commands to your Claude Code agents from anywhere via Telegram
-- Receive notifications when agent tasks complete
-- Monitor session progress remotely
 - Trigger agent workflows while away from your desk
+- Approve Tier 3 gates (schema changes, commits) from your phone
+- Monitor session progress remotely
 
-This is the "in your pocket" layer of the Founder OS. It's the difference between being chained to your laptop and having your agent team working while you're in a meeting.
+This is the "in your pocket" layer of the Founder OS. It is the difference between being chained to your laptop and having your agent team working while you are in a meeting.
+
+Note: Telegram does receive some output back from agents (so you can see results), but it is not the structured notification channel. For organised, channel-by-channel visibility of all 26 agents, use Discord.
 
 ---
 
@@ -27,7 +53,7 @@ This is the "in your pocket" layer of the Founder OS. It's the difference betwee
 5. BotFather will ask for a name — this is the display name. Example: `PromptCEO Bot`
 6. BotFather will ask for a username — this must end in `bot`. Example: `promptceo_yourname_bot`
 7. BotFather will send you a **bot token**. It looks like: `7123456789:AAGabcdefGHIjklmNOPqrstUVWxyz12345`
-8. Copy this token. You'll need it in your `.env` file.
+8. Copy this token. You will need it in your `.env` file.
 
 Keep your bot token private. Anyone with this token can control your bot.
 
@@ -35,7 +61,7 @@ Keep your bot token private. Anyone with this token can control your bot.
 
 ## Step 2: Get Your Telegram Chat ID
 
-Your chat ID is the unique identifier for your personal Telegram account. The bot needs this to know who it's allowed to talk to.
+Your chat ID is the unique identifier for your personal Telegram account. The bot needs this to know who it is allowed to talk to.
 
 **Method 1: Use @userinfobot**
 1. In Telegram, search for `@userinfobot`
@@ -109,7 +135,7 @@ In Telegram, open a chat with your bot and send:
 /start
 ```
 
-The bot should respond with a greeting and confirm it's connected.
+The bot should respond with a greeting and confirm it is connected.
 
 Try a simple command:
 
@@ -117,7 +143,7 @@ Try a simple command:
 /run echo "Hello from PromptCEO"
 ```
 
-If it works, you'll see the terminal output returned in Telegram.
+If it works, you will see the terminal output returned in Telegram.
 
 ---
 
@@ -174,7 +200,7 @@ If your bot token is compromised: go to BotFather, use `/revoke` to invalidate t
 **Bot is not responding:**
 - Verify the bot is running (`pm2 status` or check the terminal)
 - Confirm `TELEGRAM_CHAT_ID` matches your actual Telegram ID
-- Ensure `TELEGRAM_BOT_TOKEN` is correct and hasn't been revoked
+- Ensure `TELEGRAM_BOT_TOKEN` is correct and has not been revoked
 
 **"Unauthorized" error from Telegram API:**
 - The bot token is wrong or has been revoked
@@ -185,7 +211,7 @@ If your bot token is compromised: go to BotFather, use `/revoke` to invalidate t
 - Verify `ANTHROPIC_API_KEY` is set in the bot's environment
 
 **Can't find your chat ID:**
-- Make sure you've sent at least one message to the bot before querying `/getUpdates`
+- Make sure you have sent at least one message to the bot before querying `/getUpdates`
 
 ---
 
@@ -217,6 +243,8 @@ Use in agent hooks:
 After completing any major task, run: node scripts/telegram-notify.js "Task complete: [task name]"
 ```
 
+Note: In v2.0, the primary notification channel is Discord. Use Telegram notifications sparingly — mainly for high-priority approvals that need your immediate attention on mobile.
+
 ---
 
 ## Reference
@@ -224,3 +252,4 @@ After completing any major task, run: node scripts/telegram-notify.js "Task comp
 - Bot implementation: https://github.com/RichardAtCT/claude-code-telegram
 - Telegram Bot API docs: https://core.telegram.org/bots/api
 - BotFather: https://t.me/botfather
+- Discord setup: docs/DISCORD_SETUP.md

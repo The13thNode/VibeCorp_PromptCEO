@@ -82,7 +82,7 @@ Sign up at: https://github.com
 - It runs in your terminal, right where your code lives.
 - It can **read and write files** on your computer.
 - It can **run terminal commands** on your behalf.
-- It can **connect to external tools** (Slack, Jira, Notion, GitHub) via MCP servers.
+- It can **connect to external tools** (Discord, Slack, Jira, Notion, GitHub) via MCP servers.
 - It can **spawn sub-agents** — multiple AI instances running in parallel.
 - It maintains **persistent memory** across sessions via files it writes itself.
 
@@ -119,11 +119,27 @@ A standard AI chat answers your question and stops. An agent:
 4. Monitors results and adjusts
 5. Reports back when done
 
+### The 26-agent team structure
+
+This framework gives you 26 specialized agents organized into four teams — plus floating specialists who help any team:
+
+Think of it like a small company:
+
+- **Alpha Build team** — writes the code (frontend developer, backend developer, database manager)
+- **Bravo Quality team** — tests everything and catches security issues (QA engineer, security auditor)
+- **Charlie Strategy team** — plans what to build and why (product manager, business analyst, validation lead)
+- **Delta Business team** — handles market research, pricing, and investor prep (market analyst, revenue modeler, GTM strategist, investor agent)
+- **Floating specialists** — experts who help any team when needed (CEO thinking partner and others)
+
+Each agent also has access to **58 specialized skills** they can load on demand — like a toolkit that snaps in when needed. For example: a Jira skill for creating tickets, a market research skill for competitor analysis, a validation skill for testing assumptions.
+
+You do not manage these agents individually. One command to the CEO (your orchestrator) and it figures out which agents to use, in what order, and whether to run them in parallel.
+
 **What agents CAN do:**
 - Write, edit, and refactor code
 - Run tests and fix failures
 - Create and update Jira tickets
-- Post messages to Slack
+- Post messages to Discord or Slack
 - Read and write documents in Notion
 - Browse the web for research
 - Manage files and folders
@@ -171,9 +187,12 @@ A standard AI chat answers your question and stops. An agent:
 Think of it this way: Claude, by itself, can only read and write text. An MCP server is a bridge that gives Claude hands.
 
 Each MCP server connects Claude to a specific tool:
+
 - `@modelcontextprotocol/server-slack` → lets Claude post to Slack
 - `@spillwave/mcp-jira` → lets Claude create and update Jira tickets
 - `@modelcontextprotocol/server-notion` → lets Claude read/write Notion pages
+
+This framework uses four MCP servers: **Jira**, **Notion**, **Slack**, and **Telegram**. Discord notifications work via webhooks (a simpler, free method) rather than a full MCP server — which is why Discord is the recommended default for most founders.
 
 When you add an MCP server to your `.mcp.json` file, Claude can now "call" that tool the same way a developer would call a function.
 
@@ -220,15 +239,17 @@ This is why the framework includes token budget management — each agent is con
 A **webhook** is a way for a service to notify you when something happens.
 
 The difference from an API:
+
 - With an API, you go ask: "Did anything happen?" (polling)
 - With a webhook, the service calls you when something happens (push notification)
 
 In this framework:
-- When an agent completes a task, it can trigger a webhook to post a Slack message.
+
+- When an agent completes a task, it triggers a webhook to post a Discord (or Slack) message.
 - When a deployment finishes, a webhook can create a Jira ticket automatically.
 - When a test fails, a webhook can alert the QA agent.
 
-You configure webhooks by giving the sending service a URL to call. In this system, the Slack Incoming Webhook URL is the most commonly used webhook.
+You configure webhooks by giving the sending service a URL to call. In this system, Discord webhook URLs are the most commonly used (free, no account setup beyond creating a server). Slack webhooks work the same way but require a paid plan for full message history.
 
 ---
 
@@ -332,7 +353,7 @@ This creates a copy of the example file named `.env`. Never commit this file to 
 Open the file with any text editor (Notepad, TextEdit, VS Code, etc.) and fill in:
 
 - `ANTHROPIC_API_KEY` — from step 11 above
-- `PROJECT_NAME` — your product's name (e.g., "NestMatch UAE")
+- `PROJECT_NAME` — your product's name (e.g., "MyApp", "TaskFlow")
 - `PROJECT_REPO` — your full GitHub repo URL
 - Leave anything you don't have yet blank — you can add it later
 
@@ -359,8 +380,9 @@ bash scripts/deploy.sh
 ```
 
 Watch the output. It will tell you:
+
 - Which environment variables are missing
-- Whether Slack is connected
+- Whether Discord (or Slack) is connected
 - Whether the agent memory files were created successfully
 
 If something fails, read the error message carefully. Most issues are missing environment variables or a typo in a URL.
@@ -402,11 +424,12 @@ Create a new Jira ticket for the user authentication feature. Assign it to the E
 ```
 
 Watch it work. The agent will:
+
 1. Identify that this is a Jira task
 2. Call the Jira MCP server
 3. Create the ticket
 4. Confirm completion
-5. (If configured) post a Slack notification
+5. (If configured) post a Discord or Slack notification
 
 ---
 
@@ -445,9 +468,20 @@ Before giving a new task, run:
 Read CLAUDE.md and the protocols/ folder to get context on this project.
 ```
 
-### Slack notifications not arriving
+### Notifications not arriving (Discord or Slack)
 
-Test manually:
+Discord is the recommended default — it is free, has unlimited message history, and requires no app approval. Slack is an optional paid alternative.
+
+**Discord:** Test manually:
+
+```bash
+node scripts/discord-post.cjs CEO "Test message"
+```
+
+If this fails, verify that the Discord webhook URLs are filled in inside `scripts/discord-post.cjs`. To create a webhook: open your Discord server → right-click a channel → Edit Channel → Integrations → Webhooks → New Webhook. Copy the URL and paste it into the script. See `docs/DISCORD_SETUP.md` for a full walkthrough.
+
+**Slack (optional):** Test manually:
+
 ```bash
 node scripts/slack-post.cjs "Test message"
 ```
@@ -489,7 +523,7 @@ Anthropic offers several plans:
 | **Claude Max (20x)** | $200/month | Effectively unlimited for most | Power users, constant agent sessions |
 | **API (pay-as-you-go)** | Per token | No monthly limit | Developers who want precise cost control |
 
-For running this framework seriously — multiple agent sessions per day, Slack/Jira/Notion integrations active — expect to be on Max ($100-200/month) or using the API.
+For running this framework seriously — multiple agent sessions per day, Discord/Jira/Notion integrations active, with Slack as an optional add-on — expect to be on Max ($100–200/month) or using the API.
 
 ### API costs (if using pay-as-you-go)
 
@@ -505,18 +539,22 @@ A typical founder session (2-3 hours of active agent work) might use 500K-2M tok
 
 ### Other tool costs
 
-- **Slack**: Free tier is sufficient to start
+- **Discord**: Free — recommended default for notifications (unlimited message history, free webhooks, no app approval needed). See `docs/DISCORD_SETUP.md`.
+- **Slack**: Free tier for basic use (paid tiers required for message history beyond 90 days). Optional alternative to Discord.
+- **Obsidian**: Free — optional local knowledge base. Claude reads your Obsidian vault files directly as context. See `docs/OBSIDIAN_SETUP.md`.
 - **Jira**: Free for up to 10 users
 - **Notion**: Free tier is sufficient
 - **GitHub**: Free for public repos; $4/month for private
 
-**Realistic monthly cost for a solo founder:** $100-250/month all-in, depending on usage intensity.
+**Realistic monthly cost for a solo founder:** $100–250/month all-in, depending on usage intensity.
 
 ---
 
 ## 18. What can one person actually build with this?
 
-This system was battle-tested on **NestMatch UAE**, a real estate matching platform, built by a solo founder.
+This system was battle-tested on a real production product, built by a solo founder.
+
+The 26 agents across four teams (Alpha Build, Bravo Quality, Charlie Strategy, Delta Business) plus floating specialists give you the functional equivalent of a small company — without the payroll. One command to the CEO orchestrator and the right team springs into action.
 
 In practice, one person running this framework can:
 

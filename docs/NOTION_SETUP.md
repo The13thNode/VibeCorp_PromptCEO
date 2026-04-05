@@ -1,23 +1,112 @@
-# Notion Setup — VibeCorp PromptCEO
+# Notion Setup — PromptCEO v2.0
 
-How to set up Notion as the command center and memory layer for your Founder OS.
+How to set up Notion as the structured data layer and command center for your Founder OS.
+
+> **v2.0 — 26 agents, 58 skills, 7 protocols**
+> Notion is the long-term memory of the system. It is NOT the real-time notification layer — that is Discord. Notion stores structured records: agent activity, ideas, market research, and deprecated decisions.
 
 ---
 
-## What This Gives You
+## What Notion Does in This System
 
-Notion serves as the persistent brain of your agent system. While agents work within sessions, Notion stores the outputs, decisions, and history that outlive any individual session.
+Think of PromptCEO as a small company with three communication layers:
 
-With Notion configured, agents can:
-- Log every session to a permanent record
-- Maintain a live agent registry
-- Track sprint progress across sessions
-- Log decisions with context and rationale
-- Maintain a risk register
-- Build a searchable document library
-- Manage stakeholder information
-- Track metrics over time
-- Queue handoffs between sessions
+| Layer | Tool | Purpose |
+|-------|------|---------|
+| Real-time alerts | Discord | Push notifications when agents complete tasks |
+| Remote control | Telegram | Send commands to your agents from your phone |
+| Structured records | Notion | Permanent logs, databases, backlogs, agent history |
+
+**Notion is the "command center" — not the chat.** Agents write to it after every session. You read it when you want to review history, track progress, or look up what was decided and why.
+
+Without Notion, your agent work disappears at the end of each Claude Code session. With Notion, every task, decision, and idea is recorded permanently and searchable.
+
+---
+
+## The 4 Core Databases (Required)
+
+These four databases are the minimum setup. They map directly to what the 26 agents write during normal operation.
+
+### 1. Agent Activity Log
+A row is added every time an agent completes a task.
+
+| Column | Type | What it stores |
+|--------|------|---------------|
+| Agent Name | Title | e.g., "frontend-dev", "market-analyst" |
+| Task Summary | Text | One sentence: what was done |
+| Timestamp | Date | When the task completed |
+| Status | Select | In Progress / Complete / Blocked |
+| Files Changed | Text | List of files the agent modified |
+| Jira Link | URL | Link to the ticket this maps to |
+| Git Commit | URL | Link to the GitHub commit |
+| Date Created | Date | When the work started |
+| Priority | Select | P0 Critical / P1 High / P2 Medium / P3 Low / Icebox |
+
+### 2. Ideas & Backlog
+Every idea that comes up during a session — whether acted on or not — goes here.
+
+| Column | Type | What it stores |
+|--------|------|---------------|
+| Idea | Title | Short description of the idea |
+| Date Created | Date | When it was raised |
+| Priority | Select | P0 Critical / P1 High / P2 Medium / P3 Low / Icebox |
+| Description | Text | More detail — what is it, why does it matter |
+| Status | Select | Captured / Specced / In Dev / Shipped / Parked |
+| Release Date | Date | When it shipped or is planned to ship |
+
+### 3. Market & Business Intel
+Assumptions, market facts, and research findings that agents uncover or founders share.
+
+| Column | Type | What it stores |
+|--------|------|---------------|
+| Finding | Title | Short headline |
+| Date Created | Date | When it was recorded |
+| Priority | Select | P0 Critical / P1 High / P2 Medium / P3 Low / Icebox |
+| Description | Text | What the finding is and why it matters |
+| Source | Text | Where the information came from |
+| Status | Select | Assumption / Validated / Invalidated / Parked |
+
+### 4. Removed & Deprecated
+Features and decisions that were removed, deferred, or changed. This prevents relitigating old decisions.
+
+| Column | Type | What it stores |
+|--------|------|---------------|
+| Item | Title | What was removed |
+| Date Created | Date | When it was first proposed |
+| Release Date | Date | When it was removed or deferred |
+| Reason | Text | Why it was removed |
+| Priority | Select | P0 Critical / P1 High / P2 Medium / P3 Low / Icebox |
+| Status | Select | Removed / Deferred / Superseded |
+
+---
+
+## Additional Databases (Optional)
+
+The following databases were part of the original setup and remain useful as your project grows:
+
+- **Session Log** — full record of every agent session
+- **Sprint Board** — tasks and sprint status (synced with Jira if you use it)
+- **Decision Log** — key strategic decisions with context and rationale
+- **Risk Register** — known risks, severity, and mitigation plans
+- **Stakeholder Map** — investors, advisors, partners, customers
+- **Metric Dashboard** — business metrics over time
+- **Document Index** — searchable index of all important documents
+- **Handoff Queue** — tasks that need to be picked up in the next session
+
+---
+
+## The 4 Notion Sub-Skills
+
+PromptCEO v2.0 includes four specialist Notion skills that agents can load when needed. These live at `skills/public/notion/`:
+
+| Skill | What it does |
+|-------|-------------|
+| `knowledge-capture` | Captures session outputs, decisions, and findings into the right databases |
+| `meeting-intelligence` | Turns meeting notes into structured Notion records |
+| `research-documentation` | Formats market research and business intel for the Market & Business Intel database |
+| `spec-to-implementation` | Takes a PRD or spec and creates linked Notion records and Jira tickets |
+
+Agents load these skills just-in-time — only when the task requires them. You do not need to configure anything for these skills to work.
 
 ---
 
@@ -88,209 +177,21 @@ Add the page ID to your `.env`:
 NOTION_DATABASE_ID=your-page-id-here
 ```
 
-Find the page ID in the URL: `https://notion.so/Your-Page-Name-[PAGE_ID]` — it's the last part of the URL.
+Find the page ID in the URL: `https://notion.so/Your-Page-Name-[PAGE_ID]` — it is the last part of the URL.
 
 ---
 
-## Step 4: Create the 9 Recommended Databases
+## Step 4: Create the Databases
 
-Create each of these as a database inside your Command Center page. Click **"+"** → **"Database — Full page"**.
+Create each database inside your Command Center page. Click **"+"** → **"Database — Full page"**.
 
----
-
-### Database 1: Agent Registry
-
-Tracks all agents, their capabilities, and current status.
-
-**Properties:**
-
-| Property | Type | Notes |
-|---|---|---|
-| Name | Title | Agent name (e.g., "Engineering Agent") |
-| Team | Select | Strategy / Build / Quality / Business |
-| Status | Select | Active / Inactive / Deprecated |
-| Model | Select | Opus / Sonnet / Haiku |
-| Capabilities | Multi-select | Code / Tickets / Content / etc. |
-| Last Active | Date | Updated by agent on each use |
-| Notes | Text | Any special instructions |
-
-**Pre-populate with:** CEO Agent and all 12 specialist agents.
-
----
-
-### Database 2: Session Log
-
-A permanent record of every agent session.
-
-**Properties:**
-
-| Property | Type | Notes |
-|---|---|---|
-| Session ID | Title | Auto-generated (date + session number) |
-| Date | Date | Session date |
-| Duration | Number | Minutes |
-| Goals | Text | What the session aimed to accomplish |
-| Completed | Text | What was actually done |
-| Agents Used | Multi-select | Which agents participated |
-| Tokens Used | Number | Approximate token count |
-| Blockers | Text | Anything that blocked progress |
-| Decisions Made | Text | Key decisions recorded |
-| Next Steps | Text | What to pick up next session |
-
-**Updated by:** CEO Agent at end of every session (end ritual).
-
----
-
-### Database 3: Sprint Board
-
-Tracks the current sprint and upcoming work.
-
-**Properties:**
-
-| Property | Type | Notes |
-|---|---|---|
-| Task | Title | Task description |
-| Status | Select | Backlog / This Sprint / In Progress / Done |
-| Priority | Select | P0 (urgent) / P1 / P2 / P3 |
-| Assigned Agent | Select | Which agent handles this |
-| Jira Ticket | URL | Link to corresponding Jira ticket |
-| Sprint | Number | Sprint number |
-| Due Date | Date | |
-| Notes | Text | Context, blockers, links |
-
-**Synced with Jira** (if both are configured — agents maintain both).
-
----
-
-### Database 4: Decision Log
-
-A permanent record of significant decisions and their rationale.
-
-**Properties:**
-
-| Property | Type | Notes |
-|---|---|---|
-| Decision | Title | Short description of the decision |
-| Date | Date | When it was made |
-| Context | Text | Why this decision was needed |
-| Options Considered | Text | Alternatives that were evaluated |
-| Choice Made | Text | What was decided |
-| Rationale | Text | Why this option was chosen |
-| Decision Maker | Select | Founder / CEO Agent / Team Lead |
-| Impact | Select | Low / Medium / High / Critical |
-| Review Date | Date | When to revisit this decision |
-
-**Use this to:** avoid relitigating decisions and onboard new team members.
-
----
-
-### Database 5: Risk Register
-
-Tracks known risks, their severity, and mitigation plans.
-
-**Properties:**
-
-| Property | Type | Notes |
-|---|---|---|
-| Risk | Title | Brief risk description |
-| Category | Select | Technical / Market / Financial / Legal / Operational |
-| Likelihood | Select | Low / Medium / High |
-| Impact | Select | Low / Medium / High / Critical |
-| Status | Select | Open / Mitigating / Resolved / Accepted |
-| Owner | Select | Which agent monitors this |
-| Mitigation | Text | Steps taken or planned |
-| Last Reviewed | Date | |
-
-**Updated by:** CEO Agent during weekly reviews.
-
----
-
-### Database 6: Stakeholder Map
-
-Tracks key people — investors, advisors, partners, customers.
-
-**Properties:**
-
-| Property | Type | Notes |
-|---|---|---|
-| Name | Title | Full name |
-| Role | Select | Investor / Advisor / Partner / Customer / Team |
-| Company | Text | |
-| Email | Email | |
-| Relationship Status | Select | Active / Dormant / Target |
-| Last Contact | Date | |
-| Next Action | Text | What to do next |
-| Notes | Text | Context, preferences, history |
-
-**Note:** Do not store sensitive personal data here without appropriate privacy measures.
-
----
-
-### Database 7: Metric Dashboard
-
-Tracks your key business metrics over time.
-
-**Properties:**
-
-| Property | Type | Notes |
-|---|---|---|
-| Metric | Title | e.g., "Weekly Active Users" |
-| Value | Number | Current value |
-| Date | Date | When recorded |
-| Category | Select | Growth / Revenue / Engagement / Technical |
-| Target | Number | Goal value |
-| Status | Formula | Compare Value to Target |
-| Notes | Text | Context, anomalies |
-
-**Updated by:** Data Agent or Finance Agent on a regular schedule.
-
----
-
-### Database 8: Document Index
-
-A searchable index of all important documents.
-
-**Properties:**
-
-| Property | Type | Notes |
-|---|---|---|
-| Document | Title | Document name |
-| Type | Select | PRD / Spec / Contract / Research / Pitch / Other |
-| Location | URL | Link to the document |
-| Status | Select | Draft / Review / Final / Archived |
-| Owner | Select | Which agent owns this |
-| Created | Date | |
-| Last Updated | Date | |
-| Summary | Text | One-paragraph description |
-| Tags | Multi-select | For searchability |
-
----
-
-### Database 9: Handoff Queue
-
-Tasks that need to be picked up in the next session.
-
-**Properties:**
-
-| Property | Type | Notes |
-|---|---|---|
-| Task | Title | What needs to be done |
-| Priority | Select | Urgent / High / Normal / Low |
-| From Agent | Select | Who created this handoff |
-| To Agent | Select | Who should pick it up |
-| Context | Text | Everything the next agent needs to know |
-| Created | Date | |
-| Due | Date | |
-| Status | Select | Pending / In Progress / Done |
-| Linked Jira | URL | |
-
-**This is the bridge between sessions.** The end ritual writes to this queue; the start ritual reads from it.
+Start with the 4 core databases listed above. Add the optional databases as you need them.
 
 ---
 
 ## Step 5: Get Database IDs
 
-Each database has a unique ID in its URL. Agents need these to read and write to specific databases.
+Each database has a unique ID in its URL. Agents need these to write to specific databases.
 
 For each database:
 1. Open the database in Notion
@@ -299,15 +200,10 @@ For each database:
 
 Add to `.env`:
 ```
-NOTION_AGENT_REGISTRY_ID=...
-NOTION_SESSION_LOG_ID=...
-NOTION_SPRINT_BOARD_ID=...
-NOTION_DECISION_LOG_ID=...
-NOTION_RISK_REGISTER_ID=...
-NOTION_STAKEHOLDER_MAP_ID=...
-NOTION_METRIC_DASHBOARD_ID=...
-NOTION_DOCUMENT_INDEX_ID=...
-NOTION_HANDOFF_QUEUE_ID=...
+NOTION_AGENT_ACTIVITY_LOG_ID=...
+NOTION_IDEAS_BACKLOG_ID=...
+NOTION_MARKET_INTEL_ID=...
+NOTION_REMOVED_DEPRECATED_ID=...
 ```
 
 ---
@@ -318,11 +214,10 @@ Add to `CLAUDE.md`:
 
 ```
 NOTION INTEGRATION:
-- After every session, log to Session Log database (ID: [SESSION_LOG_ID])
-- Write all significant decisions to Decision Log
-- Update Sprint Board when task status changes
-- Check Handoff Queue at session start for pending items
-- Add new items to Handoff Queue at session end
+- After every session, log to Agent Activity Log (ID: [AGENT_ACTIVITY_LOG_ID])
+- Write all new ideas to Ideas & Backlog
+- Write all market assumptions to Market & Business Intel
+- Write all removed/deferred items to Removed & Deprecated
 - When in doubt, log it — Notion is the long-term memory
 ```
 
@@ -333,21 +228,37 @@ NOTION INTEGRATION:
 In a Claude Code session:
 
 ```
-Add an entry to the Notion Session Log database.
-Title: "Test Session"
-Date: today
-Goals: "Testing Notion integration"
+Add an entry to the Notion Agent Activity Log database.
+Agent Name: "test"
+Task Summary: "Testing Notion integration"
 Status: Complete
+Date Created: today
 ```
 
 Check your Notion database — the entry should appear.
 
 ---
 
+## Notion vs Discord: Which Does What
+
+A common point of confusion when setting up v2.0:
+
+| Question | Answer |
+|----------|--------|
+| Where do I get push notifications when an agent finishes? | Discord |
+| Where do I look up what an agent did last week? | Notion |
+| Where are my ideas stored? | Notion (Ideas & Backlog) |
+| Where does the real-time build log go? | Discord (#build channel) |
+| Where do I find the full history of strategic decisions? | Notion (Decision Log or Removed & Deprecated) |
+
+**Discord is for now. Notion is forever.**
+
+---
+
 ## Troubleshooting
 
 **"object_not_found" error:**
-- The integration hasn't been shared with that specific database
+- The integration has not been shared with that specific database
 - Open the database, click Share, invite the integration
 
 **"unauthorized" error:**
@@ -360,7 +271,7 @@ Check your Notion database — the entry should appear.
 
 **Properties not matching:**
 - Notion is case-sensitive and type-sensitive for properties
-- Ensure the property names in agent instructions match exactly what's in the database
+- Ensure property names in agent instructions match exactly what is in the database
 
 ---
 
@@ -369,3 +280,4 @@ Check your Notion database — the entry should appear.
 - Notion API documentation: https://developers.notion.com
 - Notion Integration management: https://www.notion.so/my-integrations
 - MCP Notion server: https://github.com/modelcontextprotocol/servers
+- Notion sub-skills: `skills/public/notion/` (4 skills: knowledge-capture, meeting-intelligence, research-documentation, spec-to-implementation)

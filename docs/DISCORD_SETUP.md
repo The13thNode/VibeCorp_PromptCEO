@@ -34,7 +34,7 @@ Discord is the command center for monitoring your agent team — for free.
 ## Step 2: Create the 12 Channels
 
 In your new server, create these 12 text channels. Naming convention: `#[project]-[purpose]`
-(Replace `[project]` with a short slug of your project name, e.g. `nestmatch`, `acme`, `myapp`)
+(Replace `[project]` with a short slug of your project name, e.g. `taskflow`, `acme`, `myapp`)
 
 | Channel Key | Channel Name | Who Posts | Purpose |
 |-------------|-------------|-----------|---------|
@@ -163,7 +163,7 @@ node scripts/discord-post.cjs CEO "SESSION CLOSED — [summary]. Next: [pending 
 
 | Pattern | Example | Use when |
 |---------|---------|----------|
-| `#[project]-ceo` | `#nestmatch-ceo` | Single product |
+| `#[project]-ceo` | `#taskflow-ceo` | Single product |
 | `#[slug]-ceo` | `#nm-ceo` | Short slug preferred |
 
 Pick one convention and use it consistently across all 12 channels.

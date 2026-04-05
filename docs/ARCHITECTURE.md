@@ -6,7 +6,7 @@ How the Founder OS agent system is designed, how agents communicate, and how ses
 
 ## Overview
 
-PromptCEO is a hierarchical multi-agent system built on Claude Code. One CEO agent orchestrates four specialist teams. All agents share a common context (via `CLAUDE.md`) and communicate through structured protocols and shared state files.
+PromptCEO is a hierarchical multi-agent system built on Claude Code. One CEO agent orchestrates four specialist teams across 26 agents and 58 reusable skills. All agents share a common context (via `CLAUDE.md`) and communicate through structured protocols and shared state files.
 
 The system is designed for a solo founder or small team that wants to operate at the output velocity of a much larger organization.
 
@@ -31,18 +31,21 @@ The system is designed for a solo founder or small team that wants to operate at
                        │         │          │
            ┌───────────┘    ┌────┘     ┌────┘
            ▼                ▼          ▼
-  ┌────────────────┐ ┌────────────┐ ┌─────────────────────────────┐
-  │  STRATEGY TEAM │ │ BUILD TEAM │ │     QUALITY & OPS TEAMS      │
-  │                │ │            │ │                              │
-  │ - Product Agent│ │ - Eng Agent│ │ QA TEAM:                     │
-  │ - Market Agent │ │ - Data Agent│ │ - QA Agent                  │
-  │ - Content Agent│ │ - DevOps   │ │ - Security Agent             │
-  └────────────────┘ └────────────┘ │                              │
-                                    │ BUSINESS TEAM:               │
-                                    │ - Finance Agent              │
-                                    │ - Legal Agent                │
-                                    │ - Comms Agent                │
-                                    └──────────────────────────────┘
+    ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐
+    │  ALPHA    │  │  BRAVO    │  │  CHARLIE  │  │  DELTA    │
+    │  Build    │  │  Quality  │  │  Strategy │  │  Business │
+    │  (4)      │  │  (5)      │  │  (4)      │  │  (5)      │
+    ├───────────┤  ├───────────┤  ├───────────┤  ├───────────┤
+    │frontend   │  │qa-engineer│  │product-mgr│  │market     │
+    │backend    │  │demo-tester│  │biz-analyst│  │revenue    │
+    │db-manager │  │ux-research│  │validation │  │gtm        │
+    │ui-designer│  │dev-advoc  │  │workflow   │  │investor   │
+    │           │  │release-eng│  │           │  │visual-stry│
+    └───────────┘  └───────────┘  └───────────┘  └───────────┘
+
+    + 8 FLOATING: ceo-thinking-partner (Opus), security-auditor,
+      build-quality-auditor, code-reviewer, safety-guard,
+      developer-provocateur, provocateur, social-host
 
                     ┌─────────────────────────────────┐
                     │         SHARED LAYER             │
@@ -57,7 +60,8 @@ The system is designed for a solo founder or small team that wants to operate at
                     ┌─────────────────────────────────┐
                     │       EXTERNAL INTEGRATIONS      │
                     │                                  │
-                    │  Slack ← notifications           │
+                    │  Discord ← notifications (primary)│
+                    │  Slack ← notifications (optional)│
                     │  Jira ← ticket management        │
                     │  Notion ← documentation          │
                     │  GitHub ← code & PRs             │
@@ -81,42 +85,68 @@ The top-level orchestrator. The CEO agent:
 
 The CEO agent does not write code, manage tickets, or produce content directly. Its role is coordination and judgment.
 
-### The Four Teams
+### The Four Teams (v2.0 — 26 Agents)
 
-#### Strategy Team
-Responsible for direction, market intelligence, and communication.
+#### Alpha — Build Team (4 agents)
 
-| Agent | Responsibilities |
-|---|---|
-| Product Agent | Feature prioritization, roadmap, user story writing, PRD drafts |
-| Market Agent | Competitor analysis, market sizing, user research synthesis |
-| Content Agent | Blog posts, social copy, SEO briefs, email drafts |
-
-#### Build Team
-Responsible for shipping working software.
+Responsible for shipping working software. These agents write code, manage databases, and handle design.
 
 | Agent | Responsibilities |
 |---|---|
-| Engineering Agent | Feature development, bug fixes, code review, refactoring |
-| Data Agent | Schema design, migrations, queries, analytics pipeline |
-| DevOps Agent | CI/CD pipelines, infrastructure, deployment scripts, monitoring |
+| frontend-dev | UI components, pages, visual implementation |
+| backend-dev | APIs, server logic, integrations |
+| database-manager | Schema design, migrations, queries (**VETO holder** — can block schema changes) |
+| ui-designer | Visual design, component specs, design system, 3-option proposals |
 
-#### Quality Team
-Responsible for correctness and safety.
+#### Bravo — Quality Team (5 agents)
 
-| Agent | Responsibilities |
-|---|---|
-| QA Agent | Test writing, test execution, bug reproduction, regression checks |
-| Security Agent | Vulnerability scanning, secret detection, auth flow review |
-
-#### Business Team
-Responsible for operations, finance, and stakeholder management.
+Responsible for correctness, testing, and release readiness. Led by qa-engineer.
 
 | Agent | Responsibilities |
 |---|---|
-| Finance Agent | Burn rate tracking, revenue modeling, expense categorization |
-| Legal Agent | Contract review flagging, compliance checklists (not legal advice) |
-| Comms Agent | Investor updates, press releases, stakeholder communications |
+| qa-engineer | **Team Lead** — test writing, execution, bug reproduction, sign-off |
+| demo-tester | Investor demo readiness, DEMO-BLOCKER findings |
+| ux-researcher | User journey testing, Journey Test Records |
+| developer-advocate | First-time user DX audit, GOOD/NEEDS WORK/BROKEN grading |
+| release-engineer | Release pipeline, deployment (Tier 3 — founder trigger only) |
+
+#### Charlie — Strategy Team (4 agents)
+
+Responsible for direction, planning, and validation. Led by product-manager.
+
+| Agent | Responsibilities |
+|---|---|
+| product-manager | **Team Lead** — PRDs, roadmap, feature prioritization |
+| business-analyst | Requirements, user stories, acceptance criteria |
+| validation-lead | Evidence gathering, traceability matrix (**VETO holder** — can block unvalidated features) |
+| workflow-architect | State machines, flow design, pre-engineering review |
+
+#### Delta — Business Team (5 agents)
+
+Responsible for market intelligence, revenue, and investor communications.
+
+| Agent | Responsibilities |
+|---|---|
+| market-analyst | Competitor analysis, market sizing, TAM/SAM/SOM |
+| revenue-modeler | Pricing, projections, unit economics |
+| gtm-strategist | Go-to-market, channels, ICP, which marketplace side first |
+| investor-agent | Pitch deck, fundraising narrative, investor Q&A |
+| visual-storyteller | Demo narration, pitch content, data storytelling |
+
+#### Floating Specialists (8 agents)
+
+Not assigned to any team — they attach to whichever team needs them.
+
+| Agent | Model | Responsibilities |
+|---|---|---|
+| ceo-thinking-partner | **Opus** | Strategic advisor, 7 thinking modes, ARB chair |
+| security-auditor | Sonnet | Vulnerability scanning, auth/KYC audit (**VETO holder**) |
+| build-quality-auditor | Sonnet | Post-sprint code audit, SEV-1-5 findings (**VETO holder**) |
+| developer-provocateur | Sonnet | In-sprint READ-ONLY code challenger (no VETO) |
+| code-reviewer | Sonnet | 4-stage review pipeline, auto-fix suggestions |
+| safety-guard | Sonnet | Destructive command guard, CAREFUL/FREEZE/GUARD modes (**VETO holder**) |
+| social-host | Sonnet | Optional social sessions (founder approval required) |
+| provocateur | Sonnet | Post-sprint external audit, rotating lens framework |
 
 ---
 
@@ -160,7 +190,7 @@ Agents communicate through **structured state files** — not live message passi
 2. Specialist agent reads the queue, picks up the task
 3. Specialist writes progress notes to `SESSION_STATE.md`
 4. On completion, specialist writes result to `HANDOFF_QUEUE.md` (completed section)
-5. CEO reads completion, updates `DECISION_LOG.md` if needed, posts to Slack
+5. CEO reads completion, updates `DECISION_LOG.md` if needed, posts to Discord
 
 ---
 
@@ -180,9 +210,9 @@ Use for: daily briefings, test runs, ticket triage, metric reports.
 
 ### Tier 3: Fully Automated (Fire-and-forget)
 
-Agents run on a schedule with no human in the loop for routine operations. Output is posted directly to Slack/Notion.
+Agents run on a schedule with no human in the loop for routine operations. Output is posted directly to Discord/Notion.
 
-Use for: status reports, heartbeat checks, low-stakes notifications.
+Use for: status reports, heartbeat checks, low-stakes Discord notifications.
 
 **Warning:** Keep Tier 3 narrow. Agents operating without human oversight can make mistakes that compound. Default to Tier 1 for anything that matters.
 
@@ -199,7 +229,7 @@ Defined in `protocols/START_RITUAL.md`. Every session begins with this ritual:
 2. CEO reads SESSION_STATE.md (current sprint/goals)
 3. CEO reads DAILY_BRIEFING.md (yesterday's summary)
 4. CEO reads HANDOFF_QUEUE.md (outstanding tasks)
-5. CEO posts session-start notification to Slack
+5. CEO posts session-start notification to Discord
 6. CEO presents founder with:
    - Current sprint status
    - Top 3 recommended priorities for today
@@ -225,7 +255,7 @@ Defined in `protocols/END_RITUAL.md`:
 1. CEO reads all completed tasks from SESSION_STATE.md
 2. CEO writes session summary to DAILY_BRIEFING.md
 3. CEO updates DECISION_LOG.md with any significant decisions
-4. CEO posts end-of-session summary to Slack
+4. CEO posts end-of-session summary to Discord
 5. CEO flags any incomplete tasks in HANDOFF_QUEUE.md for next session
 6. CEO resets SESSION_STATE.md for tomorrow
 ```
@@ -239,10 +269,11 @@ Defined in `protocols/END_RITUAL.md`:
 One agent completes work, writes to `HANDOFF_QUEUE.md`, next agent picks it up.
 
 ```
-Engineering Agent writes code
-  → QA Agent reads code, writes tests
-  → Security Agent reviews tests
-  → DevOps Agent deploys
+database-manager approves schema
+  → backend-dev writes API code
+  → frontend-dev builds UI
+  → qa-engineer tests everything
+  → release-engineer deploys
 ```
 
 ### Parallel Execution (with Agent Teams)
@@ -251,8 +282,8 @@ When `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` is set, multiple agents can run si
 
 ```
 CEO assigns two parallel tasks:
-  → Engineering Agent (feature A)      ┐ run simultaneously
-  → Content Agent (launch copy for A)  ┘
+  → frontend-dev (feature UI)               ┐ run simultaneously
+  → market-analyst (competitive research)    ┘
   → Both report to CEO on completion
 ```
 
@@ -261,11 +292,11 @@ CEO assigns two parallel tasks:
 Agent produces output → different agent reviews → feedback → original agent revises.
 
 ```
-Engineering Agent writes PR
-  → QA Agent reviews for test coverage gaps
-  → Engineering Agent addresses gaps
-  → QA Agent approves
-  → DevOps Agent merges and deploys
+backend-dev writes API endpoint
+  → code-reviewer reviews for quality
+  → security-auditor checks for vulnerabilities
+  → qa-engineer validates with tests
+  → release-engineer deploys
 ```
 
 ---

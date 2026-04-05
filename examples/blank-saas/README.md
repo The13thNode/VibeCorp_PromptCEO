@@ -14,7 +14,7 @@ Use the blank SaaS template when you are building:
 - A web app with a dashboard, user accounts, and billing
 - An internal tool, admin panel, or API-first product
 
-If you're building a **marketplace** (two-sided, with supply and demand), use the NestMatch example as a reference instead — it includes the two-sided validation flow and marketplace-specific agent rules.
+If you're building a **marketplace** (two-sided, with supply and demand), use the [Marketplace example](../marketplace/) as a reference instead — it includes the two-sided validation flow and marketplace-specific agent rules.
 
 ---
 

@@ -1,113 +1,179 @@
-# Choose Your Stack
+# Choose Your Stack — PromptCEO v2.0
 
-PromptCEO works with many tools. None are mandatory — start with what you have and add as needed.
+PromptCEO v2.0 ships with 26 agents, 58 skills, and 7 protocols. None of the external tools are mandatory — start with what you have and add as you need.
 
 > Pricing changes frequently. Check each tool's website for current plans. Links provided below.
 
 ---
 
-## 1. Communication (Agent Notifications)
+## How the Tools Fit Together
 
-| Tool | Free Tier | Open Source | Works with Agents | Pros | Cons |
-|------|-----------|-------------|-------------------|------|------|
-| [Discord](https://discord.com) | Yes | No | Via webhook | Unlimited history, free webhooks and bots, community features | Less "professional" perception, no native Claude MCP |
-| [Slack](https://slack.com) | Yes (limited) | No | Yes (native MCP) | Native Claude MCP integration, professional, threaded conversations | Free tier expires message history, expensive at scale |
-| [Telegram](https://telegram.org) | Yes | Partially | Yes (bot) | Two-way communication, mobile-first, voice messages | Groups only (no channels), less structured |
-| [Microsoft Teams](https://www.microsoft.com/teams) | Yes (with M365) | No | Via webhook | Enterprise-ready, familiar to corporates | Heavy, slow, webhook setup is clunky |
-| None (terminal only) | Yes | N/A | N/A | Zero setup — everything stays in your Claude Code session | No push notifications, no mobile access, no audit trail |
+Before picking tools, understand the four jobs that need to be done:
 
-**Recommendation:** Discord for solo founders (free, unlimited). Slack if you need native MCP or work with a team.
+| Job | What it means | Primary tool (v2.0 default) |
+|-----|--------------|----------------------------|
+| **Notifications** | Agents push updates to you in real time | Discord (free) |
+| **Remote control** | You send commands to agents from your phone | Telegram (free) |
+| **Structured records** | Permanent logs, databases, backlog, history | Notion |
+| **Personal thinking** | Rough notes, daily logs, private strategy | Obsidian (free, local) |
 
----
-
-## 2. Knowledge Base (Notes, Docs, Second Brain)
-
-| Tool | Free Tier | Open Source | Works with Agents | Pros | Cons |
-|------|-----------|-------------|-------------------|------|------|
-| [Obsidian](https://obsidian.md) | Yes | No (free to use) | Yes (local files) | Local-first, your data stays on your machine, Claude Code reads/writes directly at zero API cost, works offline, plain markdown | No built-in databases, needs plugins for advanced views |
-| [Notion](https://www.notion.so) | Yes (limited) | No | Yes (native MCP) | Databases, Gantt charts, team collaboration, native Claude MCP | Cloud-only, vendor lock-in, MCP calls cost tokens |
-| [Logseq](https://logseq.com) | Yes | Yes | Yes (local files) | Open source, good for journals, graph view | Smaller ecosystem, fewer integrations |
-| Plain markdown in repo | Yes | Yes | Yes (local files) | Already in your project, git-tracked, no extra tool | No search UI, no graph view, no visual interface |
-
-**Recommendation:** Obsidian for private thinking (free, local, Claude reads directly). Notion if you need team dashboards or databases.
+No tool does all four jobs. Pick the right tool for each job.
 
 ---
 
-## 3. Task Management (Tickets, Sprints, Tracking)
+## 1. Notifications (Agent Alerts — Real Time)
 
-| Tool | Free Tier | Open Source | Works with Agents | Pros | Cons |
-|------|-----------|-------------|-------------------|------|------|
-| [Jira](https://www.atlassian.com/software/jira) | Yes (10 users) | No | Yes (native MCP) | Full sprint management, agile boards, roadmaps | Complex, heavy for solo founders, steep learning curve |
-| [GitHub Issues + Projects](https://github.com/features/issues) | Yes | No | Yes (via CLI) | Already where your code lives, simple, integrated | Limited sprint features, no native story points |
-| [Linear](https://linear.app) | Yes (limited) | No | No native MCP | Beautiful UI, fast, developer-friendly | No Claude MCP yet, paid tier scales quickly |
-| [Trello](https://trello.com) | Yes (limited) | No | No native MCP | Visual boards, simple drag-and-drop | Limited for software projects, no sprint support |
-| Obsidian Tasks plugin | Yes | Yes (plugin) | Yes (local files) | Everything local, markdown-based, free | No board view, no team features, manual tracking |
-| Plain `TODO.md` in repo | Yes | Yes | Yes (local files) | Zero setup, git-tracked | No visualisation, no assignment, no automation |
+This is how your agents tell you what they are doing. In v2.0, Discord is the primary notification layer. It is free, has unlimited message history, and works with webhooks out of the box.
 
-**Recommendation:** GitHub Issues for solo (free, already there). Jira for teams that need sprints and MCP integration.
+| Tool | Cost | Required? | Setup difficulty | MCP integration | Setup guide |
+|------|------|-----------|-----------------|-----------------|-------------|
+| **Discord** | Free | Recommended | Easy (webhook) | Via webhook | docs/DISCORD_SETUP.md |
+| Slack | Free tier (limited history) / Paid | Optional | Medium (MCP setup) | Native Claude MCP | docs/SLACK_SETUP.md |
+| Microsoft Teams | Free with M365 / Paid | No | Hard | Via webhook | — |
+| None (terminal only) | Free | — | None | — | — |
+
+**Recommendation:** Discord for all founders. It is free, unlimited, and works immediately with a webhook URL. Upgrade to Slack only if your team already uses it or you need the native Claude MCP integration.
+
+**Discord channels in v2.0:**
+
+| Channel | Who posts there | Purpose |
+|---------|----------------|---------|
+| #ceo | CEO agent only | Orchestration, commits, deploys, sprint summaries |
+| #build | frontend-dev, backend-dev, database-manager | Build updates, file changes |
+| #quality | qa-engineer, security-auditor | Test results, audit findings |
+| #strategy | product-manager, business-analyst, validation-lead | PRDs, validation, thinking sessions |
+| #business | market-analyst, revenue-modeler, gtm-strategist, investor-agent | Research, pricing, GTM |
+| #alerts | All 26 agents | Blockers and vetoes only |
 
 ---
 
-## 4. Hosting & Deployment
+## 2. Remote Control (Phone Access to Agents)
 
-| Tool | Free Tier | Open Source | Pros | Cons |
-|------|-----------|-------------|------|------|
-| [Vercel](https://vercel.com) | Yes (hobby) | No | Auto-deploy from GitHub, fast, great developer experience | Serverless limits on free tier |
-| [Cloudflare Pages](https://pages.cloudflare.com) | Yes | No | Fast global CDN, Workers integration, generous free tier | Smaller ecosystem |
-| [Netlify](https://www.netlify.com) | Yes (starter) | No | Easy setup, built-in form handling | Build minutes limited on free |
-| [GitHub Pages](https://pages.github.com) | Yes | No | Simple static hosting, zero config | Static sites only, no serverless |
+This is how you send commands to your agents when you are away from your computer. Telegram is the standard approach — it runs a bot on your machine that you can message from anywhere.
+
+| Tool | Cost | Required? | Setup difficulty | Setup guide |
+|------|------|-----------|-----------------|-------------|
+| **Telegram bot** | Free | Optional | Medium | docs/TELEGRAM_SETUP.md |
+| Claude.ai (phone browser) | Claude subscription | No | None | — |
+| SSH from phone (Termux) | Free | No | Hard | — |
+
+**Recommendation:** Telegram bot for real remote access. Claude.ai on mobile for quick questions when you do not need access to local files or agents.
+
+---
+
+## 3. Structured Records (Databases, Logs, Backlog)
+
+This is where agent work is stored permanently. Notion is the default because it has structured databases and a native Claude MCP integration.
+
+| Tool | Cost | Required? | Setup difficulty | MCP integration | Setup guide |
+|------|------|-----------|-----------------|-----------------|-------------|
+| **Notion** | Free tier / Paid | Recommended | Medium (MCP setup) | Native Claude MCP | docs/NOTION_SETUP.md |
+| Airtable | Free tier / Paid | No | Medium | No native MCP | — |
+| Plain markdown in repo | Free | No | None | Direct file access | — |
+
+**Recommendation:** Notion for most founders. The 4 core databases (Agent Activity Log, Ideas & Backlog, Market & Business Intel, Removed & Deprecated) give you everything you need to track 26 agents over time.
+
+---
+
+## 4. Personal Thinking (Notes, Strategy, Daily Logs)
+
+This is your private space — rough notes, daily logs, strategic thinking that is not ready to share. Obsidian is the best fit: it is free, stores everything as plain markdown on your computer, and Claude Code can read and write to it directly.
+
+| Tool | Cost | Required? | Setup difficulty | How agents access it | Setup guide |
+|------|------|-----------|-----------------|---------------------|-------------|
+| **Obsidian** | Free | Optional | Easy | Direct file read/write (no API needed) | docs/OBSIDIAN_SETUP.md |
+| Notion | Free tier / Paid | No | Medium | MCP (API calls) | docs/NOTION_SETUP.md |
+| Logseq | Free (open source) | No | Easy | Direct file read/write | — |
+| Plain markdown in repo | Free | No | None | Direct file read/write | — |
+
+**Recommendation:** Obsidian for private thinking (free, local, zero API cost). Notion for structured team-facing databases. They complement each other well — see "Obsidian vs Notion" below.
+
+The Obsidian skill lives at `skills/public/obsidian/SKILL.md`.
+
+---
+
+## 5. Task Management (Tickets, Sprints, Tracking)
+
+| Tool | Cost | Required? | Setup difficulty | MCP integration | Setup guide |
+|------|------|-----------|-----------------|-----------------|-------------|
+| **Jira** | Free (up to 10 users) | Optional | Hard | Native Claude MCP | docs/JIRA_SETUP.md |
+| GitHub Issues | Free | No | Easy | Via gh CLI | — |
+| Linear | Free tier / Paid | No | Easy | No native MCP | — |
+| Plain TODO.md in repo | Free | No | None | Direct file access | — |
+
+**Recommendation:** GitHub Issues for solo founders (already where your code lives). Jira for teams that need full sprint management and MCP integration.
+
+---
+
+## 6. Hosting and Deployment
+
+| Tool | Cost | Required? | Pros | Cons |
+|------|------|-----------|------|------|
+| **Vercel** | Free hobby tier | Depends on project | Auto-deploy from GitHub, fast | Serverless limits on free tier |
+| Cloudflare Pages | Free | No | Fast global CDN, Workers integration | Smaller ecosystem |
+| Netlify | Free starter | No | Easy setup | Build minutes limited |
+| GitHub Pages | Free | No | Zero config | Static sites only |
 
 **Recommendation:** Vercel for most projects. Cloudflare if you use Workers.
 
 ---
 
-## 5. Remote Access (Phone / Mobile Control)
+## Obsidian vs Notion — Quick Reference
 
-| Tool | Free Tier | Open Source | Pros | Cons |
-|------|-----------|-------------|------|------|
-| [Telegram bot](https://github.com/RichardAtCT/claude-code-telegram) | Yes | Yes | Two-way chat with your local Claude Code, voice messages | Bot must run on your machine, sessions don't persist |
-| [Claude.ai](https://claude.ai) (phone browser) | With subscription | No | No setup, works from anywhere | No access to local files, MCP, or agents |
-| SSH from phone ([Termux](https://termux.dev)) | Yes | Yes | Full terminal access from mobile | Not user-friendly, no AI interface layer |
+These two tools are often confused because both store notes. They serve different purposes.
 
-**Recommendation:** Telegram bot for real remote access to your agents. Claude.ai web for quick questions on the go.
+| | Obsidian | Notion |
+|---|---------|--------|
+| Where data lives | Your computer (local files) | Notion's cloud servers |
+| Privacy | Completely private — never leaves your machine | Cloud-based, vendor-controlled |
+| Agent access | Direct file read/write — zero API cost | MCP calls — uses tokens |
+| Best for | Personal thinking, rough notes, daily logs | Structured databases, team dashboards, agent logs |
+| Works offline | Yes | No |
+| Cost | Free | Free tier, then paid |
+| Setup | Download app, point Claude at vault path | Create integration, configure MCP |
+
+**Use both:** Obsidian for your private thinking layer, Notion for the structured data layer that agents and (eventually) your team share.
 
 ---
 
 ## Recommended Stacks
 
-### Stack A: Free (solo founder, bootstrapping)
+### Stack A: Free (solo founder, just starting)
 
-| Layer | Tool |
-|-------|------|
-| Communication | Discord |
-| Knowledge Base | Obsidian |
-| Task Management | GitHub Issues |
-| Hosting | Vercel (free tier) |
-| Remote Access | Telegram bot |
+| Layer | Tool | Cost |
+|-------|------|------|
+| Notifications | Discord | Free |
+| Remote control | Telegram bot | Free |
+| Structured records | Plain markdown in repo | Free |
+| Personal thinking | Obsidian | Free |
+| Task management | GitHub Issues | Free |
+| Hosting | Vercel (free tier) | Free |
 
 Total cost: $0/month (plus your Claude subscription).
 
-### Stack B: Hybrid (solo founder, looks professional)
+### Stack B: Hybrid (solo founder, wants structure)
 
-| Layer | Tool |
-|-------|------|
-| Communication | Discord (internal) + Slack (external-facing) |
-| Knowledge Base | Obsidian (private) + Notion (team dashboards) |
-| Task Management | Jira (free tier) |
-| Hosting | Vercel |
-| Remote Access | Telegram bot |
+| Layer | Tool | Cost |
+|-------|------|------|
+| Notifications | Discord | Free |
+| Remote control | Telegram bot | Free |
+| Structured records | Notion (free tier) | Free |
+| Personal thinking | Obsidian | Free |
+| Task management | Jira (free tier) | Free |
+| Hosting | Vercel | Free tier |
 
-### Stack C: Team / Enterprise
+### Stack C: Team or Enterprise
 
-| Layer | Tool |
-|-------|------|
-| Communication | Slack |
-| Knowledge Base | Notion |
-| Task Management | Jira |
-| Hosting | Vercel or Cloudflare |
-| Remote Access | Telegram bot |
+| Layer | Tool | Notes |
+|-------|------|-------|
+| Notifications | Slack | Native MCP integration |
+| Remote control | Telegram bot | Free |
+| Structured records | Notion | Team plan |
+| Personal thinking | Obsidian | Each team member has their own vault |
+| Task management | Jira | Full sprint management + MCP |
+| Hosting | Vercel or Cloudflare | Depends on stack |
 
-**Start with Stack A.** Upgrade individual tools as the need becomes clear. Don't pay for tools before you have paying customers.
+**Start with Stack A.** Upgrade individual tools as the need becomes clear. Do not pay for tools before you have paying customers.
 
 ---
 
@@ -118,8 +184,9 @@ Every tool choice is reversible. Common migrations:
 | From | To | How |
 |------|----|-----|
 | Slack | Discord | Change the webhook URL in `scripts/slack-post.cjs` — same message format works |
-| Notion | Obsidian | Export Notion pages as markdown, drop into your project's `docs/` folder |
+| Discord | Slack | Reverse of above — add Slack webhook, update channel IDs in CLAUDE.md |
+| Notion | Obsidian | Export Notion pages as markdown, drop into your vault's `docs/` folder |
 | Jira | GitHub Issues | Export Jira as CSV, import via GitHub's issue importer or `gh` CLI |
-| Vercel | Cloudflare Pages | Connect same GitHub repo to Cloudflare dashboard — auto-deploys work the same way |
+| Vercel | Cloudflare Pages | Connect same GitHub repo to Cloudflare dashboard |
 
 None of these migrations are permanent. You can always switch back.

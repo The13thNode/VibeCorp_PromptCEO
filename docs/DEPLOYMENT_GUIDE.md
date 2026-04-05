@@ -2,7 +2,7 @@
 
 ## From Vibe Coder to Full-Scale AI-Powered Organization
 
-**The complete journey from "I have an idea" to "I have 13 AI agents running my product team."**
+**The complete journey from "I have an idea" to "I have 26 AI agents running my product team."**
 
 This guide is structured in five progressive phases. Start at Phase 1 if you have never opened a terminal. Start at Phase 3 if you are a developer who just wants the MCP connectors configured. Each phase builds on the previous one, and every phase ends with a verification checkpoint so you know it worked before moving on.
 
@@ -149,7 +149,7 @@ Read CLAUDE.md and begin session start ritual
 
 The CEO agent will:
 - Read your project context
-- Summarize the 13 agents available
+- Summarize the 26 agents available
 - Ask what you want to work on
 
 Try these starter prompts:
@@ -178,7 +178,7 @@ Before moving to Phase 2, confirm all of the following:
 
 **Who this is for:** You completed Phase 1 (or you are already comfortable with the terminal and Claude Code). You want to configure the framework properly for your specific product.
 
-**What you will have at the end of this phase:** A fully personalized CLAUDE.md, the governance protocols active, and all 13 agents responding to your commands with project-specific context.
+**What you will have at the end of this phase:** A fully personalized CLAUDE.md, the governance protocols active, and all 26 agents responding to your commands with project-specific context.
 
 **Estimated time:** 30–45 minutes
 
@@ -230,7 +230,7 @@ Fill in the PROJECT STATUS table at the top of CLAUDE.md:
 
 ### 2.2 Understand the Agent Roster
 
-Your 13 agents are organized into four teams:
+Your 26 agents are organized into four teams:
 
 **Leadership:**
 - CEO Thinking Partner — Your strategic advisor. Challenges assumptions, validates ideas, runs 7 thinking modes.
@@ -432,7 +432,7 @@ Create these Slack channels (or rename to match your project):
 | Channel | Purpose | Agents That Post Here |
 |---|---|---|
 | #project-ceo | Orchestration, commits, deploys | CEO only |
-| #project-alerts | Blockers, vetoes, escalations | All 13 agents |
+| #project-alerts | Blockers, vetoes, escalations | All 26 agents |
 | #project-strategy | Thinking sessions, PRDs, validation | CEO, PM, BA, Validation Lead |
 | #project-build | Build updates, file changes, API work | Frontend, Backend, DB Manager |
 | #project-quality | Test results, audit findings | QA Engineer, Security Auditor |
@@ -768,7 +768,7 @@ Agents self-assess their token usage every 10 turns:
 | Model | Who Uses It | When |
 |---|---|---|
 | Opus | CEO (main instance) only | Your interaction, orchestration, strategic thinking |
-| Sonnet | All 12 sub-agents (default) | Builds, specs, QA, research, analysis |
+| Sonnet | All 25 sub-agents (default) | Builds, specs, QA, research, analysis |
 | Haiku | Ad-hoc, CEO decides | Simple reads, summaries, formatting |
 
 **Rule:** Opus is reserved for the CEO. Never spawn a sub-agent on Opus unless you explicitly request it. This alone saves 5–25x on token costs.
@@ -833,11 +833,11 @@ When other people join your project, each person needs their own setup:
 
 ### 5.2 Role-Based Agent Access
 
-As your team grows, not everyone needs all 13 agents. Here is a suggested role mapping:
+As your team grows, not everyone needs all 26 agents. Here is a suggested role mapping:
 
 | Team Member | Agents They Use | Slack Channels |
 |---|---|---|
-| Founder/CEO | All 13 (full orchestrator) | All channels |
+| Founder/CEO | All 26 (full orchestrator) | All channels |
 | Product Lead | PM, BA, Validation Lead, CEO Thinking | #strategy |
 | Lead Engineer | Frontend, Backend, DB Manager, QA | #build, #quality |
 | Business Lead | Market Analyst, Revenue Modeler, GTM, Investor | #business |
@@ -868,7 +868,7 @@ See `docs/AGENT_TEAMS.md` for full documentation on the parallel execution model
 
 ### 5.4 Custom Agents
 
-The 13 agents are a starting configuration. Add agents that match your specific needs:
+The 26 agents are a starting configuration. Add agents that match your specific needs:
 
 **To add a custom agent:**
 1. Create a new `.md` file in `.claude/agents/` (e.g., `legal-agent.md` or `customer-success.md`)
@@ -1102,21 +1102,58 @@ Type immediately: `stop all`. Review `docs/execution-log/` to see what happened.
 
 ### Agent Quick Reference
 
-| # | Agent | Team | Spawned For |
-|---|---|---|---|
-| 1 | CEO Thinking Partner | Leadership | Strategic decisions (used directly by CEO, not spawned) |
-| 2 | Product Manager | Strategy | PRDs, features, roadmap |
-| 3 | Business Analyst | Strategy | Requirements, specs, ACs |
-| 4 | Frontend Developer | Build | UI components, pages |
-| 5 | Backend Developer | Build | APIs, server logic |
-| 6 | Database Manager | Build | Schema, migrations (VETO holder) |
-| 7 | QA Engineer | Quality | Tests, bugs, quality gates |
-| 8 | Security Auditor | Quality | Vulnerabilities, compliance (VETO holder) |
-| 9 | Market Analyst | Business | Research, competitors, TAM/SAM/SOM |
-| 10 | Revenue Modeler | Business | Pricing, projections, unit economics |
-| 11 | GTM Strategist | Business | Go-to-market, channels, ICP |
-| 12 | Validation Lead | Business | Evidence, traceability (VETO holder) |
-| 13 | Investor Agent | Business | Pitch deck, fundraising |
+26 agents organized into four teams plus floating specialists. Think of it as a small company: Build writes the code, Quality tests it, Strategy plans what to build, Business handles market research and investors. Floating specialists support any team on demand.
+
+#### Floating Specialists
+
+| # | Agent                | Spawned For                                                          |
+|---|----------------------|----------------------------------------------------------------------|
+| 1 | CEO Thinking Partner | Strategic decisions (used directly by CEO, not spawned as sub-agent) |
+
+#### Alpha Build Team — writes and ships the code
+
+| # | Agent | Spawned For |
+|---|---|---|
+| 2 | Frontend Developer | UI components, pages, visual changes (src/ only) |
+| 3 | Backend Developer | APIs, server logic, integrations (backend/ only) |
+| 4 | Database Manager | Schema design, migrations, optimization (VETO holder) |
+| 5 | DevOps / Infra Agent | CI/CD pipelines, deployments, infrastructure |
+| 6 | Mobile Developer | iOS/Android/React Native builds |
+| 7 | Integration Developer | Third-party API connections, webhooks |
+
+#### Bravo Quality Team — tests everything, catches issues before they ship
+
+| # | Agent | Spawned For |
+|---|---|---|
+| 8 | QA Engineer | Test runs, bug tracking, quality gates |
+| 9 | Security Auditor | Vulnerability assessment, compliance checks (VETO holder) |
+| 10 | Performance Analyst | Load testing, optimization, bottleneck analysis |
+| 11 | Accessibility Auditor | WCAG compliance, screen reader testing |
+| 12 | Documentation Writer | Technical docs, API references, changelogs |
+
+#### Charlie Strategy Team — plans what to build and why
+
+| # | Agent | Spawned For |
+|---|---|---|
+| 13 | Product Manager | PRDs, roadmap, feature prioritization |
+| 14 | Business Analyst | Requirements, user stories, acceptance criteria |
+| 15 | Validation Lead | Hypothesis testing, evidence gathering, traceability (VETO holder) |
+| 16 | UX Researcher | User interview synthesis, journey mapping, personas |
+| 17 | Content Strategist | Copy, messaging, content planning |
+| 18 | Data Analyst | Metrics, dashboards, A/B test analysis |
+
+#### Delta Business Team — market research, pricing, fundraising
+
+| # | Agent | Spawned For |
+|---|---|---|
+| 19 | Market Analyst | Market research, competitor analysis, TAM/SAM/SOM |
+| 20 | Revenue Modeler | Pricing strategy, financial projections, unit economics |
+| 21 | GTM Strategist | Go-to-market planning, launch strategy, ICP definition |
+| 22 | Investor Agent | Pitch deck, fundraising strategy, investor Q&A |
+| 23 | Legal Analyst | Contract review, compliance research, terms of service |
+| 24 | Customer Success Agent | User feedback triage, support docs, onboarding flows |
+| 25 | Brand Strategist | Brand identity, positioning, visual language |
+| 26 | Partnership Agent | Business development, co-marketing, channel partnerships |
 
 ### File Map
 
@@ -1125,7 +1162,7 @@ Type immediately: `stop all`. Review `docs/execution-log/` to see what happened.
 | `CLAUDE.md` | Master configuration — all agents read this |
 | `SETUP.md` | Technical setup reference |
 | `.mcp.json` | MCP connector configuration (never commit) |
-| `.claude/agents/` | 13 agent definition files |
+| `.claude/agents/` | 26 agent definition files |
 | `protocols/` | 7 governance protocols |
 | `skills/` | Reusable agent skills (Jira, etc.) |
 | `scripts/` | Deployment and notification scripts |
@@ -1134,7 +1171,7 @@ Type immediately: `stop all`. Review `docs/execution-log/` to see what happened.
 | `docs/execution-log/` | Append-only audit trail |
 | `docs/handoffs/` | Structured agent-to-agent work transfers |
 | `docs/agent-notes/` | Per-agent session notes |
-| `examples/` | Real-world (NestMatch) and blank SaaS examples |
+| `examples/` | Marketplace and blank SaaS examples |
 
 ### Cost Summary
 
@@ -1174,4 +1211,4 @@ Costs can escalate quickly with heavy agent usage. Set billing alerts on your An
 
 ---
 
-*Built by [VibeCorp](https://github.com/The13thNode). Battle-tested on NestMatch UAE.*
+*Built by [VibeCorp](https://github.com/The13thNode). Battle-tested on a real product.*

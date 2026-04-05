@@ -29,7 +29,7 @@ Here is the easiest way to think about the difference:
 - **Claude.ai chat** = texting a smart friend who can answer questions
 - **Claude Code** = hiring that friend to sit at your desk, open your files, read them, write code, run programs, and actually get things done
 
-Claude Code can read files on your computer, write and edit code, run commands, and connect to external tools like Slack, Jira, and Notion. That is why it is so much more powerful than the browser chat.
+Claude Code can read files on your computer, write and edit code, run commands, and connect to external tools like Discord, Jira, Notion, and Telegram. That is why it is so much more powerful than the browser chat.
 
 Official docs: [Claude Code Documentation](https://code.claude.com/docs)
 
@@ -162,9 +162,9 @@ The file `CLAUDE.md` is the brain of the framework. It tells Claude Code everyth
 
 ### Step 5: (Optional) Configure Integrations
 
-**Before you start:** This step is optional. Skip it if you just want to try the agents first. You can always come back to this later. Integrations connect Claude Code to external tools like Slack, Jira, and Notion.
+**Before you start:** This step is optional. Skip it if you just want to try the agents first. You can always come back to this later. Integrations connect Claude Code to external tools like Discord, Jira, and Notion.
 
-You do NOT need integrations to use the agents. The agents work without them. Integrations just let Claude Code send messages to your Slack, create Jira tickets, or update your Notion workspace automatically.
+You do NOT need integrations to use the agents. The agents work without them. Integrations just let Claude Code send notifications to your Discord server (free), create Jira tickets, or update your Notion workspace automatically. See [Discord Setup](docs/DISCORD_SETUP.md) for the recommended free notification layer, or [Slack Setup](docs/SLACK_SETUP.md) if your org already pays for Slack.
 
 **If you want to set up integrations:**
 
@@ -214,7 +214,7 @@ For detailed instructions on each integration, see `SETUP.md` in the main folder
 What agents do I have available? Summarize their roles.
 ```
 
-**What to expect:** Claude will respond with a summary of the 13 agents in the framework and ask what you want to work on. It may ask you a few clarifying questions about your project before it starts. That is normal — it is trying to understand your context.
+**What to expect:** Claude will respond with a summary of the 26 agents in the framework and ask what you want to work on. It may ask you a few clarifying questions about your project before it starts. That is normal — it is trying to understand your context.
 
 **Troubleshooting Step 6:**
 - If Claude seems confused — make sure you filled in `CLAUDE.md` properly in Step 4. The more detail you gave it, the better it will perform.

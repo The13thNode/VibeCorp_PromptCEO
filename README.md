@@ -1,10 +1,10 @@
 # PromptCEO by VibeCorp
 
-**Turn a business idea into a product with 13 AI agents working as your team.**
+**Turn a business idea into a product with 26 AI agents working as your team.**
 
-PromptCEO is a free, open-source framework that gives you a complete AI-powered product team. One CEO agent coordinates 12 specialist agents — a product manager, business analyst, developers, QA engineer, security auditor, market analyst, revenue modeler, GTM strategist, investor agent, validation lead, and database manager — all working together to think, build, test, and ship your product.
+PromptCEO is a free, open-source framework that gives you a complete AI-powered product team. One CEO agent coordinates 25 specialist agents — organized into four teams (Build, Quality, Strategy, Business) plus floating specialists — all working together to think, build, test, and ship your product.
 
-This isn't theory. Every pattern in this framework was battle-tested across 50+ sessions, 17 versions, and 100+ commits on a real product ([NestMatch UAE](examples/nestmatch/README.md) — a compliance-first rental marketplace for Dubai).
+This isn't theory. Every pattern in this framework was battle-tested across 50+ sessions, 17 versions, and 100+ commits on a real product — then extracted into this universal framework.
 
 > **Complete beginner?** Never used a terminal or GitHub before? Start with the [Step-by-Step Guide](docs/STEP_BY_STEP_GUIDE.md). Have questions? Read the [FAQ](docs/FAQ.md).
 
@@ -19,28 +19,31 @@ This isn't theory. Every pattern in this framework was battle-tested across 50+ 
                                 │
                     ┌───────────┼───────────┐
                     │     CEO Thinking      │
-                    │       Partner         │
+                    │    Partner (Opus)     │
                     └───────────┬───────────┘
                                 │
-          ┌─────────────────────┼─────────────────────┐
-          │                     │                     │
-   ┌──────┴──────┐      ┌──────┴──────┐      ┌──────┴──────┐
-   │  STRATEGY   │      │    BUILD    │      │  BUSINESS   │
-   │    TEAM     │      │    TEAM     │      │    TEAM     │
-   ├─────────────┤      ├─────────────┤      ├─────────────┤
-   │ Product Mgr │      │ Frontend    │      │ Market      │
-   │ Business    │      │ Backend     │      │ Revenue     │
-   │  Analyst    │      │ Database    │      │ GTM         │
-   │ Validation  │      │ QA Engineer │      │ Investor    │
-   │  Lead       │      │ Security    │      │  Agent      │
-   └─────────────┘      └─────────────┘      └─────────────┘
+    ┌───────────────┬───────────┼───────────┬───────────────┐
+    │               │                       │               │
+┌───┴───┐     ┌─────┴─────┐          ┌─────┴─────┐   ┌─────┴─────┐
+│ ALPHA │     │   BRAVO   │          │  CHARLIE  │   │   DELTA   │
+│ Build │     │  Quality  │          │ Strategy  │   │ Business  │
+├───────┤     ├───────────┤          ├───────────┤   ├───────────┤
+│Front  │     │QA (lead)  │          │PM (lead)  │   │Market     │
+│Back   │     │Demo Test  │          │Biz Analyst│   │Revenue    │
+│DB Mgr │     │UX Research│          │Validation │   │GTM        │
+│UI Des │     │Dev Advoc  │          │Workflow   │   │Investor   │
+│       │     │Release Eng│          │ Architect │   │Visual     │
+└───────┘     └───────────┘          └───────────┘   └───────────┘
+
+  + Floating: Security Auditor, Build Quality Auditor, Code Reviewer,
+              Safety Guard, Developer Provocateur, Provocateur, Social Host
 ```
 
 ## Before & After
 
 | Without PromptCEO | With PromptCEO |
 |---|---|
-| You're one person with a business idea | You have a 13-agent product team |
+| You're one person with a business idea | You have a 26-agent product team |
 | You context-switch between strategy, code, testing, and business | Each agent specializes in their domain |
 | Knowledge is lost between sessions | Execution memory persists across sessions |
 | No governance — anything goes | Three-tier approval system with CEO oversight |
@@ -91,7 +94,7 @@ Claude Code can:
 - Connect to external tools (Slack, Jira, Notion) via MCP servers
 - Spawn sub-agents that work in parallel
 
-This framework uses Claude Code's **agent system** — each of the 13 agents is a markdown file that gives Claude a specific role, expertise, and set of rules to follow.
+This framework uses Claude Code's **agent system** — each of the 26 agents is a markdown file that gives Claude a specific role, expertise, and set of rules to follow.
 
 ## What are AI Agents?
 
@@ -149,23 +152,58 @@ Webhooks are how your agents send you notifications. When an agent finishes a ta
 
 ---
 
-## The 13 Agents
+## The 26 Agents
 
-| # | Agent | Role | Team |
-|---|---|---|---|
-| 1 | CEO Thinking Partner | Strategic advisor, challenges assumptions | Leadership |
-| 2 | Product Manager | PRDs, roadmap, feature prioritization | Strategy |
-| 3 | Business Analyst | Requirements, user stories, acceptance criteria | Strategy |
-| 4 | Frontend Developer | UI/UX implementation | Build |
-| 5 | Backend Developer | API, server logic, integrations | Build |
-| 6 | Database Manager | Schema design, migrations, optimization | Build |
-| 7 | QA Engineer | Testing, bug tracking, quality gates | Quality |
-| 8 | Security Auditor | Vulnerability assessment, compliance checks | Quality |
-| 9 | Market Analyst | Market research, competitor analysis | Business |
-| 10 | Revenue Modeler | Financial projections, pricing strategy | Business |
-| 11 | GTM Strategist | Go-to-market planning, launch strategy | Business |
-| 12 | Validation Lead | Hypothesis testing, evidence gathering | Business |
-| 13 | Investor Agent | Pitch deck, fundraising strategy | Business |
+### Team Alpha — Product Build
+
+| # | Agent | Role |
+|---|---|---|
+| 1 | Frontend Developer | UI components, design system implementation |
+| 2 | Backend Developer | APIs, database, server logic |
+| 3 | Database Manager | Schema design, migrations, optimization |
+| 4 | UI Designer | Design system, 3-option proposals, component review |
+
+### Team Bravo — Quality Gate
+
+| # | Agent | Role |
+|---|---|---|
+| 5 | QA Engineer (Team Lead) | Testing, bug tracking, quality gates |
+| 6 | Demo Tester | Investor demo readiness, DEMO-BLOCKER findings |
+| 7 | UX Researcher | User journey testing, Journey Test Records |
+| 8 | Developer Advocate | First-time user DX audit |
+| 9 | Release Engineer | Release pipeline (Tier 3 — founder trigger only) |
+
+### Team Charlie — Strategy
+
+| # | Agent | Role |
+|---|---|---|
+| 10 | Product Manager (Team Lead) | PRDs, roadmap, feature prioritization |
+| 11 | Business Analyst | Requirements, user stories, acceptance criteria |
+| 12 | Validation Lead | Hypothesis testing, evidence gathering |
+| 13 | Workflow Architect | State machines, flow design, pre-engineering review |
+
+### Team Delta — Business
+
+| # | Agent | Role |
+|---|---|---|
+| 14 | Market Analyst | Market research, competitor analysis |
+| 15 | Revenue Modeler | Financial projections, pricing strategy |
+| 16 | GTM Strategist | Go-to-market planning, launch strategy |
+| 17 | Investor Agent | Pitch deck, fundraising strategy |
+| 18 | Visual Storyteller | Demo narration, pitch content |
+
+### Floating Specialists
+
+| # | Agent | Role |
+|---|---|---|
+| 19 | CEO Thinking Partner | Strategic advisor, 7 thinking modes (Opus model) |
+| 20 | Security Auditor | Vulnerability assessment, compliance (VETO holder) |
+| 21 | Build Quality Auditor | Post-sprint code audit, SEV-1-5 (VETO holder) |
+| 22 | Developer Provocateur | In-sprint READ-ONLY code challenger |
+| 23 | Code Reviewer | 4-stage review pipeline |
+| 24 | Safety Guard | Destructive command guard (VETO holder) |
+| 25 | Social Host | Optional team social sessions |
+| 26 | Provocateur | Post-sprint external audit, rotating lens |
 
 ---
 
@@ -186,14 +224,15 @@ See [Architecture](docs/ARCHITECTURE.md) for the full system design.
 
 ## Integrations
 
-| Tool | Purpose | Setup Guide |
-|---|---|---|
-| Slack | Agent notifications and updates | [Slack Setup](docs/SLACK_SETUP.md) |
-| Jira | Ticket management and sprint tracking | [Jira Setup](docs/JIRA_SETUP.md) |
-| Notion | Command center and knowledge base | [Notion Setup](docs/NOTION_SETUP.md) |
-| Telegram | Remote access to Claude Code | [Telegram Setup](docs/TELEGRAM_SETUP.md) |
+| Tool | Purpose | Cost | Setup Guide |
+|---|---|---|---|
+| **Discord** | Agent notifications (12 channels) | **Free** | [Discord Setup](docs/DISCORD_SETUP.md) |
+| Slack | Agent notifications (alternative) | Paid (~$8.75/user/mo) | [Slack Setup](docs/SLACK_SETUP.md) |
+| Jira | Ticket management and sprint tracking | Free tier available | [Jira Setup](docs/JIRA_SETUP.md) |
+| Notion | Command center and knowledge base | Free tier available | [Notion Setup](docs/NOTION_SETUP.md) |
+| Telegram | Remote access to Claude Code | Free | [Telegram Setup](docs/TELEGRAM_SETUP.md) |
 
-All integrations are optional. The framework works without them — they just make it better.
+All integrations are optional. Discord is recommended as the default (free) notification layer.
 
 ---
 
@@ -207,10 +246,10 @@ VibeCorp_PromptCEO/
 ├── SECURITY.md                  ← Data boundaries and guardrails
 ├── LICENSE                      ← MIT (use it however you want)
 │
-├── .claude/agents/              ← 13 agent definition files
+├── .claude/agents/              ← 26 agent definition files
 ├── protocols/                   ← 7 governance protocols
-├── skills/                      ← Reusable agent skills (Jira, etc.)
-├── scripts/                     ← Deployment and notification scripts
+├── skills/                      ← 58 reusable agent skills
+├── scripts/                     ← Discord/Slack notification + deployment scripts
 ├── templates/                   ← Fill-in templates for your project
 ├── docs/                        ← Full documentation
 └── examples/                    ← Real-world and blank-SaaS examples
@@ -235,7 +274,7 @@ VibeCorp_PromptCEO/
 
 ## Examples
 
-- **[NestMatch UAE](examples/nestmatch/)** — Real-world example. A compliance-first rental marketplace for Dubai, built entirely with this framework.
+- **[Marketplace Example](examples/marketplace/)** — Two-sided marketplace example with supply/demand validation, compliance tiers, and marketplace-specific agent rules.
 - **[Blank SaaS](examples/blank-saas/)** — Starting template for a SaaS product with common defaults pre-filled.
 
 ---
@@ -250,7 +289,7 @@ VibeCorp maintains two complementary frameworks:
 | **How it works** | Agents read/write files, run commands, build software | Copy a skill into a Claude Project, chat with it |
 | **Requires** | Terminal, Claude Code CLI | Browser only — no terminal needed |
 | **Best for** | Building products, writing code, managing sprints | Strategy, planning, analysis, business thinking |
-| **Agents** | 13 specialized agents with governance | No agents — skill-guided conversations |
+| **Agents** | 26 specialized agents with governance | No agents — skill-guided conversations |
 
 **Use CoworkSkills for thinking. Use PromptCEO for building.**
 
@@ -280,6 +319,6 @@ MIT — use it however you want. See [LICENSE](LICENSE).
 
 ## Credits
 
-Built by [VibeCorp](https://github.com/The13thNode). Battle-tested on NestMatch UAE.
+Built by [VibeCorp](https://github.com/The13thNode). Battle-tested on a real product, then extracted into this universal framework.
 
 See [CREDITS.md](docs/CREDITS.md) for full attribution to all open-source projects and contributors that made this possible.

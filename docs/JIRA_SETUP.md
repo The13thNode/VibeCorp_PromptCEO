@@ -119,7 +119,7 @@ You should see `jira` in the list.
 
 1. In Jira, click **"Projects"** → **"Create project"**
 2. Choose **"Scrum"** for sprint-based development, or **"Kanban"** for continuous flow
-3. Name it after your product (e.g., `NestMatch` or `PromptCEO`)
+3. Name it after your product (e.g., `TaskFlow` or `MyApp`)
 4. Note the **Project Key** (e.g., `NM` or `PC`) — this is the prefix for all your tickets
 
 Add to `.env`:

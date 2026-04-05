@@ -4,7 +4,7 @@
 # Pre-filled with realistic values for a React + Node.js + PostgreSQL + Stripe stack.
 # Replace every [PLACEHOLDER] with your actual project values.
 #
-# For a more complete example, see examples/nestmatch/CLAUDE.md.example
+# For a more complete example, see examples/marketplace/CLAUDE.md.example
 
 ---
 

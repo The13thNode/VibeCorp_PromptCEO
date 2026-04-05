@@ -67,15 +67,13 @@ Reference: [TowardsAI](https://towardsai.net) (Claude Code skills coverage)
 
 ## Proving Ground
 
-### NestMatch UAE
-
 VibeCorp PromptCEO was not built in theory. It was battle-tested on a real product.
 
-**NestMatch UAE** is a real estate matching platform built in the UAE market by a solo founder. The multi-agent framework documented here was developed iteratively while actually shipping NestMatch — building features, managing sprints, writing content, handling investor communications, and managing the full product lifecycle.
+The multi-agent framework documented here was developed iteratively while actually shipping a production product — building features, managing sprints, writing content, handling investor communications, and managing the full product lifecycle.
 
 Everything in this framework has been used to ship real code to a real product. The patterns that survived are documented here. The patterns that failed are quietly absent.
 
-NestMatch UAE is the proof that a solo founder with this system can operate at the output level of a small team.
+This is the proof that a solo founder with this system can operate at the output level of a small team.
 
 ---
 

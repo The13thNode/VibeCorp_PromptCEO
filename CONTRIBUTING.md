@@ -47,14 +47,11 @@ Follow these rules:
 **This is mandatory before every commit.** Run these checks from the repo root:
 
 ```bash
-# Personal identifiers
-grep -ri "pushk\|pushkar\|nagela\|hotspotVPN" --include="*.md" --exclude-dir=.git --exclude-dir=_source
-
 # Local file paths
 grep -ri "C:\\\\Users\|/home/\|/Users/" --include="*.md" --exclude-dir=.git --exclude-dir=_source
 
-# Real service URLs
-grep -ri "slack.com/services\|hooks.slack.com" --include="*.md" --exclude-dir=.git --exclude-dir=_source
+# Real service URLs and webhook leaks
+grep -ri "slack.com/services\|hooks.slack.com\|discord.com/api/webhooks/[0-9]" --include="*.md" --exclude-dir=.git --exclude-dir=_source
 
 # Email addresses
 grep -ri "@gmail.com\|@hotmail.com\|@yahoo.com" --include="*.md" --exclude-dir=.git --exclude-dir=_source

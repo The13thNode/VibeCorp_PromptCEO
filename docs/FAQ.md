@@ -177,7 +177,7 @@ Everything that passes through a Claude Code session — your prompts, file cont
 
 ### 13. Can I add my own agents or remove ones I don't need?
 
-Yes to both. The 13 agents in this framework are a starting configuration, not a fixed ceiling.
+Yes to both. The 26 agents in this framework are a starting configuration, not a fixed ceiling.
 
 **To add an agent:**
 1. Create a new `.md` file in `.claude/agents/` describing the agent's role, responsibilities, and rules
