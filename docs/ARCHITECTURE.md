@@ -27,10 +27,10 @@ The system is designed for a solo founder or small team that wants to operate at
                     │   Priority setting               │
                     │   Cross-team coordination        │
                     │   Escalation handling            │
-                    └──┬─────────┬──────────┬─────────┘
-                       │         │          │
-           ┌───────────┘    ┌────┘     ┌────┘
-           ▼                ▼          ▼
+                    └──┬────────┬─────────┬────────┬──┘
+                       │        │         │        │
+           ┌───────────┘   ┌────┘    ┌────┘   ┌────┘
+           ▼               ▼         ▼        ▼
     ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐
     │  ALPHA    │  │  BRAVO    │  │  CHARLIE  │  │  DELTA    │
     │  Build    │  │  Quality  │  │  Strategy │  │  Business │
@@ -85,7 +85,7 @@ The top-level orchestrator. The CEO agent:
 
 The CEO agent does not write code, manage tickets, or produce content directly. Its role is coordination and judgment.
 
-### The Four Teams (v2.0 — 26 Agents)
+### The Four Teams + Floating Specialists (v2.0 — 26 Agents)
 
 #### Alpha — Build Team (4 agents)
 
@@ -174,6 +174,8 @@ Founder
 ## Message Bus
 
 Agents communicate through **structured state files** — not live message passing. This is intentional: it makes communication auditable, resumable, and inspectable.
+
+It also provides persistence beyond any single agent's context window. Each agent operates within a token budget (GREEN/YELLOW/RED/BLACK tiers — see Token Budget Management below). When an agent approaches its context limit, it writes its work to the handoff queue and stops. The next session reads from these files and resumes. This file-based pattern ensures no work is lost even when an agent's memory is full.
 
 ### State Files
 

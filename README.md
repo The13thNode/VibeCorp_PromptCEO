@@ -91,7 +91,7 @@ For experienced developers, see the [Quick Start](docs/QUICK_START.md).
 Claude Code can:
 - Read, write, and edit files on your computer
 - Run terminal commands
-- Connect to external tools (Slack, Jira, Notion) via MCP servers
+- Connect to external tools (Discord, Slack, Jira, Notion) via MCP servers and webhooks
 - Spawn sub-agents that work in parallel
 
 This framework uses Claude Code's **agent system** — each of the 26 agents is a markdown file that gives Claude a specific role, expertise, and set of rules to follow.
@@ -106,7 +106,7 @@ An AI agent is Claude operating with a specific persona and set of instructions.
 - Analyze markets and competitors
 - Build financial models
 - Run tests and find bugs
-- Post updates to Slack, create Jira tickets
+- Post updates to Discord or Slack, create Jira tickets
 
 **What agents CAN'T do:**
 - Make phone calls or send emails
@@ -122,12 +122,14 @@ GitHub is where your project's code lives online. Think of it as Google Drive fo
 ## What are MCP Servers?
 
 MCP (Model Context Protocol) servers are how Claude Code connects to external tools. Without MCP, Claude can only work with files on your computer. With MCP, your agents can:
-- Post messages to **Slack** channels
+- Post messages to **Discord** or **Slack** channels
 - Create and update **Jira** tickets
 - Read and write **Notion** pages
 - Send **Telegram** messages for remote notifications
 
-You configure these connections in a `.mcp.json` file. See [SETUP.md](SETUP.md) for details.
+Discord does NOT use MCP — it uses webhooks, which are simpler and free. This is why Discord is the recommended default notification layer.
+
+You configure MCP connections in a `.mcp.json` file. See [SETUP.md](SETUP.md) for details.
 
 ## What are Tokens?
 
@@ -148,7 +150,9 @@ Tokens are the "currency" of AI. Every message you send to Claude and every resp
 
 ## What are Webhooks?
 
-Webhooks are how your agents send you notifications. When an agent finishes a task or needs your approval, it can automatically post a message to your Slack channel. This means you don't have to sit and watch the terminal — you can get notified on your phone.
+Webhooks are how your agents send you notifications. When an agent finishes a task or needs your approval, it can automatically post a message to your Discord channel (or Slack if configured). This means you don't have to sit and watch the terminal — you can get notified on your phone.
+
+Discord webhook URLs are the default notification method (free, unlimited). Slack webhooks work the same way but require a paid plan for full message history.
 
 ---
 
@@ -267,6 +271,8 @@ VibeCorp_PromptCEO/
 | [Model Policy](docs/MODEL_POLICY.md) | Everyone | When to use which Claude model |
 | [Agent Teams](docs/AGENT_TEAMS.md) | Advanced | Experimental parallel agents |
 | [Security](SECURITY.md) | Everyone | Data boundaries and guardrails |
+| [Discord Setup](docs/DISCORD_SETUP.md) | Everyone | Free notification setup (12 channels) |
+| [Obsidian Setup](docs/OBSIDIAN_SETUP.md) | Everyone | Free local knowledge base |
 | [Choose Your Stack](docs/TOOL_COMPARISON.md) | Everyone | Pick your tools (free and paid options) |
 | [FAQ](docs/FAQ.md) | Everyone | Common questions answered |
 

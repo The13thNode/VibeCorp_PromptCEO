@@ -545,22 +545,28 @@ Telegram lets you interact with Claude Code from your phone when you are away fr
 }
 ```
 
-### 3.7 The Slack Posting Script
+### 3.7 Notification Scripts (Discord + Slack)
 
-PromptCEO includes a dedicated posting script at `scripts/slack-post.cjs` that sends messages as your app (with push notifications) rather than silently through MCP.
+**Discord (free, recommended default):** See [Discord Setup](DISCORD_SETUP.md) for full instructions. Discord uses webhooks — no MCP server needed.
 
-**Usage:**
+```
+node scripts/discord-post.cjs CEO "SESSION STARTED — Gate: G1. Pending: 0 items."
+node scripts/discord-post.cjs BUILD "FRONTEND-DEV — SPAWNED — Task: Build homepage"
+node scripts/discord-post.cjs ALERTS "BLOCKED: database-manager — schema approval needed"
+```
+
+**Available Discord channels:** CEO, STRATEGY, BUILD, QUALITY, BUSINESS, ALERTS, CROSSTEAM, DEMOLOG, SOCIAL, PROVOCATEUR, PULSE, DESIGN
+
+**Slack (optional, paid):** If your org already pays for Slack, the framework also includes `scripts/slack-post.cjs` which works the same way but posts to Slack webhooks instead.
+
 ```
 node scripts/slack-post.cjs CEO "SESSION STARTED — Gate: G1. Pending: 0 items."
-node scripts/slack-post.cjs BUILD "FRONTEND-DEV — SPAWNED — Task: Build homepage"
-node scripts/slack-post.cjs ALERTS "BLOCKED: database-manager — schema approval needed"
 ```
 
-**Available channels:** CEO, STRATEGY, BUILD, QUALITY, BUSINESS, ALERTS
-
 **When to use which:**
-- `node scripts/slack-post.cjs` — For all agent notifications (triggers push notifications)
-- MCP Slack tool — For reading channels, searching messages, replying to threads
+- `node scripts/discord-post.cjs` — Default for all agent notifications (free, push notifications)
+- `node scripts/slack-post.cjs` — Alternative if your team uses paid Slack
+- MCP Slack tool — For reading Slack channels, searching messages, replying to threads
 
 ### 3.8 Complete MCP Configuration Reference
 
@@ -614,7 +620,7 @@ Here is the full `.mcp.json` with all four integrations:
 - [ ] (Optional) Telegram: You can send and receive messages
 - [ ] All channel IDs are in CLAUDE.md's Slack Channel Registry
 - [ ] The Jira project key and cloud ID are in CLAUDE.md
-- [ ] You have tested `node scripts/slack-post.cjs CEO "test"` successfully
+- [ ] You have tested `node scripts/discord-post.cjs CEO "test"` successfully (or `slack-post.cjs` if using Slack)
 
 ---
 
@@ -648,7 +654,7 @@ PromptCEO ships with 7 governance protocols in the `protocols/` directory. These
 
 When you give the CEO agent a command, here is exactly what happens:
 
-1. **Command received** — CEO posts to Slack CEO channel
+1. **Command received** — CEO posts to Discord CEO channel (or Slack)
 2. **Route analysis** — CEO reads the routing table in CLAUDE.md and identifies which agents are needed
 3. **Tier check** — For each task, CEO determines Tier 1, 2, or 3
 4. **Gate detection** — If Tier 3 is detected, CEO stops and asks for your approval
@@ -715,17 +721,19 @@ The CEO will orchestrate this 10-step sequence:
 
 ### 4.5 VETO Holders and Emergency Controls
 
-Three agents can block work regardless of tier:
+Five agents can block work regardless of tier:
 
 | VETO Holder | Blocks | Why |
 |---|---|---|
 | Database Manager | Any schema change | Prevents data model corruption |
 | Security Auditor | Any auth/KYC/PII change | Prevents security holes |
 | Validation Lead | Any ASSUMPTION-strength feature | Prevents building unvalidated features |
+| Build Quality Auditor | SEV-1/SEV-2 quality failures | Shipping broken work to investors is irreversible |
+| Safety Guard | Destructive file/database commands | Accidental data loss cannot be undone |
 
 When a VETO fires:
 - Jira ticket gets a BLOCKED comment
-- Slack `#project-alerts` gets a notification
+- Discord `#[project]-alerts` (or Slack) gets a notification
 - All downstream agents stop
 - You are presented with resolution options
 
@@ -740,11 +748,11 @@ When a VETO fires:
 2. CEO reads `docs/SESSION_LOG.md` — checks pending items
 3. CEO reads `VALIDATION_LOG.md` — checks open decisions
 4. CEO runs `[BUILD_CHECK_COMMAND]` — verifies clean state
-5. CEO posts to Slack: "SESSION STARTED"
+5. CEO posts to Discord: "SESSION STARTED"
 6. CEO announces to you: "Session ready. Gate: [X]. Pending: [Y items]."
 
 **End Ritual (run before closing):**
-1. CEO posts to Slack: "SESSION ENDING — [summary]"
+1. CEO posts to Discord: "SESSION ENDING — [summary]"
 2. CEO checks: Any new ideas not in traceability matrix? → Add to Notion
 3. CEO checks: Features removed not in decision archaeology? → Add to Notion
 4. CEO checks: Assumptions not in market intelligence? → Add to Notion
@@ -875,7 +883,7 @@ The 26 agents are a starting configuration. Add agents that match your specific 
 2. Define: agent name, role, responsibilities, owned files/directories, rules, output format
 3. Add the agent to the roster table in `CLAUDE.md`
 4. Add it to the routing table so the CEO knows when to spawn it
-5. Assign it to a Slack channel
+5. Assign it to a Discord channel (or Slack if configured)
 
 **Popular custom agents to consider:**
 
@@ -1034,7 +1042,12 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 ### Integration Issues
 
-**"Slack messages not appearing"**
+**"Discord messages not appearing"**
+1. Verify webhook URLs are filled in inside `scripts/discord-post.cjs`
+2. Verify the webhook URL is for the correct channel
+3. Test manually: `node scripts/discord-post.cjs CEO "test"`
+
+**"Slack messages not appearing" (if using Slack)**
 1. Verify bot token (starts with `xoxb-`) in `.mcp.json`
 2. Verify bot is invited to the channel (`/invite @PromptCEO`)
 3. Verify channel ID (starts with `C`) — not the channel name
@@ -1104,56 +1117,61 @@ Type immediately: `stop all`. Review `docs/execution-log/` to see what happened.
 
 26 agents organized into four teams plus floating specialists. Think of it as a small company: Build writes the code, Quality tests it, Strategy plans what to build, Business handles market research and investors. Floating specialists support any team on demand.
 
-#### Floating Specialists
+#### Leadership
 
-| # | Agent                | Spawned For                                                          |
-|---|----------------------|----------------------------------------------------------------------|
-| 1 | CEO Thinking Partner | Strategic decisions (used directly by CEO, not spawned as sub-agent) |
+| # | Agent | Spawned For |
+|---|---|---|
+| 1 | CEO Thinking Partner | Strategic decisions, 7 thinking modes (Opus — used directly, not spawned) |
 
-#### Alpha Build Team — writes and ships the code
+#### Alpha — Build Team (writes and ships the code)
 
 | # | Agent | Spawned For |
 |---|---|---|
 | 2 | Frontend Developer | UI components, pages, visual changes (src/ only) |
 | 3 | Backend Developer | APIs, server logic, integrations (backend/ only) |
-| 4 | Database Manager | Schema design, migrations, optimization (VETO holder) |
-| 5 | DevOps / Infra Agent | CI/CD pipelines, deployments, infrastructure |
-| 6 | Mobile Developer | iOS/Android/React Native builds |
-| 7 | Integration Developer | Third-party API connections, webhooks |
+| 4 | Database Manager | Schema design, migrations, optimization (**VETO holder**) |
+| 5 | UI Designer | Design system, 3-option proposals, component review |
 
-#### Bravo Quality Team — tests everything, catches issues before they ship
+#### Bravo — Quality Team (tests everything, catches issues before they ship)
 
 | # | Agent | Spawned For |
 |---|---|---|
-| 8 | QA Engineer | Test runs, bug tracking, quality gates |
-| 9 | Security Auditor | Vulnerability assessment, compliance checks (VETO holder) |
-| 10 | Performance Analyst | Load testing, optimization, bottleneck analysis |
-| 11 | Accessibility Auditor | WCAG compliance, screen reader testing |
-| 12 | Documentation Writer | Technical docs, API references, changelogs |
+| 6 | QA Engineer (Team Lead) | Test runs, bug tracking, quality gates, sign-off |
+| 7 | Demo Tester | Investor demo readiness, DEMO-BLOCKER findings |
+| 8 | UX Researcher | User journey testing, Journey Test Records |
+| 9 | Developer Advocate | First-time user DX audit, GOOD/NEEDS WORK/BROKEN grading |
+| 10 | Release Engineer | Release pipeline (Tier 3 — founder trigger only) |
 
-#### Charlie Strategy Team — plans what to build and why
-
-| # | Agent | Spawned For |
-|---|---|---|
-| 13 | Product Manager | PRDs, roadmap, feature prioritization |
-| 14 | Business Analyst | Requirements, user stories, acceptance criteria |
-| 15 | Validation Lead | Hypothesis testing, evidence gathering, traceability (VETO holder) |
-| 16 | UX Researcher | User interview synthesis, journey mapping, personas |
-| 17 | Content Strategist | Copy, messaging, content planning |
-| 18 | Data Analyst | Metrics, dashboards, A/B test analysis |
-
-#### Delta Business Team — market research, pricing, fundraising
+#### Charlie — Strategy Team (plans what to build and why)
 
 | # | Agent | Spawned For |
 |---|---|---|
-| 19 | Market Analyst | Market research, competitor analysis, TAM/SAM/SOM |
-| 20 | Revenue Modeler | Pricing strategy, financial projections, unit economics |
-| 21 | GTM Strategist | Go-to-market planning, launch strategy, ICP definition |
-| 22 | Investor Agent | Pitch deck, fundraising strategy, investor Q&A |
-| 23 | Legal Analyst | Contract review, compliance research, terms of service |
-| 24 | Customer Success Agent | User feedback triage, support docs, onboarding flows |
-| 25 | Brand Strategist | Brand identity, positioning, visual language |
-| 26 | Partnership Agent | Business development, co-marketing, channel partnerships |
+| 11 | Product Manager (Team Lead) | PRDs, roadmap, feature prioritization |
+| 12 | Business Analyst | Requirements, user stories, acceptance criteria |
+| 13 | Validation Lead | Evidence gathering, traceability matrix (**VETO holder**) |
+| 14 | Workflow Architect | State machines, flow design, pre-engineering review |
+
+#### Delta — Business Team (market research, pricing, fundraising)
+
+| # | Agent | Spawned For |
+|---|---|---|
+| 15 | Market Analyst | Market research, competitor analysis, TAM/SAM/SOM |
+| 16 | Revenue Modeler | Pricing strategy, financial projections, unit economics |
+| 17 | GTM Strategist | Go-to-market planning, launch strategy, ICP definition |
+| 18 | Investor Agent | Pitch deck, fundraising strategy, investor Q&A |
+| 19 | Visual Storyteller | Demo narration, pitch content, data storytelling |
+
+#### Floating Specialists (attach to any team as needed)
+
+| # | Agent | Spawned For |
+|---|---|---|
+| 20 | Security Auditor | Vulnerability assessment, auth/KYC audit (**VETO holder**) |
+| 21 | Build Quality Auditor | Post-sprint code audit, SEV-1-5 findings (**VETO holder**) |
+| 22 | Developer Provocateur | In-sprint READ-ONLY code challenger (no VETO) |
+| 23 | Code Reviewer | 4-stage review pipeline, auto-fix suggestions |
+| 24 | Safety Guard | Destructive command guard, CAREFUL/FREEZE/GUARD modes (**VETO holder**) |
+| 25 | Social Host | Optional social sessions (founder approval required) |
+| 26 | Provocateur | Post-sprint external audit, rotating lens framework |
 
 ### File Map
 
