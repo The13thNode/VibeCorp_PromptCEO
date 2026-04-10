@@ -29,7 +29,7 @@
 
 PromptCEO is a free, open-source framework that gives you a complete AI-powered product team. One CEO agent coordinates 25 specialist agents — organized into four teams (Build, Quality, Strategy, Business) plus floating specialists — all working together to think, build, test, and ship your product.
 
-This isn't theory. Every pattern in this framework was battle-tested across 50+ sessions, 17 versions, and 100+ commits on a real product ([NestMatch UAE](https://github.com/HotspotVPN/Nest_Match_UAE) — a verified shared-accommodation platform for the UAE market) — then extracted into this universal framework so anyone can use it.
+This isn't theory. Every pattern in this framework was battle-tested across 50+ sessions, 17 versions, and 100+ commits on a real, production product — then extracted into this universal framework so anyone can use it.
 
 > **New here?** Start with the [Step-by-Step Guide](docs/STEP_BY_STEP_GUIDE.md) or read the [Beginner's Guide](docs/BEGINNERS_GUIDE.md) if you're unfamiliar with Claude Code, GitHub, or AI agents. Have questions? Read the [FAQ](docs/FAQ.md).
 
@@ -41,7 +41,7 @@ This isn't theory. Every pattern in this framework was battle-tested across 50+ 
 
 AI geek in a state of permanent hyperfocus. Architecting the 13th Floor — building the agentic C-Suite with a swarm of AI agents that scale through automation.
 
-PromptCEO was born from building [NestMatch UAE](https://github.com/HotspotVPN/Nest_Match_UAE), a DLD/RERA-compliant shared-accommodation platform for the UAE rental market. Rather than hiring a traditional team, the entire product — frontend, backend, QA, market analysis, investor pitch — was built by AI agents orchestrated through Claude Code. The patterns that worked were extracted. The patterns that failed were discarded. What remained became PromptCEO.
+PromptCEO was born from building a real product end-to-end. Rather than hiring a traditional team, the entire product — frontend, backend, QA, market analysis, investor pitch — was built by AI agents orchestrated through Claude Code. The patterns that worked were extracted. The patterns that failed were discarded. What remained became PromptCEO.
 
 VibeCorp is the umbrella for two open-source projects: **PromptCEO** (agents for building) and **[CoworkSkills](https://github.com/The13thNode/VibeCorp_CoworkSkills)** (skills for thinking).
 
@@ -317,11 +317,11 @@ Sister repo: [VibeCorp CoworkSkills](https://github.com/The13thNode/VibeCorp_Cow
 
 PromptCEO wasn't designed in a vacuum. It was extracted from building a real product.
 
-[NestMatch UAE](https://github.com/HotspotVPN/Nest_Match_UAE) is a verified shared-accommodation platform for the UAE rental market — DLD/RERA compliant, with identity verification tiers, occupancy governance, and transport-proximity matching. The entire product was built by a single developer orchestrating AI agents through Claude Code.
+The entire product — frontend, backend, QA, market analysis, investor pitch — was built by a single developer orchestrating AI agents through Claude Code.
 
 Over 50+ sessions, patterns emerged: which agent configurations worked, how to prevent destructive actions, when to use Opus vs Sonnet, how to persist knowledge across sessions, and how to keep agents coordinated without chaos. Version after version, the framework was refined — until it was mature enough to extract into a standalone, product-agnostic framework.
 
-That extraction became PromptCEO. The NestMatch-specific rules were stripped. The universal patterns were kept. What you're looking at is the result.
+That extraction became PromptCEO. The product-specific rules were stripped. The universal patterns were kept. What you're looking at is the result.
 
 ---
 
