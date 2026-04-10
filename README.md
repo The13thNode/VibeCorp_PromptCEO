@@ -1,23 +1,23 @@
 <div align="center">
 
-<a href="https://github.com/The13thNode/VibeCorp_PromptCEO">
-  <img src="https://socialify.git.ci/The13thNode/VibeCorp_PromptCEO/image?font=Source%20Code%20Pro&description=1&forks=1&language=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Dark" alt="PromptCEO" width="100%" />
-</a>
+  <a href="https://github.com/The13thNode/VibeCorp_PromptCEO">
+    <img src="https://socialify.git.ci/The13thNode/VibeCorp_PromptCEO/image?font=Source%20Code%20Pro&description=1&forks=1&language=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Dark" alt="PromptCEO" width="100%" />
+  </a>
 
-<br/>
+  <br/>
 
-<a href="https://github.com/The13thNode/VibeCorp_PromptCEO">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=1000&color=6C63FF&center=true&width=600&lines=26+AI+Agents.+58+Skills.+One+CEO.;Turn+a+business+idea+into+a+shipped+product.;Battle-tested+across+50%2B+sessions+and+100%2B+commits." alt="Typing SVG" />
-</a>
+  <a href="https://github.com/The13thNode/VibeCorp_PromptCEO">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=1000&color=6C63FF&center=true&width=600&lines=26+AI+Agents.+58+Skills.+One+CEO.;Turn+a+business+idea+into+a+shipped+product.;Battle-tested+across+50%2B+sessions+and+100%2B+commits." alt="Typing SVG" />
+  </a>
 
-<br/>
+  <br/>
 
-![Agents](https://img.shields.io/badge/AGENTS-26-6C63FF?style=for-the-badge)
-![Skills](https://img.shields.io/badge/SKILLS-58-FF6B6B?style=for-the-badge)
-![Protocols](https://img.shields.io/badge/PROTOCOLS-7-00D2FF?style=for-the-badge)
-![Claude Code](https://img.shields.io/badge/CLAUDE_CODE-OPUS_|_SONNET-blueviolet?style=for-the-badge)
-![License](https://img.shields.io/github/license/The13thNode/VibeCorp_PromptCEO?style=for-the-badge)
-![Stars](https://img.shields.io/github/stars/The13thNode/VibeCorp_PromptCEO?style=for-the-badge&color=yellow)
+[![Agents](https://img.shields.io/badge/AGENTS-26-6C63FF?style=for-the-badge)](https://github.com/The13thNode/VibeCorp_PromptCEO/blob/main/docs/AGENT_TEAMS.md)
+[![Skills](https://img.shields.io/badge/SKILLS-58-FF6B6B?style=for-the-badge)](https://github.com/The13thNode/VibeCorp_PromptCEO/tree/main/skills)
+[![Protocols](https://img.shields.io/badge/PROTOCOLS-7-00D2FF?style=for-the-badge)](https://github.com/The13thNode/VibeCorp_PromptCEO/tree/main/protocols)
+[![Claude Code](https://img.shields.io/badge/CLAUDE_CODE-OPUS_|_SONNET-blueviolet?style=for-the-badge)](https://github.com/The13thNode/VibeCorp_PromptCEO/blob/main/docs/MODEL_POLICY.md)
+[![License](https://img.shields.io/github/license/The13thNode/VibeCorp_PromptCEO?style=for-the-badge)](https://github.com/The13thNode/VibeCorp_PromptCEO/blob/main/LICENSE)
+[![Stars](https://img.shields.io/github/stars/The13thNode/VibeCorp_PromptCEO?style=for-the-badge&color=yellow)](https://github.com/The13thNode/VibeCorp_PromptCEO/stargazers)
 
 </div>
 
@@ -55,6 +55,7 @@ graph TD
     CTP["🧠 CEO Thinking Partner<br/><i>Opus Model</i>"]
 
     YOU --> CTP
+
     CTP --> ALPHA
     CTP --> BRAVO
     CTP --> CHARLIE
@@ -98,8 +99,7 @@ graph TD
     style DELTA fill:#1a1a2e,stroke:#FFD700,color:#fff
 ```
 
-**Floating Specialists** (cross-team, activated on demand):
-Security Auditor · Build Quality Auditor · Code Reviewer · Safety Guard · Developer Provocateur · Provocateur · Social Host
+**Floating Specialists** (cross-team, activated on demand): Security Auditor · Build Quality Auditor · Code Reviewer · Safety Guard · Developer Provocateur · Provocateur · Social Host
 
 ---
 
@@ -252,20 +252,20 @@ All integrations are optional. Discord is recommended as the default (free) noti
 
 ```
 VibeCorp_PromptCEO/
-├── README.md                ← You are here
-├── CLAUDE.md                ← Template: fill in for your project
-├── SETUP.md                 ← Step-by-step deployment guide
-├── SECURITY.md              ← Data boundaries and guardrails
-├── CONTRIBUTING.md          ← How to contribute
-├── LICENSE                  ← MIT (use it however you want)
+├── README.md              ← You are here
+├── CLAUDE.md              ← Template: fill in for your project
+├── SETUP.md               ← Step-by-step deployment guide
+├── SECURITY.md            ← Data boundaries and guardrails
+├── CONTRIBUTING.md        ← How to contribute
+├── LICENSE                ← MIT (use it however you want)
 │
-├── .claude/agents/          ← 26 agent definition files
-├── protocols/               ← 7 governance protocols
-├── skills/                  ← 58 reusable agent skills
-├── scripts/                 ← Discord/Slack notification + deployment scripts
-├── templates/               ← Fill-in templates for your project
-├── docs/                    ← Full documentation (16 guides)
-└── examples/                ← Real-world and blank-SaaS examples
+├── .claude/agents/        ← 26 agent definition files
+├── protocols/             ← 7 governance protocols
+├── skills/                ← 58 reusable agent skills
+├── scripts/               ← Discord/Slack notification + deployment scripts
+├── templates/             ← Fill-in templates for your project
+├── docs/                  ← Full documentation (16 guides)
+└── examples/              ← Real-world and blank-SaaS examples
 ```
 
 ---
