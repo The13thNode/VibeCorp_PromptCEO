@@ -1,43 +1,107 @@
+<div align="center">
+
+<a href="https://github.com/The13thNode/VibeCorp_PromptCEO">
+  <img src="https://socialify.git.ci/The13thNode/VibeCorp_PromptCEO/image?font=Source%20Code%20Pro&description=1&forks=1&language=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Dark" alt="PromptCEO" width="100%" />
+</a>
+
+<br/>
+
+<a href="https://github.com/The13thNode/VibeCorp_PromptCEO">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=1000&color=6C63FF&center=true&width=600&lines=26+AI+Agents.+58+Skills.+One+CEO.;Turn+a+business+idea+into+a+shipped+product.;Battle-tested+across+50%2B+sessions+and+100%2B+commits." alt="Typing SVG" />
+</a>
+
+<br/>
+
+![Agents](https://img.shields.io/badge/AGENTS-26-6C63FF?style=for-the-badge)
+![Skills](https://img.shields.io/badge/SKILLS-58-FF6B6B?style=for-the-badge)
+![Protocols](https://img.shields.io/badge/PROTOCOLS-7-00D2FF?style=for-the-badge)
+![Claude Code](https://img.shields.io/badge/CLAUDE_CODE-OPUS_|_SONNET-blueviolet?style=for-the-badge)
+![License](https://img.shields.io/github/license/The13thNode/VibeCorp_PromptCEO?style=for-the-badge)
+![Stars](https://img.shields.io/github/stars/The13thNode/VibeCorp_PromptCEO?style=for-the-badge&color=yellow)
+
+</div>
+
+---
+
 # PromptCEO by VibeCorp
 
 **Turn a business idea into a product with 26 AI agents working as your team.**
 
 PromptCEO is a free, open-source framework that gives you a complete AI-powered product team. One CEO agent coordinates 25 specialist agents — organized into four teams (Build, Quality, Strategy, Business) plus floating specialists — all working together to think, build, test, and ship your product.
 
-This isn't theory. Every pattern in this framework was battle-tested across 50+ sessions, 17 versions, and 100+ commits on a real product — then extracted into this universal framework.
+This isn't theory. Every pattern in this framework was battle-tested across 50+ sessions, 17 versions, and 100+ commits on a real product ([NestMatch UAE](https://github.com/HotspotVPN/Nest_Match_UAE) — a verified shared-accommodation platform for the UAE market) — then extracted into this universal framework so anyone can use it.
 
-> **Complete beginner?** Never used a terminal or GitHub before? Start with the [Step-by-Step Guide](docs/STEP_BY_STEP_GUIDE.md). Have questions? Read the [FAQ](docs/FAQ.md).
+> **New here?** Start with the [Step-by-Step Guide](docs/STEP_BY_STEP_GUIDE.md) or read the [Beginner's Guide](docs/BEGINNERS_GUIDE.md) if you're unfamiliar with Claude Code, GitHub, or AI agents. Have questions? Read the [FAQ](docs/FAQ.md).
+
+---
+
+## About the Creator
+
+**The13thNode** · *NeuralEntropy_VPN*
+
+AI geek in a state of permanent hyperfocus. Architecting the 13th Floor — building the agentic C-Suite with a swarm of AI agents that scale through automation.
+
+PromptCEO was born from building [NestMatch UAE](https://github.com/HotspotVPN/Nest_Match_UAE), a DLD/RERA-compliant shared-accommodation platform for the UAE rental market. Rather than hiring a traditional team, the entire product — frontend, backend, QA, market analysis, investor pitch — was built by AI agents orchestrated through Claude Code. The patterns that worked were extracted. The patterns that failed were discarded. What remained became PromptCEO.
+
+VibeCorp is the umbrella for two open-source projects: **PromptCEO** (agents for building) and **[CoworkSkills](https://github.com/The13thNode/VibeCorp_CoworkSkills)** (skills for thinking).
 
 ---
 
 ## What You'll Get
 
-```
-                         ┌─────────────┐
-                         │   YOU (CEO)  │
-                         └──────┬───────┘
-                                │
-                    ┌───────────┼───────────┐
-                    │     CEO Thinking      │
-                    │    Partner (Opus)     │
-                    └───────────┬───────────┘
-                                │
-    ┌───────────────┬───────────┼───────────┬───────────────┐
-    │               │                       │               │
-┌───┴───┐     ┌─────┴─────┐          ┌─────┴─────┐   ┌─────┴─────┐
-│ ALPHA │     │   BRAVO   │          │  CHARLIE  │   │   DELTA   │
-│ Build │     │  Quality  │          │ Strategy  │   │ Business  │
-├───────┤     ├───────────┤          ├───────────┤   ├───────────┤
-│Front  │     │QA (lead)  │          │PM (lead)  │   │Market     │
-│Back   │     │Demo Test  │          │Biz Analyst│   │Revenue    │
-│DB Mgr │     │UX Research│          │Validation │   │GTM        │
-│UI Des │     │Dev Advoc  │          │Workflow   │   │Investor   │
-│       │     │Release Eng│          │ Architect │   │Visual     │
-└───────┘     └───────────┘          └───────────┘   └───────────┘
+```mermaid
+graph TD
+    YOU["🧑 YOU (CEO)"]
+    CTP["🧠 CEO Thinking Partner<br/><i>Opus Model</i>"]
 
-  + Floating: Security Auditor, Build Quality Auditor, Code Reviewer,
-              Safety Guard, Developer Provocateur, Provocateur, Social Host
+    YOU --> CTP
+    CTP --> ALPHA
+    CTP --> BRAVO
+    CTP --> CHARLIE
+    CTP --> DELTA
+
+    subgraph ALPHA["🔨 ALPHA — Build"]
+        A1[Frontend Developer]
+        A2[Backend Developer]
+        A3[Database Manager]
+        A4[UI Designer]
+    end
+
+    subgraph BRAVO["🛡️ BRAVO — Quality"]
+        B1[QA Engineer ★ Lead]
+        B2[Demo Tester]
+        B3[UX Researcher]
+        B4[Developer Advocate]
+        B5[Release Engineer]
+    end
+
+    subgraph CHARLIE["📋 CHARLIE — Strategy"]
+        C1[Product Manager ★ Lead]
+        C2[Business Analyst]
+        C3[Validation Lead]
+        C4[Workflow Architect]
+    end
+
+    subgraph DELTA["💼 DELTA — Business"]
+        D1[Market Analyst]
+        D2[Revenue Modeler]
+        D3[GTM Strategist]
+        D4[Investor Agent]
+        D5[Visual Storyteller]
+    end
+
+    style YOU fill:#6C63FF,stroke:#fff,color:#fff
+    style CTP fill:#FF6B6B,stroke:#fff,color:#fff
+    style ALPHA fill:#1a1a2e,stroke:#6C63FF,color:#fff
+    style BRAVO fill:#1a1a2e,stroke:#00D2FF,color:#fff
+    style CHARLIE fill:#1a1a2e,stroke:#FF6B6B,color:#fff
+    style DELTA fill:#1a1a2e,stroke:#FFD700,color:#fff
 ```
+
+**Floating Specialists** (cross-team, activated on demand):
+Security Auditor · Build Quality Auditor · Code Reviewer · Safety Guard · Developer Provocateur · Provocateur · Social Host
+
+---
 
 ## Before & After
 
@@ -53,8 +117,6 @@ This isn't theory. Every pattern in this framework was battle-tested across 50+ 
 ---
 
 ## Prerequisites
-
-You'll need four things:
 
 1. **A Claude subscription** — [Claude Pro](https://claude.ai/upgrade) ($20/month) or Claude Max ($100-200/month) for heavier usage
 2. **A computer** — Windows, Mac, or Linux
@@ -79,80 +141,29 @@ cd VibeCorp_PromptCEO
 claude "Read CLAUDE.md and begin session start ritual"
 ```
 
-For a detailed walkthrough, see the [Full Guide](docs/FULL_GUIDE.md).
-For experienced developers, see the [Quick Start](docs/QUICK_START.md).
+For a detailed walkthrough, see the [Full Guide](docs/FULL_GUIDE.md). For experienced developers, see the [Quick Start](docs/QUICK_START.md).
 
 ---
 
-## What is Claude Code?
+## How It Works
 
-[Claude Code](https://claude.ai/code) is Anthropic's command-line tool for working with Claude AI. Think of it as having an AI assistant that lives in your terminal (the text-based interface on your computer). Unlike ChatGPT, which runs in a browser, Claude Code works directly with your files and code.
+PromptCEO is built on three pillars: **agents** (who does the work), **protocols** (how they coordinate), and **skills** (what they know how to do).
 
-Claude Code can:
-- Read, write, and edit files on your computer
-- Run terminal commands
-- Connect to external tools (Discord, Slack, Jira, Notion) via MCP servers and webhooks
-- Spawn sub-agents that work in parallel
+**Agents** — 26 markdown files in `.claude/agents/` that give Claude a specific role, expertise, and behavioral rules. The CEO orchestrator (defined in `CLAUDE.md`) routes tasks to the right specialist.
 
-This framework uses Claude Code's **agent system** — each of the 26 agents is a markdown file that gives Claude a specific role, expertise, and set of rules to follow.
+**Protocols** — Seven governance rules that keep agents coordinated and safe:
 
-## What are AI Agents?
+| Protocol | Purpose |
+|---|---|
+| [Chain of Command](protocols/CHAIN_OF_COMMAND.md) | Who reports to whom, escalation paths |
+| [Approval Gates](protocols/APPROVAL_GATES.md) | Three tiers: auto-execute, post-check, CEO approval |
+| [Message Bus](protocols/MESSAGE_BUS.md) | How agents communicate with each other |
+| [Execution Memory](protocols/EXECUTION_MEMORY.md) | How knowledge persists across sessions |
+| [Token Budget](protocols/TOKEN_BUDGET_PROTOCOL.md) | Cost control and model selection rules |
+| [Ownership & Jira](protocols/OWNERSHIP_AND_JIRA.md) | System ownership tracking and ticket management |
+| [Agent Activation](protocols/AGENT_ACTIVATION_CHECKLIST.md) | Pre-flight checklist before spawning agents |
 
-An AI agent is Claude operating with a specific persona and set of instructions. When you tell Claude to "be the QA engineer," it reads the QA engineer's agent file and follows those rules — what to test, how to report bugs, when to escalate.
-
-**What agents CAN do:**
-- Write and review code
-- Create documents and plans
-- Analyze markets and competitors
-- Build financial models
-- Run tests and find bugs
-- Post updates to Discord or Slack, create Jira tickets
-
-**What agents CAN'T do:**
-- Make phone calls or send emails
-- Access the internet to browse websites (without MCP)
-- Remember things between sessions (without execution memory)
-- Replace human judgment for critical decisions
-- Guarantee their output is correct (always verify)
-
-## What is GitHub?
-
-GitHub is where your project's code lives online. Think of it as Google Drive for code — it stores your files, tracks every change, and lets you go back to any previous version. When you "clone" this repository, you're downloading a copy to your computer.
-
-## What are MCP Servers?
-
-MCP (Model Context Protocol) servers are how Claude Code connects to external tools. Without MCP, Claude can only work with files on your computer. With MCP, your agents can:
-- Post messages to **Discord** or **Slack** channels
-- Create and update **Jira** tickets
-- Read and write **Notion** pages
-- Send **Telegram** messages for remote notifications
-
-Discord does NOT use MCP — it uses webhooks, which are simpler and free. This is why Discord is the recommended default notification layer.
-
-You configure MCP connections in a `.mcp.json` file. See [SETUP.md](SETUP.md) for details.
-
-## What are Tokens?
-
-Tokens are the "currency" of AI. Every message you send to Claude and every response you get back costs tokens. One token is roughly 4 characters of English text.
-
-**Why this matters:**
-- Claude Pro gives you ~5x the standard usage per month
-- Claude Max gives you 20x ($100/mo) or unlimited ($200/mo)
-- The framework includes a **Token Budget Protocol** to help agents be efficient
-- Using Sonnet (cheaper) instead of Opus (expensive) for routine work saves significantly
-
-**Approximate costs per 1M tokens:**
-| Model | Input | Output |
-|---|---|---|
-| Opus | $15.00 | $75.00 |
-| Sonnet | $3.00 | $15.00 |
-| Haiku | $0.25 | $1.25 |
-
-## What are Webhooks?
-
-Webhooks are how your agents send you notifications. When an agent finishes a task or needs your approval, it can automatically post a message to your Discord channel (or Slack if configured). This means you don't have to sit and watch the terminal — you can get notified on your phone.
-
-Discord webhook URLs are the default notification method (free, unlimited). Slack webhooks work the same way but require a paid plan for full message history.
+**Skills** — 58 reusable modules in `skills/` that agents load just-in-time (e.g., security-audit, design-system, market-analysis). Not loaded upfront — only when needed.
 
 ---
 
@@ -211,18 +222,15 @@ Discord webhook URLs are the default notification method (free, unlimited). Slac
 
 ---
 
-## Governance System
+## Model Policy
 
-PromptCEO includes battle-tested governance protocols:
+| Model | Role | Cost (per 1M tokens) |
+|---|---|---|
+| **Opus** | CEO Thinking Partner only | $15 input / $75 output |
+| **Sonnet** | All 25 sub-agents | $3 input / $15 output |
+| **Haiku** | Trivial tasks only | $0.25 input / $1.25 output |
 
-- **Chain of Command** — Who reports to whom, escalation paths
-- **Message Bus** — How agents communicate with each other
-- **Execution Memory** — How knowledge persists across sessions
-- **Approval Gates** — Three tiers: auto-execute, post-check, CEO approval
-- **Token Budget Protocol** — Cost control and model selection rules
-- **Ownership & Jira** — System ownership tracking and ticket management
-
-See [Architecture](docs/ARCHITECTURE.md) for the full system design.
+Token Budget zones: GREEN (0-60%) normal · YELLOW (60-80%) compact · RED (80-95%) stop · BLACK (95%+) emergency halt.
 
 ---
 
@@ -244,19 +252,20 @@ All integrations are optional. Discord is recommended as the default (free) noti
 
 ```
 VibeCorp_PromptCEO/
-├── README.md                    ← You are here
-├── CLAUDE.md                    ← Template: fill in for your project
-├── SETUP.md                     ← Step-by-step deployment guide
-├── SECURITY.md                  ← Data boundaries and guardrails
-├── LICENSE                      ← MIT (use it however you want)
+├── README.md                ← You are here
+├── CLAUDE.md                ← Template: fill in for your project
+├── SETUP.md                 ← Step-by-step deployment guide
+├── SECURITY.md              ← Data boundaries and guardrails
+├── CONTRIBUTING.md          ← How to contribute
+├── LICENSE                  ← MIT (use it however you want)
 │
-├── .claude/agents/              ← 26 agent definition files
-├── protocols/                   ← 7 governance protocols
-├── skills/                      ← 58 reusable agent skills
-├── scripts/                     ← Discord/Slack notification + deployment scripts
-├── templates/                   ← Fill-in templates for your project
-├── docs/                        ← Full documentation
-└── examples/                    ← Real-world and blank-SaaS examples
+├── .claude/agents/          ← 26 agent definition files
+├── protocols/               ← 7 governance protocols
+├── skills/                  ← 58 reusable agent skills
+├── scripts/                 ← Discord/Slack notification + deployment scripts
+├── templates/               ← Fill-in templates for your project
+├── docs/                    ← Full documentation (16 guides)
+└── examples/                ← Real-world and blank-SaaS examples
 ```
 
 ---
@@ -265,11 +274,14 @@ VibeCorp_PromptCEO/
 
 | Document | For | Description |
 |---|---|---|
+| [Step-by-Step Guide](docs/STEP_BY_STEP_GUIDE.md) | Complete Beginners | Zero-to-running, every click explained |
+| [Beginner's Guide](docs/BEGINNERS_GUIDE.md) | Complete Beginners | What is Claude Code, GitHub, agents, MCP, tokens |
 | [Quick Start](docs/QUICK_START.md) | Developers | 5-minute setup |
 | [Full Guide](docs/FULL_GUIDE.md) | Everyone | Complete walkthrough from zero |
 | [Architecture](docs/ARCHITECTURE.md) | Technical | How the system works |
 | [Model Policy](docs/MODEL_POLICY.md) | Everyone | When to use which Claude model |
 | [Agent Teams](docs/AGENT_TEAMS.md) | Advanced | Experimental parallel agents |
+| [Deployment Guide](docs/DEPLOYMENT_GUIDE.md) | Technical | Production deployment patterns |
 | [Security](SECURITY.md) | Everyone | Data boundaries and guardrails |
 | [Discord Setup](docs/DISCORD_SETUP.md) | Everyone | Free notification setup (12 channels) |
 | [Obsidian Setup](docs/OBSIDIAN_SETUP.md) | Everyone | Free local knowledge base |
@@ -280,14 +292,12 @@ VibeCorp_PromptCEO/
 
 ## Examples
 
-- **[Marketplace Example](examples/marketplace/)** — Two-sided marketplace example with supply/demand validation, compliance tiers, and marketplace-specific agent rules.
+- **[Marketplace Example](examples/marketplace/)** — Two-sided marketplace with supply/demand validation, compliance tiers, and marketplace-specific agent rules.
 - **[Blank SaaS](examples/blank-saas/)** — Starting template for a SaaS product with common defaults pre-filled.
 
 ---
 
 ## PromptCEO vs CoworkSkills
-
-VibeCorp maintains two complementary frameworks:
 
 | | PromptCEO | CoworkSkills |
 |---|---|---|
@@ -303,15 +313,41 @@ Sister repo: [VibeCorp CoworkSkills](https://github.com/The13thNode/VibeCorp_Cow
 
 ---
 
+## Origin Story
+
+PromptCEO wasn't designed in a vacuum. It was extracted from building a real product.
+
+[NestMatch UAE](https://github.com/HotspotVPN/Nest_Match_UAE) is a verified shared-accommodation platform for the UAE rental market — DLD/RERA compliant, with identity verification tiers, occupancy governance, and transport-proximity matching. The entire product was built by a single developer orchestrating AI agents through Claude Code.
+
+Over 50+ sessions, patterns emerged: which agent configurations worked, how to prevent destructive actions, when to use Opus vs Sonnet, how to persist knowledge across sessions, and how to keep agents coordinated without chaos. Version after version, the framework was refined — until it was mature enough to extract into a standalone, product-agnostic framework.
+
+That extraction became PromptCEO. The NestMatch-specific rules were stripped. The universal patterns were kept. What you're looking at is the result.
+
+---
+
+## Glossary
+
+| Term | Definition |
+|---|---|
+| **Agent** | A markdown file in `.claude/agents/` that gives Claude a specific role and behavioral rules |
+| **CEO Orchestrator** | The top-level agent (in `CLAUDE.md`) that routes tasks to specialists |
+| **Skill** | A reusable capability module in `skills/` loaded by agents just-in-time |
+| **Protocol** | A governance rule in `protocols/` controlling agent coordination |
+| **Execution Memory** | System for persisting decisions and context across sessions |
+| **Token Budget** | Cost-control system with zones: GREEN → YELLOW → RED → BLACK |
+| **Approval Tier** | Tier 1 (auto-execute), Tier 2 (post-check), Tier 3 (CEO approval required) |
+| **VETO Holder** | Agents that can block actions: Security Auditor, Build Quality Auditor, Safety Guard |
+| **MCP** | Model Context Protocol — lets Claude Code connect to external tools |
+| **JIT** | Just-In-Time — loading skills only when needed to save tokens |
+| **Opus / Sonnet / Haiku** | Claude model tiers: Opus (most capable), Sonnet (balanced), Haiku (fastest) |
+
+---
+
 ## Disclaimer
 
 This is a community project. **It is not affiliated with, endorsed by, or sponsored by Anthropic.**
 
-PromptCEO is a framework — a set of files and patterns. It does not guarantee any particular outcome. AI agents can and will make mistakes. Always review their output, especially for:
-- Legal and compliance matters
-- Financial calculations
-- Security-critical code
-- Anything that affects real users or real money
+PromptCEO is a framework — a set of files and patterns. It does not guarantee any particular outcome. AI agents can and will make mistakes. Always review their output, especially for legal and compliance matters, financial calculations, security-critical code, and anything that affects real users or real money.
 
 The framework was built with one real product. Your results will vary based on your idea, your input, and how you use the tools.
 
@@ -328,3 +364,11 @@ MIT — use it however you want. See [LICENSE](LICENSE).
 Built by [VibeCorp](https://github.com/The13thNode). Battle-tested on a real product, then extracted into this universal framework.
 
 See [CREDITS.md](docs/CREDITS.md) for full attribution to all open-source projects and contributors that made this possible.
+
+---
+
+<div align="center">
+
+`ai-agents` `claude-code` `prompt-engineering` `multi-agent-systems` `agent-orchestration` `open-source` `developer-tools` `startup-tools` `saas-framework` `ai-governance` `mcp-servers` `vibecorp`
+
+</div>
